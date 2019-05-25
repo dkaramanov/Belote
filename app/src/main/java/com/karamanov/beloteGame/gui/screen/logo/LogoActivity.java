@@ -30,9 +30,6 @@ public final class LogoActivity extends Activity {
 
     /**
      * Constructor.
-     * 
-     * @param canvas parent container game canvas
-     * @param rootComponent original root component
      */
     public LogoActivity() {
         super();

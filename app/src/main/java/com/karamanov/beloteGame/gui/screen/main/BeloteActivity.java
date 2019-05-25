@@ -22,7 +22,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import com.karamanov.beloteGame.Belote;
@@ -54,15 +53,14 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
 
     private DealerFacade dealer;
     private BeloteView beloteView;
-    private RelativeLayout buttonsView;
+    //private RelativeLayout buttonsView;
     private RelativeLayout bodyView;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        
+
         addMessageListener(Belote.MT_KEY_PRESSED, new KeyPressedListener());
         addMessageListener(Belote.MT_TOUCH_EVENT, new TouchListener());
         addMessageListener(Belote.MT_EXIT_EVENT, new ExitListener());
@@ -74,60 +72,18 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
         boolean blackRedOrder = preferences.getBoolean(key, Boolean.FALSE);
         Belote.getBeloteFacade(this).setBlackRedCardOrder(blackRedOrder);
 
-        buttonsView = new RelativeLayout(this);
-        //buttonsView.setId(1);
-        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        buttonsView.setLayoutParams(rlp);
-        
-        ImageButton left = new ImageButton(this);
-        left.setBackgroundResource(R.drawable.btn_left);
-        rlp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        rlp.addRule(RelativeLayout.CENTER_VERTICAL);
-        left.setLayoutParams(rlp);
-        left.setOnClickListener(new ButtonPressListener(Integer.valueOf(NAV_LEFT)));
-        left.setSoundEffectsEnabled(false);
-        buttonsView.addView(left);
-
-        ImageButton play = new ImageButton(this);
-        play.setBackgroundResource(R.drawable.btn_play);
-        rlp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        rlp.addRule(RelativeLayout.CENTER_IN_PARENT);
-        play.setLayoutParams(rlp);
-        play.setOnClickListener(new ButtonPressListener(Integer.valueOf(NAV_PRESS)));
-        play.setSoundEffectsEnabled(false);
-        buttonsView.addView(play);
-
-        ImageButton right = new ImageButton(this);
-        right.setBackgroundResource(R.drawable.btn_right);
-        rlp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        rlp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        rlp.addRule(RelativeLayout.CENTER_VERTICAL);
-        right.setLayoutParams(rlp);
-        right.setOnClickListener(new ButtonPressListener(Integer.valueOf(NAV_RIGHT)));
-        right.setSoundEffectsEnabled(false);
-        buttonsView.addView(right);
-        
-        boolean showBtns = preferences.getBoolean(getString(R.string.prefShowBtns), Boolean.TRUE);
-        buttonsView.setVisibility(showBtns ? View.VISIBLE : View.GONE);
-
         beloteView = new BeloteView(this);
         
-        dealer = new DealerFacade(this, beloteView, buttonsView);
-        rlp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        rlp.addRule(RelativeLayout.ABOVE, buttonsView.getId());
+        dealer = new DealerFacade(this, beloteView);
+        RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         beloteView.setLayoutParams(rlp);
         
         bodyView = new RelativeLayout(this);
-        
-        bodyView.addView(buttonsView);
         bodyView.addView(beloteView);
 
         setContentView(bodyView);
 
         preferences.registerOnSharedPreferenceChangeListener(this);
-
     }
 
     @Override
@@ -145,7 +101,6 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //super.onCreateOptionsMenu(menu);
         int base = Menu.CATEGORY_SECONDARY;
 
         MenuItem newMenu = menu.add(base, base + MENU_GAME_NEW_INDEX, base + MENU_GAME_NEW_INDEX, getString(R.string.New));
@@ -162,8 +117,6 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        //super.onPrepareOptionsMenu(menu);
-
         int base = Menu.CATEGORY_SECONDARY;
 
         boolean showTricks = !Belote.getBeloteFacade(this).getGame().getTrickList().isEmpty();
@@ -331,11 +284,6 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.prefShowBtns))) {
-            boolean showBtns = sharedPreferences.getBoolean(key, Boolean.TRUE);
-            buttonsView.setVisibility(showBtns ? View.VISIBLE : View.GONE);
-        }
-
         if (key.equals(getString(R.string.prefBlackRedOrder))) {
             boolean blackRedOrder = sharedPreferences.getBoolean(key, Boolean.FALSE);
             Belote.getBeloteFacade(this).setBlackRedCardOrder(blackRedOrder);

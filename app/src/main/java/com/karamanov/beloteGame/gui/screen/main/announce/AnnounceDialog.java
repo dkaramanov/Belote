@@ -144,9 +144,9 @@ public class AnnounceDialog extends Dialog {
     private final MessageActivity activity;
     
     /**
-     * Constructor.
+     * Constructor
+     * @param context component.
      * @param game a BelotGame instance.
-     * @param parent component.
      */
     public AnnounceDialog(MessageActivity context, final BeloteFacade game) {
         super(context);

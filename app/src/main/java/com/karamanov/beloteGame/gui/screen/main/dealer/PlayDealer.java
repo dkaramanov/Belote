@@ -1,14 +1,7 @@
 package com.karamanov.beloteGame.gui.screen.main.dealer;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.view.View;
-import belote.base.BelotException;
-import belote.bean.Player;
-import belote.bean.pack.card.Card;
-import belote.bean.pack.card.rank.Rank;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.gui.screen.gameResume.GameResumeActivity;
@@ -18,10 +11,17 @@ import com.karamanov.beloteGame.gui.screen.main.message.MessageData;
 import com.karamanov.framework.MessageActivity;
 import com.karamanov.framework.graphics.Rectangle;
 
+import java.util.ArrayList;
+
+import belote.base.BelotException;
+import belote.bean.Player;
+import belote.bean.pack.card.Card;
+import belote.bean.pack.card.rank.Rank;
+
 final class PlayDealer extends BaseDealer {
 
-    public PlayDealer(MessageActivity context, BeloteView belotPanel, View buttons) {
-        super(context, belotPanel, buttons);
+    public PlayDealer(MessageActivity context, BeloteView belotPanel) {
+        super(context, belotPanel);
     }
 
     @Override
@@ -76,7 +76,6 @@ final class PlayDealer extends BaseDealer {
      * Process game playing.
      * 
      * @param keyCode pressed key code.
-     * @param gameAction status.
      */
     private void processGamePlaying(int keyCode) {
         checkTrickEnd();
@@ -92,7 +91,6 @@ final class PlayDealer extends BaseDealer {
      * Process round playing.
      * 
      * @param keyCode pressed key code.
-     * @param gameAction status.
      */
     private void processRoundPlaying(int keyCode) {
         if (!beloteFacade.isHumanTrickOrder()) {
@@ -108,7 +106,6 @@ final class PlayDealer extends BaseDealer {
      * Process rounds after human player.
      * 
      * @param keyCode
-     * @param gameAction
      */
     private void processPlayAfterHumanPlayer(int keyCode) {
         beloteFacade.getHumanPlayer().setSelectedCard(null);
@@ -119,7 +116,6 @@ final class PlayDealer extends BaseDealer {
      * Process rounds till human player.
      * 
      * @param keyCode
-     * @param gameAction
      */
     private void processPlayTillHumanPlayer(int keyCode) {
         if (beloteFacade.getHumanPlayer().equals(beloteFacade.getGame().getTrickAttackPlayer())) {
@@ -135,7 +131,6 @@ final class PlayDealer extends BaseDealer {
      * Checks card click.
      * 
      * @param keyCode pressed key code.
-     * @param gameAction status.
      */
     private void processSelectCard(int keyCode) {
         boolean keyLeftRightAction = keyCode == BeloteActivity.NAV_LEFT || keyCode == BeloteActivity.NAV_RIGHT;
@@ -224,8 +219,8 @@ final class PlayDealer extends BaseDealer {
     /**
      * Checks card click.
      * 
-     * @param keyCode pressed key code.
-     * @param gameAction status.
+     * @param x
+     * @param y
      * @return if a card was selected.
      */
     private boolean processSelectHumanCard(float x, float y) {
@@ -287,8 +282,8 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Process round playing.
-     * @param keyCode pressed key code.
-     * @param gameAction status.
+     * @param x
+     * @param y
      */
     private void processRoundPlay(float x, float y) {
         if (!beloteFacade.isHumanTrickOrder()) {
@@ -303,8 +298,8 @@ final class PlayDealer extends BaseDealer {
     /**
      * Process rounds till human player.
      * 
-     * @param keyCode
-     * @param gameAction
+     * @param x
+     * @param y
      */
     private void processTillHumanPlayer(float x, float y) {
         if (beloteFacade.getHumanPlayer().equals(beloteFacade.getGame().getTrickAttackPlayer())) {
@@ -330,8 +325,8 @@ final class PlayDealer extends BaseDealer {
     /**
      * Process rounds after human player.
      * 
-     * @param keyCode
-     * @param gameAction
+     * @param x
+     * @param y
      */
     private void processAfterHumanPlayer(float x, float y) {
         beloteFacade.getHumanPlayer().setSelectedCard(null);

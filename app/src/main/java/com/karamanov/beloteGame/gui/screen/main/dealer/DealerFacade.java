@@ -1,11 +1,10 @@
 package com.karamanov.beloteGame.gui.screen.main.dealer;
 
-import android.view.View;
-import belote.logic.HumanBeloteFacade;
-
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.gui.screen.main.BeloteView;
 import com.karamanov.framework.MessageActivity;
+
+import belote.logic.HumanBeloteFacade;
 
 public final class DealerFacade {
 
@@ -17,12 +16,12 @@ public final class DealerFacade {
     
     private final BaseDealer playDealer;
 
-    public DealerFacade(MessageActivity context, BeloteView belotPanel, View buttons) {
+    public DealerFacade(MessageActivity context, BeloteView belotPanel) {
         this.context = context;
         this.beloteFacade = Belote.getBeloteFacade(context);
 
-        announceDealer = new AnnounceDealer(context, belotPanel, buttons);
-        playDealer = new PlayDealer(context, belotPanel, buttons);
+        announceDealer = new AnnounceDealer(context, belotPanel);
+        playDealer = new PlayDealer(context, belotPanel);
     }
     
     private BaseDealer getDealer() {
@@ -42,7 +41,6 @@ public final class DealerFacade {
      * Checks key click.
      * 
      * @param keyCode pressed key code.
-     * @param gameAction status.
      */
     public void checkKeyPressed(int keyCode) {
         getDealer().checkKeyPressed(keyCode);

@@ -1,21 +1,9 @@
 package com.karamanov.beloteGame.gui.screen.main.dealer;
 
-import java.util.ArrayList;
-
 import android.graphics.Canvas;
 import android.os.Handler;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
-import belote.bean.Player;
-import belote.bean.announce.Announce;
-import belote.bean.announce.suit.AnnounceSuit;
-import belote.bean.pack.card.Card;
-import belote.bean.pack.sequence.Sequence;
-import belote.bean.pack.sequence.SequenceIterator;
-import belote.bean.pack.sequence.SequenceType;
-import belote.bean.pack.square.SquareIterator;
-import belote.logic.HumanBeloteFacade;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.R;
@@ -25,6 +13,18 @@ import com.karamanov.beloteGame.gui.screen.main.message.MessageScreen;
 import com.karamanov.framework.BooleanFlag;
 import com.karamanov.framework.MessageActivity;
 import com.karamanov.framework.graphics.Rectangle;
+
+import java.util.ArrayList;
+
+import belote.bean.Player;
+import belote.bean.announce.Announce;
+import belote.bean.announce.suit.AnnounceSuit;
+import belote.bean.pack.card.Card;
+import belote.bean.pack.sequence.Sequence;
+import belote.bean.pack.sequence.SequenceIterator;
+import belote.bean.pack.sequence.SequenceType;
+import belote.bean.pack.square.SquareIterator;
+import belote.logic.HumanBeloteFacade;
 
 /**
  * BaseDealer class.
@@ -56,16 +56,13 @@ abstract class BaseDealer {
 
     protected final BeloteView belotPanel;
 
-    protected final View buttons;
-    
     protected final HumanBeloteFacade beloteFacade;
 
     private MessageScreen messageScreen;
     
-    protected BaseDealer(MessageActivity context, BeloteView belotPanel, View buttons) {
+    protected BaseDealer(MessageActivity context, BeloteView belotPanel) {
         this.context = context;
         this.belotPanel = belotPanel;
-        this.buttons = buttons;
         this.beloteFacade = Belote.getBeloteFacade(context);
 
         belotPainter = new BelotePainter(context);
@@ -75,7 +72,6 @@ abstract class BaseDealer {
     /**
      * Checks key click.
      * @param keyCode pressed key code.
-     * @param gameAction status.
      */
     public abstract void checkKeyPressed(int keyCode);
     
@@ -156,7 +152,7 @@ abstract class BaseDealer {
     /**
      * Displays a message.
      * @param player which call the message function.
-     * @param card played by player.
+     * @param messages played by player.
      */
     protected final void displayMessage(final Player player, final ArrayList<MessageData> messages) {
         final BooleanFlag flag = new BooleanFlag();
@@ -209,7 +205,6 @@ abstract class BaseDealer {
         Canvas canvas = belotPanel.getBufferedCanvas();
 
         if (canvas != null) {
-            int buttonsHeigh = buttons.getVisibility() == View.VISIBLE ? buttons.getHeight() : 0;
             Rectangle rect = belotPainter.getPlayerCardRectangle(canvas, beloteFacade, 0, player);
 
             switch (player.getID()) {
@@ -224,14 +219,14 @@ abstract class BaseDealer {
                 lp = messageScreen.getWindow().getAttributes();
                 lp.gravity |= Gravity.LEFT;
                 lp.x = rect.x + rect.width;
-                lp.y = lp.y - buttonsHeigh / 2;
+                lp.y = lp.y / 2;
                 messageScreen.getWindow().setAttributes(lp);
                 break;
 
             case 2:
                 lp = messageScreen.getWindow().getAttributes();
                 lp.gravity |= Gravity.BOTTOM;
-                lp.y = belotPanel.getHeight() + buttonsHeigh - rect.y;
+                lp.y = belotPanel.getHeight() - rect.y;
                 messageScreen.getWindow().setAttributes(lp);
                 break;
 
@@ -240,7 +235,7 @@ abstract class BaseDealer {
                 lp = messageScreen.getWindow().getAttributes();
                 lp.gravity |= Gravity.RIGHT;
                 lp.x = belotPanel.getWidth() - rect.x;
-                lp.y = lp.y - buttonsHeigh / 2;
+                lp.y = lp.y / 2;
                 messageScreen.getWindow().setAttributes(lp);
                 break;
             }
@@ -249,7 +244,6 @@ abstract class BaseDealer {
     
     /**
      * New announce deal.
-     * @param repaint
      */
     protected final void newAnnounceDealRound() {
         if (beloteFacade.getGame().getAnnounceList().getContractAnnounce() != null) {

@@ -14,11 +14,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import belote.bean.pack.card.Card;
-import belote.bean.pack.card.rank.Rank;
-import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.sequence.SequenceType;
-import belote.bean.pack.square.Square;
 
 import com.karamanov.beloteGame.R;
 import com.karamanov.beloteGame.gui.graphics.PictureDecorator;
@@ -26,6 +21,12 @@ import com.karamanov.beloteGame.text.TextDecorator;
 import com.karamanov.framework.graphics.Color;
 import com.karamanov.framework.graphics.ImageUtil;
 import com.karamanov.framework.graphics.Rectangle;
+
+import belote.bean.pack.card.Card;
+import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.suit.Suit;
+import belote.bean.pack.sequence.SequenceType;
+import belote.bean.pack.square.Square;
 
 /**
  * BasePainter class.
@@ -72,8 +73,7 @@ public abstract class BasePainter {
 
     /**
      * Constructor.
-     * @param width canvas width.
-     * @param height canvas height.
+     * @param context canvas width.
      */
     protected BasePainter(Context context) {
         this.context = context;
@@ -112,7 +112,7 @@ public abstract class BasePainter {
 
     /**
      * Draws desk image.
-     * @param g Graphics object.
+     * @param canvas
      * @param x position.
      * @param y position.
      */
@@ -134,10 +134,10 @@ public abstract class BasePainter {
 
     /**
      * Draw card to the canvas.
+     * @param canvas
      * @param card which image is retrieve.
      * @param x - x coordinate.
      * @param y - y coordinate.
-     * @param g - graphics object.
      */
     public final void drawCard(final Canvas canvas, final Card card, final int x, final int y) {
         Bitmap bitmap = pictureDecorator.getCardImage(card);
@@ -148,10 +148,10 @@ public abstract class BasePainter {
 
     /**
      * Draw card darkened to the canvas.
+     * @param canvas
      * @param card which image is retrieve.
      * @param x - x coordinate.
      * @param y - y coordinate.
-     * @param g - graphics object.
      */
     public final void drawDarkenedCard(final Canvas canvas, final Card card, final int x, final int y) {
         Bitmap picture = pictureDecorator.getCardImage(card);
@@ -164,10 +164,10 @@ public abstract class BasePainter {
 
     /**
      * Draw card mixed with color to the canvas.
+     * @param canvas
      * @param card which image is retrieve.
      * @param x - x coordinate.
      * @param y - y coordinate. param mixedColor used to transform the image.
-     * @param g - graphics object.
      */
     public final void drawMixedColorCard(final Canvas canvas, final Card card, final int x, final int y, final Color mixedColor) {
         Bitmap picture = pictureDecorator.getCardImage(card);

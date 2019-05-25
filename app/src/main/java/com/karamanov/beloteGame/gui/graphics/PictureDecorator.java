@@ -9,18 +9,19 @@
  */
 package com.karamanov.beloteGame.gui.graphics;
 
-import java.util.Hashtable;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.NinePatchDrawable;
+
+import com.karamanov.beloteGame.R;
+
+import java.util.Hashtable;
+
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.rank.Rank;
 import belote.bean.pack.card.suit.Suit;
-
-import com.karamanov.beloteGame.R;
 
 /**
  * PictureDecorator class.
@@ -136,7 +137,8 @@ public final class PictureDecorator {
 
     /**
      * The method return associated image to the card.
-     * @param card which image is retrieve.
+     * @param rank which image is retrieve.
+     * @param suit
      * @return Image the card's image.
      */
     public Bitmap getCardImage(final Rank rank, final Suit suit) {

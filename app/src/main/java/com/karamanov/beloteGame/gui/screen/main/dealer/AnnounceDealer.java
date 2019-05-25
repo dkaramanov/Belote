@@ -1,14 +1,14 @@
 package com.karamanov.beloteGame.gui.screen.main.dealer;
 
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
-import belote.bean.GameMode;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.gui.screen.main.BeloteView;
 import com.karamanov.beloteGame.gui.screen.main.announce.AnnounceDialog;
 import com.karamanov.framework.MessageActivity;
+
+import belote.bean.GameMode;
 
 /**
  * AnnounceDealer class.
@@ -25,10 +25,9 @@ final class AnnounceDealer extends BaseDealer {
      * Constructor
      * @param context
      * @param belotPanel
-     * @param buttons
      */
-    public AnnounceDealer(MessageActivity context, BeloteView belotPanel, View buttons) {
-        super(context, belotPanel, buttons);
+    public AnnounceDealer(MessageActivity context, BeloteView belotPanel) {
+        super(context, belotPanel);
         
         announceDialog = new AnnounceDialog(context, beloteFacade);
     }
@@ -36,7 +35,6 @@ final class AnnounceDealer extends BaseDealer {
     /**
      * Checks key click.
      * @param keyCode pressed key code.
-     * @param gameAction status.
      */
     @Override
     public void checkKeyPressed(int keyCode) {
@@ -103,9 +101,6 @@ final class AnnounceDealer extends BaseDealer {
                 WindowManager.LayoutParams layoutParams = announceDialog.getWindow().getAttributes();
                 layoutParams.gravity = Gravity.BOTTOM;
                 layoutParams.y = belotPainter.getFontHeight() + belotPainter.getCardHeight();
-                if (buttons.getVisibility() == View.VISIBLE) {
-                    layoutParams.y = layoutParams.y + buttons.getHeight();
-                }
                 announceDialog.getWindow().setAttributes(layoutParams);
                 announceDialog.show();
             }

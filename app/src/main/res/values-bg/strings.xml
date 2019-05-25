@@ -63,8 +63,6 @@
     <string name="PREF_STORE_GAME_SUMM">Записва състоянието на играта при изход от приложението</string>
     <string name="PREF_ALERT_ON_QUIT">Потвърждение при изход</string>
     <string name="PREF_ALERT_ON_QUIT_SUMM">Показва диалог за потвърждение при изход от приложението</string>
-    <string name="PREF_SHOW_BTNS">Покажи панела с бутони</string>
-    <string name="PREF_SHOW_BTNS_SUMM">Панела с бутони се показва (полезно при устройства с по - малка резолюция)</string>
     <string name="PREF_CARDS_RB_ORDER">Редуване на картите черни червени</string>
     <string name="PREF_CARDS_RB_ORDER_SUMM">Показва картите на играча като редува черен червен цвят</string>
     <string name="BridgeBelote">Белот</string>
