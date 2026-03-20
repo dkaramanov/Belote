@@ -32,30 +32,22 @@ public abstract class BasicImageTransformer {
      * @return Image transformed image.
      */
     public final Bitmap transformImage(final Bitmap image) {
-        return transformImage(image, null);
+        return transformImage(image, new Rectangle(0, 0, image.getWidth(), image.getHeight()));
     }
 
     /**
      * Transforms image template method.
      * @param image which will be transformed.
-     * @param rec the rectangle of the image which will be transformed.
+     * @param rectangle the rectangle of the image which will be transformed.
      * @return Image transformed image.
      */
-    public final Bitmap transformImage(final Bitmap image, final Rectangle rec) {
-        final Rectangle rectangle;
-
-        if (rec == null) {
-            rectangle = new Rectangle(0, 0, image.getWidth(), image.getHeight());
-        } else {
-            rectangle = rec;
-        }
-
-        Bitmap result = Bitmap.createBitmap(image.getWidth(), image.getHeight(), Bitmap.Config.ARGB_8888);
+    public final Bitmap transformImage(final Bitmap image, final Rectangle rectangle) {
+        Bitmap result = image.copy(image.getConfig(), true);
 
         for (int row = rectangle.y, endRow = rectangle.y + rectangle.height; row < endRow; row++) {
             for (int col = rectangle.x, endCol = rectangle.x + rectangle.width; col < endCol; col++) {
                 int pixel = image.getPixel(col, row);
-                final int RGB = pixel & 0xFFFFFFFF;
+                final int RGB = pixel;
                 pixel = (pixel & 0xFF000000) | transformPixel(RGB);
                 result.setPixel(col, row, pixel);
             }

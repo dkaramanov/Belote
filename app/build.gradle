@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    namespace 'com.karamanov.beloteGame'
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.karamanov.beloteGame"
-        minSdkVersion 11
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 34
+        versionCode 39
+        versionName "1.39"
     }
 
     buildTypes {
@@ -15,11 +18,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-
-    lintOptions {
-        checkReleaseBuilds false
-        // Or, if you prefer, you can continue to check for errors in release builds,
-        // but continue the build even when errors are found:
+    lint {
         abortOnError false
+        checkReleaseBuilds false
     }
+
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }

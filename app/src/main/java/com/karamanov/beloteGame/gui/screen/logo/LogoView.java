@@ -2,6 +2,7 @@ package com.karamanov.beloteGame.gui.screen.logo;
 
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import belote.bean.pack.Pack;
 import belote.bean.pack.card.Card;
@@ -33,12 +35,12 @@ public final class LogoView extends View {
     /**
      * Card width.
      */
-    private final int CardWidth;
+    private int cardWidth;
 
     /**
      * Card height.
      */
-    private final int CardHeight;
+    private int cardHeight;
 
     private final LogoPainter logoPainter;
 
@@ -47,9 +49,6 @@ public final class LogoView extends View {
 
         Drawable d = getResources().getDrawable(R.drawable.acespade);
         desk = ((BitmapDrawable) d).getBitmap();
-
-        CardWidth = desk.getWidth();
-        CardHeight = desk.getHeight();
 
         logoPainter = new LogoPainter(context);
     }
@@ -75,9 +74,9 @@ public final class LogoView extends View {
         final Pack pack = Pack.createFullPack();
         pack.arrange();
 
-        int visiblePart = (getWidth() - 2 - CardWidth) / (pack.getSize() - 1);
-        int x = (getWidth() - 2 - (pack.getSize() - 1) * visiblePart - CardWidth) / 2;
-        int y = (getHeight() - CardHeight) / 2;
+        int visiblePart = (getWidth() - 2 - cardWidth) / (pack.getSize() - 1);
+        int x = (getWidth() - 2 - (pack.getSize() - 1) * visiblePart - cardWidth) / 2;
+        int y = (getHeight() - cardHeight) / 2;
 
         // draw all cards
         for (int i = 0; i < pack.getSize(); i++) {
@@ -145,12 +144,12 @@ public final class LogoView extends View {
         Bitmap b = logoPainter.getSuitImage(Suit.Spade);
         canvas.drawBitmap(b, dip5, dip5, paint);
         b = logoPainter.getSuitImage(Suit.Heart);
-        canvas.drawBitmap(b, getWidth() - dip5 - b.getWidth(), dip5, paint);
+        canvas.drawBitmap(b, getWidth() - dip5 - b.getScaledWidth(canvas), dip5, paint);
         b = logoPainter.getSuitImage(Suit.Diamond);
-        canvas.drawBitmap(b, dip5, getHeight() - dip5 - b.getHeight(), paint);
+        canvas.drawBitmap(b, dip5, getHeight() - dip5 - b.getScaledHeight(canvas), paint);
         b = logoPainter.getSuitImage(Suit.Club);
         b = ImageUtil.transformToDisabledImage(b);
-        canvas.drawBitmap(b, getWidth() - dip5 - b.getWidth(), getHeight() - dip5 - b.getHeight(), paint);
+        canvas.drawBitmap(b, getWidth() - dip5 - b.getScaledWidth(canvas), getHeight() - dip5 - b.getScaledHeight(canvas), paint);
     }
 
     private float getTextWidth(Paint paint, String text) {
@@ -203,13 +202,15 @@ public final class LogoView extends View {
         textBitmap.recycle();
 
         paint.setColor(Color.BLACK);
-        float pictureTop = ((getHeight() - CardHeight) / 2 - bitmapXfermode.getHeight()) / 2;
+        float pictureTop = ((getHeight() - cardHeight) / 2 - bitmapXfermode.getHeight()) / 2;
         float pictureLeft = (getWidth() - bitmapXfermode.getWidth()) / 2;
         canvas.drawText(bridgeBelote, pictureLeft + dip5, pictureTop + dip5 + rect.height() - rect.bottom, paint);
         canvas.drawBitmap(bitmapXfermode, pictureLeft, pictureTop, paint);
     }
 
     private void drawBufferedImage(Canvas canvas) {
+        cardWidth = desk.getScaledWidth(canvas);
+        cardHeight = desk.getScaledHeight(canvas);
         drawBackground(canvas);
         drawPack(canvas);
         drawAutor(canvas);

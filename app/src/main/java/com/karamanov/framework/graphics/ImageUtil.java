@@ -68,6 +68,16 @@ public final class ImageUtil {
      * Transforms provided image to color mixed one.
      * @param image provided image.
      * @param mixedColor which will be used for mixed.
+     * @return Image transformed color mixed image.
+     */
+    public static Bitmap transformToMixedColorImage(final Bitmap image, final Color mixedColor) {
+        return new MixedColorImageTransformer(mixedColor).transformImage(image);
+    }
+
+    /**
+     * Transforms provided image to color mixed one.
+     * @param image provided image.
+     * @param mixedColor which will be used for mixed.
      * @param rec rectangle which will be mixed.
      * @return Image transformed color mixed image.
      */

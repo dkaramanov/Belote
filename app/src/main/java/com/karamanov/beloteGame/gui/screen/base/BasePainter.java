@@ -10,10 +10,12 @@
 package com.karamanov.beloteGame.gui.screen.base;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.DisplayMetrics;
 
 import com.karamanov.beloteGame.R;
 import com.karamanov.beloteGame.gui.graphics.PictureDecorator;
@@ -78,11 +80,12 @@ public abstract class BasePainter {
     protected BasePainter(Context context) {
         this.context = context;
 
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         pictureDecorator = new PictureDecorator(context);
-        cardWidth = pictureDecorator.getCardImage(Rank.Ace, Suit.Spade).getWidth();
-        cardHeight = pictureDecorator.getCardImage(Rank.Ace, Suit.Spade).getHeight();
-        cardBackWidth = pictureDecorator.getCardBackImageSmall().getWidth();
-        cardBackHeight = pictureDecorator.getCardBackImageSmall().getHeight();
+        cardWidth = pictureDecorator.getCardImage(Rank.Ace, Suit.Spade).getScaledWidth(metrics);
+        cardHeight = pictureDecorator.getCardImage(Rank.Ace, Suit.Spade).getScaledHeight(metrics);
+        cardBackWidth = pictureDecorator.getCardBackImageSmall().getScaledWidth(metrics);
+        cardBackHeight = pictureDecorator.getCardBackImageSmall().getScaledHeight(metrics);
         textDecorator = new TextDecorator(context);
 
         mSmooth = new Paint(Paint.FILTER_BITMAP_FLAG);

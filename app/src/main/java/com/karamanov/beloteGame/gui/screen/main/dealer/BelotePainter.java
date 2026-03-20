@@ -356,8 +356,8 @@ final class BelotePainter extends BasePainter {
         if (announce.isTrumpAnnounce()) {
             Suit suit = AnnounceUnit.transformFromAnnounceSuitToSuit(announce.getAnnounceSuit());
             Bitmap image = getSuitImage(suit);
-            w = bounds.width() + dip6 + image.getWidth() + dip4;
-            h = Math.max(image.getHeight(), bounds.height());
+            w = bounds.width() + dip6 + image.getScaledWidth(canvas) + dip4;
+            h = Math.max(image.getScaledHeight(canvas), bounds.height());
         } else {
             w = bounds.width() + dip6;
             h = bounds.height();
@@ -438,8 +438,8 @@ final class BelotePainter extends BasePainter {
         if (announce.isTrumpAnnounce()) {
             Suit suit = AnnounceUnit.transformFromAnnounceSuitToSuit(announce.getAnnounceSuit());
             Bitmap image = getSuitImage(suit);
-            canvas.drawBitmap(image, dest.left + dip10, 2 * dip10 + dest.top - bounds.height() + (bounds.height() - image.getHeight()) / 2, paint);
-            canvas.drawText(str, dest.left + dip10 + dip2 + image.getWidth(), 2 * dip10 + dest.top, paint);
+            canvas.drawBitmap(image, dest.left + dip10, 2 * dip10 + dest.top - bounds.height() + (bounds.height() - image.getScaledHeight(canvas)) / 2, paint);
+            canvas.drawText(str, dest.left + dip10 + dip2 + image.getScaledWidth(canvas), 2 * dip10 + dest.top, paint);
         } else {
             canvas.drawText(str, dest.left + dip10, 2 * dip10 + dest.top, paint);
         }
@@ -488,8 +488,8 @@ final class BelotePainter extends BasePainter {
 
             dest.left = x - dip10;
             dest.top = y - dip10;
-            dest.bottom = dest.top + Math.max(image.getHeight(), bounds.height()) + dip10 * 2;
-            dest.right = dest.left + image.getWidth() + dip2 + bounds.width() + dip10 * 2;
+            dest.bottom = dest.top + Math.max(image.getScaledHeight(canvas), bounds.height()) + dip10 * 2;
+            dest.right = dest.left + image.getScaledWidth(canvas) + dip2 + bounds.width() + dip10 * 2;
         } else {
             int x = rect.x + dip3;
             int y = rect.y;
@@ -556,11 +556,11 @@ final class BelotePainter extends BasePainter {
                 if (announce.isTrumpAnnounce()) {
                     Suit suit = AnnounceUnit.transformFromAnnounceSuitToSuit(announce.getAnnounceSuit());
                     Bitmap image = getSuitImage(suit);
-                    image = ImageUtil.transformToMixedColorImage(image, new Color(192), null);
-                    x -= image.getWidth() + dip5;
+                    image = ImageUtil.transformToMixedColorImage(image, new Color(192));
+                    x -= image.getScaledWidth(canvas) + dip5;
                     y = dip1;
-                    if (bounds.height() - image.getHeight() > 0) {
-                        y = (bounds.height() - image.getHeight()) / 2;
+                    if (bounds.height() - image.getScaledHeight(canvas) > 0) {
+                        y = (bounds.height() - image.getScaledHeight(canvas)) / 2;
                     }
                     canvas.drawBitmap(image, x, y, paint);
 
