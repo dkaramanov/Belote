@@ -16,6 +16,7 @@ import belote.logic.announce.factory.automat.base.AnnounceMethod;
 
 /**
  * AnnounceMethodList class. Wrapper class of system collection used to hold and access AnnounceMethod instances.
+ *
  * @author Dimitar Karamanov
  */
 public final class AnnounceMethodList {
@@ -41,6 +42,7 @@ public final class AnnounceMethodList {
 
     /**
      * Adds a method to the collection.
+     *
      * @param method to be added
      */
     public void add(AnnounceMethod method) {
@@ -49,6 +51,7 @@ public final class AnnounceMethodList {
 
     /**
      * Returns collection size.
+     *
      * @return int size of the method's collection
      */
     public int size() {
@@ -57,6 +60,7 @@ public final class AnnounceMethodList {
 
     /**
      * Returns iterator for the collection.
+     *
      * @return AnnounceMethodIterator iterator.
      */
     public AnnounceMethodIterator iterator() {
@@ -75,6 +79,7 @@ public final class AnnounceMethodList {
 
         /**
          * Constructor.
+         *
          * @param enumeration the internal collection enumerator.
          */
         public AnnounceMethodIteratorImpl(final Iterator<AnnounceMethod> enumeration) {
@@ -83,6 +88,7 @@ public final class AnnounceMethodList {
 
         /**
          * Returns true if the iteration has more elements.
+         *
          * @return boolean true if the iteration has more elements false otherwise.
          */
         public boolean hasNext() {
@@ -91,6 +97,7 @@ public final class AnnounceMethodList {
 
         /**
          * AnnounceMethod the next element in the iteration.
+         *
          * @return AnnounceMethod the next element in the iteration.
          */
         public AnnounceMethod next() {

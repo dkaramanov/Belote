@@ -10,20 +10,22 @@
 package belote.logic.play.strategy.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * NoCleanedSuitCard class. PlayCardMethod which implements the logic of playing a card from not cleaned suit.
+ *
  * @author Dimitar Karamanov
  */
 public final class NoCleanedSuitCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public NoCleanedSuitCard(final Game game) {
@@ -32,6 +34,7 @@ public final class NoCleanedSuitCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
@@ -39,10 +42,8 @@ public final class NoCleanedSuitCard extends BaseMethod {
         final Player partner = player.getPartner();
         final Suit trump = getTrump();
         // Unwanted suits
-        for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
-           
-            if ((trump == null || !suit.equals(trump))) {
+        for (final Suit suit : Suits.list()) {
+            if ((!suit.equals(trump))) {
                 if (!partner.getUnwantedSuits().contains(suit) && !partner.getMissedSuits().contains(suit)) {
                     final Card card = player.getCards().findMinSuitCard(suit);
                     if (card != null) {

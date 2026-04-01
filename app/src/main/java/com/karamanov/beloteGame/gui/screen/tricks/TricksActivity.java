@@ -1,7 +1,5 @@
 package com.karamanov.beloteGame.gui.screen.tricks;
 
-import java.io.Serializable;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,12 +8,15 @@ import android.view.MotionEvent;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ScrollView;
+
+import com.karamanov.beloteGame.R;
+
+import java.io.Serializable;
+
 import belote.bean.Game;
 import belote.bean.trick.Trick;
 import belote.bean.trick.TrickList;
 import belote.bean.trick.TrickListIterator;
-
-import com.karamanov.beloteGame.R;
 
 public final class TricksActivity extends Activity {
 
@@ -25,7 +26,9 @@ public final class TricksActivity extends Activity {
         super();
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +48,7 @@ public final class TricksActivity extends Activity {
 
                     TrickList tricks = game.getTrickList();
 
-                    for (TrickListIterator i = tricks.iterator(); i.hasNext();) {
+                    for (TrickListIterator i = tricks.iterator(); i.hasNext(); ) {
                         Trick trick = i.next();
                         TrickView trickView = new TrickView(this, trick, game);
                         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

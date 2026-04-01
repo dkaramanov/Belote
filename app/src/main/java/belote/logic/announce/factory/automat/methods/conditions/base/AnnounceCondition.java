@@ -9,16 +9,18 @@
  */
 package belote.logic.announce.factory.automat.methods.conditions.base;
 
-import belote.bean.Player;
+import belote.bean.player.Player;
 
 /**
  * AnnounceCondition interface. Defines a single condition which is used direct or as component of complicated condition.
+ *
  * @author Dimitar Karamanov
  */
 public interface AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

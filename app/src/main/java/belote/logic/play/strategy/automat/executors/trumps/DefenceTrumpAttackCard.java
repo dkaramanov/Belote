@@ -10,11 +10,11 @@
 package belote.logic.play.strategy.automat.executors.trumps;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
 import belote.bean.announce.AnnounceUnit;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.executor.PlayCardExecutor;
 import belote.logic.play.strategy.automat.methods.trumps.trumpAttack.MaxTrumpCard;
 import belote.logic.play.strategy.automat.methods.trumps.trumpAttack.MinAboveCard;
@@ -22,12 +22,14 @@ import belote.logic.play.strategy.automat.methods.trumps.trumpAttack.MinTrumpCar
 
 /**
  * DefenceTrumpAttackCard executor. Implements the obligatory rules for defense player when the attack card is from trump suit. Used in TrumpDefenceCard executor.
+ *
  * @author Dimitar Karamanov
  */
 public final class DefenceTrumpAttackCard extends PlayCardExecutor {
-    
+
     /**
      * Handler method providing the user facility to check custom condition for methods executions.
+     *
      * @param player for which is called the executor
      * @return true to process method execution false to not.
      */
@@ -43,6 +45,7 @@ public final class DefenceTrumpAttackCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public DefenceTrumpAttackCard(final Game game) {

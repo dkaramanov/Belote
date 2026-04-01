@@ -11,13 +11,14 @@ package belote.bean.announce.suit;
 
 /**
  * AllTrump class.
+ *
  * @author Dimitar Karamanov
  */
-public final class AllTrump extends ColorlessSuit {
+final class AllTrump extends ColorlessSuit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -6496179630300169647L;
 
     /**

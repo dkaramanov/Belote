@@ -10,9 +10,9 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.DealAttackPlayer;
 import belote.logic.announce.factory.automat.methods.conditions.HasCard;
@@ -23,22 +23,25 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.base.SuitD
 
 /**
  * RegGameNagNotTrumpWhenFirstAndHasAceSuitAnnounce class. Announce factory method which creates nag NT announce on ace suit and player is attack one.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameNagNoTrumpWhenFirstAndHasAceSuitAnnounce extends ConditionListMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public RegGameNagNoTrumpWhenFirstAndHasAceSuitAnnounce(final Game game) {
         super(game);
         final SuitDeterminant suitDeterminant = new DominantSuit();
-        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 5), new HasCard(Rank.Ace, suitDeterminant), new DealAttackPlayer(game)));
+        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 5), new HasCard(Ranks.Ace, suitDeterminant), new DealAttackPlayer(game)));
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

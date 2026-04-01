@@ -9,6 +9,8 @@
  */
 package belote.logic.announce.factory.automat.executors;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 import belote.logic.announce.factory.automat.methods.EndGameOpenEnemyTeamEndGameZoneAnnounce;
@@ -18,20 +20,23 @@ import belote.logic.announce.factory.automat.methods.conditions.base.NotConditio
 
 /**
  * EndGameOpenAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class EndGameOpenAnnounce extends AnnounceExecutor {
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public EndGameOpenAnnounce(final Game game) {
-        super(game);
+    public EndGameOpenAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
         // Precondition
         addPreCondition(new NotCondition(new HasContractAnnounce(game)));
         // Methods
-        register(new EndGameOpenEnemyTeamEndGameZoneAnnounce(game));
-        register(new EndGameOpenPlayerTeamEndGameZoneAnnounce(game));
+        register(new EndGameOpenEnemyTeamEndGameZoneAnnounce(game, gameLock));
+        register(new EndGameOpenPlayerTeamEndGameZoneAnnounce(game, gameLock));
     }
 }

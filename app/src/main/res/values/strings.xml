@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Copyright">Copyright © 2008–2019</string>
-    <string name="Autor">Dimitar Karamanov</string>
+    <string name="Copyright">Copyright © 2008–2026</string>
+    <string name="Author">Dimitar Karamanov</string>
     <string name="Email">santase.belot@gmail.com</string>
     <string name="Version">version</string>
     <string name="NotAvailableShort">N/A</string>
@@ -22,9 +22,9 @@
     <string name="HeartsAnnounceShort">Hearts</string>
     <string name="SpadesAnnounceShort">Spades</string>
     <string name="NotTrumpsAnnounceShort">NT</string>
-    <string name="AllTrumpsAnnounceShort">AT</string>  
+    <string name="AllTrumpsAnnounceShort">AT</string>
     <string name="DoubleAnnounce">Double</string>
-    <string name="RedoubleAnnounce">Redoble</string>   
+    <string name="RedoubleAnnounce">Redoble</string>
     <string name="Announce">Announce</string>
     <string name="OrdinaryAnnounce"></string>
     <string name="Cards">Cards</string>
@@ -77,7 +77,7 @@
     <string name="TeamWinsGame">Your team wins the game !</string>
     <string name="TeamLostGame">Your team lost the game !</string>
     <string name="ResetAnnounce">Reset announce</string>
-    
+
     <string name="app_name">Belote</string>
 
 </resources>

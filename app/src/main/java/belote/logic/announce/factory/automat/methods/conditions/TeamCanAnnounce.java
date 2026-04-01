@@ -14,6 +14,7 @@ import belote.logic.announce.factory.automat.methods.conditions.base.BaseTeamCan
 
 /**
  * TeamCanAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class TeamCanAnnounce extends BaseTeamCanAnnounce {
@@ -25,6 +26,7 @@ public final class TeamCanAnnounce extends BaseTeamCanAnnounce {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public TeamCanAnnounce(final Game game) {

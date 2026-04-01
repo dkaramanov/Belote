@@ -9,18 +9,20 @@
  */
 package belote.logic.announce.factory.transformers;
 
-import belote.bean.Player;
 import belote.bean.announce.Announce;
+import belote.bean.player.Player;
 
 /**
  * AnnounceTransformer interface.
+ *
  * @author Dimitar Karamanov
  */
 public interface AnnounceTransformer {
 
     /**
      * Transforms or not the provide announce to other dependig conditions.
-     * @param player which has to declare the announce.
+     *
+     * @param player   which has to declare the announce.
      * @param announce which will be transformed.
      * @return the same or new announce.
      */

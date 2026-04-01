@@ -10,7 +10,7 @@
 package belote.logic.play.strategy.automat.executors.trumpsLess.allTrumps;
 
 import belote.bean.Game;
-import belote.bean.Player;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.executor.PlayCardExecutor;
 import belote.logic.play.strategy.automat.executors.PossiblePartnerSuitCard;
 import belote.logic.play.strategy.automat.executors.trumpsLess.NeedlessCard;
@@ -24,12 +24,14 @@ import belote.logic.play.strategy.automat.methods.trumpsLess.allTrump.PromoteNin
 
 /**
  * Partner declared AllTrumpAttackCard executor. Used in AllTrumpAttackCard getAttackCard().
+ *
  * @author Dimitar Karamanov
  */
 class AttackCardOnPartnerContract extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public AttackCardOnPartnerContract(final Game game) {
@@ -48,6 +50,7 @@ class AttackCardOnPartnerContract extends PlayCardExecutor {
 
     /**
      * Handler method providing the user facility to check custom condition for methods executions.
+     *
      * @param player for which is called the executor
      * @return true to process method execution false to not.
      */

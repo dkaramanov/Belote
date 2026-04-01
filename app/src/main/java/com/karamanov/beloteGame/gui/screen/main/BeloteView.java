@@ -1,7 +1,5 @@
 package com.karamanov.beloteGame.gui.screen.main;
 
-import java.util.HashMap;
-
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,6 +11,8 @@ import android.view.SurfaceView;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.framework.message.Message;
+
+import java.util.HashMap;
 
 public final class BeloteView extends SurfaceView implements SurfaceHolder.Callback {
 

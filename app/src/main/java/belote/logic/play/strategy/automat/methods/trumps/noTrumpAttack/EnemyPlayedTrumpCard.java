@@ -10,19 +10,21 @@
 package belote.logic.play.strategy.automat.methods.trumps.noTrumpAttack;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseTrumpMethod;
 
 /**
  * EnemyPlayedTrumpCard class. PlayCardMethod which implements the logic of playing a hook card (3th defefence position) in defence of color game.
+ *
  * @author Dimitar Karamanov
  */
 public final class EnemyPlayedTrumpCard extends BaseTrumpMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public EnemyPlayedTrumpCard(final Game game) {
@@ -31,8 +33,9 @@ public final class EnemyPlayedTrumpCard extends BaseTrumpMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
-     * @param trump suit.
+     * @param trump  suit.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player, final Suit trump) {

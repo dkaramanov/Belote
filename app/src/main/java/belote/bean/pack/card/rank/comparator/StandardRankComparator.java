@@ -13,13 +13,14 @@ import belote.bean.pack.card.rank.Rank;
 
 /**
  * Standard rank comparator.
+ *
  * @author Dimitar Karamanov
  */
-public final class StandardRankComparator extends RankComparator {
+final class StandardRankComparator extends RankComparator {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -4489721610300306563L;
 
     /**
@@ -31,10 +32,11 @@ public final class StandardRankComparator extends RankComparator {
 
     /**
      * Compares rank a with b ones.
+     *
      * @param a first comparable object.
      * @param b second comparable object.
      * @return int value which may be: = 0 if both specified objects are equal or null > 0 if first object is not null and bigger than the second specified
-     *         object or the second is null < 0 if second object is not null and bigger than the first specified object or the first is null
+     * object or the second is null < 0 if second object is not null and bigger than the first specified object or the first is null
      */
     public int compare(Rank a, Rank b) {
         return a.compareTo(b);

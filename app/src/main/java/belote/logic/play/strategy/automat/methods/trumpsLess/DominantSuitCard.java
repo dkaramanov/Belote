@@ -10,20 +10,22 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * DominantSuitCard class. PlayCardMethod which implements the logic of playing a card from the dominant suit.
+ *
  * @author Dimitar Karamanov
  */
 public final class DominantSuitCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public DominantSuitCard(final Game game) {
@@ -32,6 +34,7 @@ public final class DominantSuitCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
@@ -53,7 +56,7 @@ public final class DominantSuitCard extends BaseMethod {
                         if (isEnemyTeamAnnounce(player)
                                 || (!partner.getUnwantedSuits().contains(dominatSuit) && !partner.getMissedSuits().contains(dominatSuit))) {
                             if (player.getCards().hasCouple(dominatSuit)) {
-                                result = player.getCards().findCard(Rank.Queen, dominatSuit);
+                                result = player.getCards().findCard(Ranks.Queen, dominatSuit);
                             } else {
                                 result = player.getCards().findMinSuitCard(dominatSuit);
                             }

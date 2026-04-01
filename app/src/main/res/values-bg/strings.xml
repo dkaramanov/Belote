@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="Copyright">Copyright © 2008–2019</string>
-    <string name="Autor">Димитър Караманов</string>
+    <string name="Copyright">Copyright © 2008–2026</string>
+    <string name="Author">Димитър Караманов</string>
     <string name="Email">santase.belot@gmail.com</string>
     <string name="Version">версия</string>
     <string name="NotAvailableShort">N/A</string>
@@ -22,9 +22,9 @@
     <string name="HeartsAnnounceShort">Купа</string>
     <string name="SpadesAnnounceShort">Пика</string>
     <string name="NotTrumpsAnnounceShort">БК</string>
-    <string name="AllTrumpsAnnounceShort">ВК</string>  
+    <string name="AllTrumpsAnnounceShort">ВК</string>
     <string name="DoubleAnnounce">Контра</string>
-    <string name="RedoubleAnnounce">Реконтра</string>   
+    <string name="RedoubleAnnounce">Реконтра</string>
     <string name="Announce">Анонс</string>
     <string name="OrdinaryAnnounce"></string>
     <string name="Cards">Карти</string>
@@ -77,7 +77,7 @@
     <string name="TeamWinsGame">Вашият тим спечели играта !</string>
     <string name="TeamLostGame">Вашият тим загуби играта !</string>
     <string name="ResetAnnounce">Рестарт анонс</string>
-    
+
     <string name="app_name">Белот</string>
 
 </resources>

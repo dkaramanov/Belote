@@ -10,20 +10,22 @@
 package belote.logic.play.strategy.automat.methods.trumps.obligatoryTrump;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.Pack;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseTrumpMethod;
 
 /**
  * SafeTrumpCard class. PlayCardMethod which implements the logic of playing a safe trump card in color game.
+ *
  * @author Dimitar Karamanov.
  */
 public final class SafeTrumpCard extends BaseTrumpMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public SafeTrumpCard(final Game game) {
@@ -32,8 +34,9 @@ public final class SafeTrumpCard extends BaseTrumpMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
-     * @param trump suit.
+     * @param trump  suit.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player, final Suit trump) {
@@ -43,9 +46,9 @@ public final class SafeTrumpCard extends BaseTrumpMethod {
 
             for (int i = playerCards.getSize() - 1; i >= 0; i--) {
                 final Card playerMaxCard = playerCards.findMaxSuitCard(trump); // It
-                                                                               // can't
-                                                                               // be
-                                                                               // null
+                // can't
+                // be
+                // null
                 final Card restMaxCard = restCards.findMaxSuitCard(trump);
                 final Card restMinCard = restCards.findMinSuitCard(trump);
 

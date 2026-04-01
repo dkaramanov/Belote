@@ -11,20 +11,20 @@ package belote.bean.trick;
 
 import java.io.Serializable;
 
-import belote.bean.Player;
 import belote.bean.pack.Pack;
-import belote.bean.pack.PackIterator;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 
 /**
  * Trick class.
+ *
  * @author Dimitar Karamanov
  */
 public final class Trick implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 1185817214486088258L;
 
     /**
@@ -49,10 +49,11 @@ public final class Trick implements Serializable {
 
     /**
      * Constructor.
+     *
      * @param attackPlayer trick attack player.
      * @param winnerPlayer trick winner player.
      * @param couplePlayer trick couple player.
-     * @param trickCards trick cards.
+     * @param trickCards   trick cards.
      */
     public Trick(final Player attackPlayer, final Player winnerPlayer, final Player couplePlayer, final Pack trickCards) {
         this.attackPlayer = attackPlayer;
@@ -64,6 +65,7 @@ public final class Trick implements Serializable {
 
     /**
      * Returns trick attack player.
+     *
      * @return Player attack player.
      */
     public Player getAttackPlayer() {
@@ -72,6 +74,7 @@ public final class Trick implements Serializable {
 
     /**
      * Returns trick winner player (Which is the next trick attack player).
+     *
      * @return Player winner player.
      */
     public Player getWinnerPlayer() {
@@ -80,6 +83,7 @@ public final class Trick implements Serializable {
 
     /**
      * Returns the player who declared a couple during the current trick or null.
+     *
      * @return Player couple player.
      */
     public Player getCouplePlayer() {
@@ -88,6 +92,7 @@ public final class Trick implements Serializable {
 
     /**
      * Returns trick cards. The count of cards is equal to player's count. (One card per player).
+     *
      * @return Pack trick cards.
      */
     public Pack getTrickCards() {
@@ -96,15 +101,14 @@ public final class Trick implements Serializable {
 
     /**
      * Returns card played by provided player in the current trick.
+     *
      * @param player which card is looking for.
      * @return Card played by provided player.
      */
     public Card getPlayerCard(Player player) {
         int id = attackPlayer.getID();
 
-        for (final PackIterator iterator = trickCards.iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
-
+        for (final Card card : trickCards.list()) {
             if (id == player.getID()) {
                 return card;
             }
@@ -117,11 +121,7 @@ public final class Trick implements Serializable {
         return null;
     }
 
-    /**
-     * Returns cards(Pack) iterator for played cards.
-     * @return PackIterator instance for played cards.
-     */
-    public PackIterator iterator() {
-        return trickCards.iterator();
+    public Iterable<Card> list() {
+        return trickCards.list();
     }
 }

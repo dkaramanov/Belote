@@ -9,19 +9,23 @@
  */
 package belote.bean.pack.card;
 
+import androidx.annotation.NonNull;
+
 import belote.base.ComparableObject;
 import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
 
 /**
  * Card class. Represents a pack card object.
+ *
  * @author Dimitar Karamanov
  */
-public final class Card extends ComparableObject {
+public final class Card extends ComparableObject<Card> {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -8015898545101203826L;
 
     /**
@@ -52,7 +56,7 @@ public final class Card extends ComparableObject {
     /**
      * ComparableMode.
      */
-    private CardComparableMode comparableMode = CardComparableMode.Standard;
+    private CardComparableMode comparableMode = CardComparableModes.Standard;
 
     /**
      * Acquire method
@@ -61,6 +65,7 @@ public final class Card extends ComparableObject {
 
     /**
      * Constructor.
+     *
      * @param suit - Suit of the card.
      * @param rank - Rank of the card.
      */
@@ -68,13 +73,14 @@ public final class Card extends ComparableObject {
         this.suit = suit;
         this.rank = rank;
 
-        stHash = Rank.getRankCount() * suit.getSuitOrder() + rank.getSTRankOrder();
-        atHash = Rank.getRankCount() * suit.getSuitOrder() + rank.getATRankOrder();
-        ntHash = Rank.getRankCount() * suit.getSuitOrder() + rank.getNTRankOrder();
+        stHash = Ranks.getRankCount() * suit.getSuitOrder() + rank.getSTRankOrder();
+        atHash = Ranks.getRankCount() * suit.getSuitOrder() + rank.getATRankOrder();
+        ntHash = Ranks.getRankCount() * suit.getSuitOrder() + rank.getNTRankOrder();
     }
 
     /**
      * The method return card's points depending on comparable mode.
+     *
      * @return int card's points as a integer value.
      */
     public int getPoints() {
@@ -83,6 +89,7 @@ public final class Card extends ComparableObject {
 
     /**
      * The method returns card's rank.
+     *
      * @return Rank the card's rank.
      */
     public Rank getRank() {
@@ -91,6 +98,7 @@ public final class Card extends ComparableObject {
 
     /**
      * The method returns card's suit.
+     *
      * @return Suit the card's suit.
      */
     public Suit getSuit() {
@@ -99,20 +107,22 @@ public final class Card extends ComparableObject {
 
     /**
      * Compares this card with the specified object(card) for order.
-     * @param obj specified object (card).
+     *
+     * @param card specified object (card).
      * @return int value which may be: = 0 if this card and the specified object(card) are equal > 0 if this card is bigger than the specified object(card) < 0
-     *         if this card is less than the specified object(card)
+     * if this card is less than the specified object(card)
      */
-    public int compareTo(final Object obj) {
-        final Card compCard = (Card) obj;
-        return comparableMode.compareCardTo(this, compCard);
+    @Override
+    public int compareTo(Card card) {
+        return comparableMode.compareCardTo(this, card);
     }
 
     /**
      * Compares this card's rank with the specified card's rank for order using appropriate rank compare method depending on comparable mode.
+     *
      * @param card which rank is used to compare
      * @return int value which may be: = 0 if this card's rank and the specified card's rank are equal > 0 if this card's rank is bigger than the specified
-     *         card's rank < 0 if this card's rank is less than the specified card's rank
+     * card's rank < 0 if this card's rank is less than the specified card's rank
      */
     public int compareRankTo(final Card card) {
         return compareRankTo(card.getRank());
@@ -120,9 +130,10 @@ public final class Card extends ComparableObject {
 
     /**
      * Compares this card's rank with the specified rank for order using appropriate rank compare method depending on comparable mode.
+     *
      * @param rank used to compare
      * @return int value which may be: = 0 if this card's rank and the specified rank are equal > 0 if this card's rank is bigger than the specified rank < 0 if
-     *         this card's rank is less than the specified rank
+     * this card's rank is less than the specified rank
      */
     public int compareRankTo(final Rank rank) {
         return comparableMode.compareRankTo(this.rank, rank);
@@ -130,6 +141,7 @@ public final class Card extends ComparableObject {
 
     /**
      * The method checks if this card and specified object (card) are equal.
+     *
      * @param obj specified object.
      * @return boolean true if this card is equal to specified object and false otherwise.
      */
@@ -143,6 +155,7 @@ public final class Card extends ComparableObject {
 
     /**
      * The method returns card's hash code.
+     *
      * @return int card's hash code value.
      */
     public int hashCode() {
@@ -153,22 +166,26 @@ public final class Card extends ComparableObject {
      * Returns a string representation of the object. The return name is based on class short name. This method has to be used only for debug purpose when the
      * project is not compiled with ofbuscating. Don't use this method to represent the object. When the project is compiled with ofbuscating the class name is
      * not the same.
+     *
      * @return String a string representation of the object.
      */
+    @NonNull
     public String toString() {
         return rank.toString() + " " + suit.toString();
     }
 
     /**
      * Checks if this card rank is Rank.Queen or Rank.King.
+     *
      * @return boolean true if this card rank is Rank.Queen or Rank.King false otherwise.
      */
     public boolean isBeloteCard() {
-        return rank.equals(Rank.King) || rank.equals(Rank.Queen);
+        return rank.equals(Ranks.King) || rank.equals(Ranks.Queen);
     }
 
     /**
      * Checks if this card and specified card are from same suit and this card rank is bigger then specified card's rank.
+     *
      * @param card with which is checked
      * @return boolean true if this card and specified card suit are equal and this card rank is bigger than specified card's rank false otherwise.
      */
@@ -178,6 +195,7 @@ public final class Card extends ComparableObject {
 
     /**
      * Returns card's comparable mode.
+     *
      * @return CardComparableMode card's comparable mode.
      */
     public CardComparableMode getCompareMode() {
@@ -186,6 +204,7 @@ public final class Card extends ComparableObject {
 
     /**
      * Sets card's comparable mode.
+     *
      * @param compareMode comparable mode.
      */
     public void setCompareMode(final CardComparableMode compareMode) {
@@ -194,6 +213,7 @@ public final class Card extends ComparableObject {
 
     /**
      * Checks if the card is major card depending on card's comparable mode.
+     *
      * @return boolean true if this card is major false otherwise.
      */
     public boolean isMajorCard() {
@@ -202,6 +222,7 @@ public final class Card extends ComparableObject {
 
     /**
      * Returns previous card from the same suit or this if this card is the less one from the suit depending on the card's comparable mode.
+     *
      * @return Card previous card or this.
      */
     public Card getSameSuitCardBefore() {
@@ -213,6 +234,7 @@ public final class Card extends ComparableObject {
 
     /**
      * Returns next card from the same suit or this if this card is the best one from the suit depending on the card's comparable mode.
+     *
      * @return Card next card or this.
      */
     public Card getSameSuitCardAfter() {
@@ -245,6 +267,7 @@ public final class Card extends ComparableObject {
 
     /**
      * Sets acquire method name (Used for logic debugging).
+     *
      * @param acquireMethod acquire method
      */
     public void setCardAcquireMethod(final String acquireMethod) {
@@ -253,6 +276,7 @@ public final class Card extends ComparableObject {
 
     /**
      * Returns acquire method name (Used for logic debugging).
+     *
      * @return String the name of the acquire method
      */
     public String getCardAcquireMethod() {

@@ -1,16 +1,17 @@
 package belote.logic.play.strategy.automat.methods.trumps.needless;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseTrumpMethod;
 
 public class MaxCardToPartnerOnDefense extends BaseTrumpMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public MaxCardToPartnerOnDefense(final Game game) {
@@ -19,8 +20,9 @@ public class MaxCardToPartnerOnDefense extends BaseTrumpMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
-     * @param trump suit.
+     * @param trump  suit.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player, final Suit trump) {
@@ -32,8 +34,7 @@ public class MaxCardToPartnerOnDefense extends BaseTrumpMethod {
                 final Player partner = player.getPartner();
                 final Player handPlayer = game.getPlayerByCard(handAttackSuitCard);
                 if (handPlayer != null && handPlayer.equals(partner)) {
-                    for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-                        final Suit suit = iterator.next();
+                    for (final Suit suit : Suits.list()) {
                         if (!suit.equals(trump) && hasTrickAttackSuit(suit)) {
                             final Card max = player.getCards().findMaxSuitCard(suit);
                             if (max != null) {

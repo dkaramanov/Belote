@@ -9,6 +9,7 @@ package com.karamanov.framework;
  *
  * This software is provided "AS IS," without a warranty of any kind.
  */
+
 import android.app.Activity;
 import android.os.Bundle;
 
@@ -18,12 +19,14 @@ import com.karamanov.framework.message.Messageable;
 
 /**
  * GameActivity class.
+ *
  * @author Dimitar Karamanov
  */
 public class MessageActivity extends Activity {
 
     /**
      * Constructor.
+     *
      * @param suppressKeyEvents indicates if the key events are suppressed.
      */
     public MessageActivity() {
@@ -63,14 +66,16 @@ public class MessageActivity extends Activity {
 
     /**
      * Adds user message to the end of the queue.
+     *
      * @param message new message.
      */
     public final void triggerMessage(final Message message) {
         triggerMessage(message, false);
     }
-    
+
     /**
      * Adds user message to the end of the queue.
+     *
      * @param message new message.
      */
     public final void triggerMessage(final Message message, boolean always) {
@@ -82,6 +87,7 @@ public class MessageActivity extends Activity {
 
     /**
      * Adds message listener for the concrete message type.
+     *
      * @param messageType concrete user message type.
      * @param messageable message listener.
      */
@@ -94,6 +100,7 @@ public class MessageActivity extends Activity {
 
     /**
      * Removes message listener for the concrete message type.
+     *
      * @param messageType concrete user message type.
      */
     public final void removeMessageListener(final MessageType messageType) {
@@ -102,7 +109,7 @@ public class MessageActivity extends Activity {
             messageApplication.getMessageProcessor().removeMessageListener(messageType);
         }
     }
-    
+
     public final void repaint() {
         Message tMessage = new Message(MessageApplication.MT_PAINT_EVENT);
         triggerMessage(tMessage, true);

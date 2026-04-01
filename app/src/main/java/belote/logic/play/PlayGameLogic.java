@@ -9,18 +9,20 @@
  */
 package belote.logic.play;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.base.BelotException;
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.Team;
 import belote.bean.announce.Announce;
-import belote.bean.announce.suit.AnnounceSuit;
+import belote.bean.announce.suit.AnnounceSuits;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.points.calculators.AllTrumpPointsCalculator;
-import belote.logic.play.points.calculators.TrumpPointsCalculator;
 import belote.logic.play.points.calculators.NotTrumpPointsCalculator;
 import belote.logic.play.points.calculators.NullPointsCalculator;
 import belote.logic.play.points.calculators.PointsCalculator;
+import belote.logic.play.points.calculators.TrumpPointsCalculator;
 import belote.logic.play.points.distributors.EqualGamePointsDistributor;
 import belote.logic.play.points.distributors.LostGamePointsDistributor;
 import belote.logic.play.points.distributors.NullPointsDistributor;
@@ -28,12 +30,13 @@ import belote.logic.play.points.distributors.PointsDistributor;
 import belote.logic.play.points.distributors.WinGamePointsDistributor;
 import belote.logic.play.strategy.AllTrumpPlayStrategy;
 import belote.logic.play.strategy.BasePlayStrategy;
-import belote.logic.play.strategy.TrumpPlayStrategy;
 import belote.logic.play.strategy.NotTrumpPlayStrategy;
 import belote.logic.play.strategy.NullPlayCardStrategy;
+import belote.logic.play.strategy.TrumpPlayStrategy;
 
 /**
  * PlayCardStrategyFacade class.
+ *
  * @author Dimitar Karamanov
  */
 public final class PlayGameLogic {
@@ -69,7 +72,7 @@ public final class PlayGameLogic {
     private final PointsCalculator clPointsCalculator;
 
     /**
-     * All trump game points calculator.
+     * All trump game points' calculator.
      */
     private final PointsCalculator atPointsCalculator;
 
@@ -103,12 +106,16 @@ public final class PlayGameLogic {
      */
     private final PointsDistributor nullPointsDistributor;
 
+    private final ReentrantReadWriteLock gameLock;
+
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
-    public PlayGameLogic(final Game game) {
+    public PlayGameLogic(final Game game, final ReentrantReadWriteLock gameLock) {
         this.game = game;
+        this.gameLock = gameLock;
         // Play card strategies helpers
         clPlayCardStrategy = new TrumpPlayStrategy(game);
         atPlayCardStrategy = new AllTrumpPlayStrategy(game);
@@ -128,6 +135,7 @@ public final class PlayGameLogic {
 
     /**
      * Returns helper depending from the provided announce type.
+     *
      * @param announce provided announce.
      * @return BasePlayCardStrategy helper depending from the provided announce type.
      */
@@ -135,35 +143,37 @@ public final class PlayGameLogic {
         if (announce == null) {
             return nullPlayCardStrategy;
         }
-        if (AnnounceSuit.AllTrump.equals(announce.getAnnounceSuit())) {
+        if (AnnounceSuits.AllTrump.equals(announce.getAnnounceSuit())) {
             return atPlayCardStrategy;
         }
-        if (AnnounceSuit.NotTrump.equals(announce.getAnnounceSuit())) {
+        if (AnnounceSuits.NotTrump.equals(announce.getAnnounceSuit())) {
             return ntPlayCardStrategy;
         }
         return clPlayCardStrategy;
     }
 
     /**
-     * Returns points calculator depending from the provided announce type.
+     * Returns points calculator depending on from the provided announce type.
+     *
      * @param announce provided announce.
-     * @return PointsCalculator depending from the provided announce type.
+     * @return PointsCalculator depending on from the provided announce type.
      */
     private PointsCalculator getPointsCalculatorByAnnounce(Announce announce) {
         if (announce == null) {
             return nullPointsCalculator;
         }
-        if (AnnounceSuit.AllTrump.equals(announce.getAnnounceSuit())) {
+        if (AnnounceSuits.AllTrump.equals(announce.getAnnounceSuit())) {
             return atPointsCalculator;
         }
-        if (AnnounceSuit.NotTrump.equals(announce.getAnnounceSuit())) {
+        if (AnnounceSuits.NotTrump.equals(announce.getAnnounceSuit())) {
             return ntPointsCalculator;
         }
         return clPointsCalculator;
     }
 
     /**
-     * Returns PointsDistributor subclass instance depends of win/lost/equal game.
+     * Returns PointsDistributor subclass instance depends on win/lost/equal game.
+     *
      * @return PointsDistributor subclass instance.
      */
     private PointsDistributor getPointsDistributor() {
@@ -188,66 +198,99 @@ public final class PlayGameLogic {
 
     /**
      * Returns playing card for the provided player (AI).
-     * 
+     *
      * @param player provided player.
      * @return Card playing card for the provided player (AI).
      */
     public Card getPlayerCard(final Player player) throws BelotException {
-        final Announce announce = game.getAnnounceList().getContractAnnounce();
-        final Card card = getHelperByAnnounce(announce).getPlayerCard(player);
+        gameLock.readLock().lock();
 
-        if (card != null) {
-            if (!getHelperByAnnounce(announce).validatePlayerCard(player, card)) {
-                throw new BelotException("The play of card " + card.toString() + " is not valid");
+        try {
+            Announce announce = game.getAnnounceList().getContractAnnounce();
+            final Card card = getHelperByAnnounce(announce).getPlayerCard(player);
+
+            if (card != null) {
+                if (!getHelperByAnnounce(announce).validatePlayerCard(player, card)) {
+                    throw new BelotException("The play of card " + card + " is not valid");
+                }
             }
+            return card;
+        } finally {
+            gameLock.readLock().unlock();
         }
-
-        return card;
     }
 
     /**
      * Returns next attack player.
+     *
      * @return next attack player.
      */
     public Player getNextTrickAttackPlayer() {
-        final Announce announce = game.getAnnounceList().getContractAnnounce();
-        return getHelperByAnnounce(announce).getNextAttackPlayer();
+        gameLock.readLock().lock();
+        try {
+            Announce announce = game.getAnnounceList().getContractAnnounce();
+            return getHelperByAnnounce(announce).getNextAttackPlayer();
+        } finally {
+            gameLock.readLock().unlock();
+        }
     }
 
     /**
      * Calculates team points.
      */
     public void calculateTeamsPoints() {
-        final Announce announce = game.getAnnounceList().getContractAnnounce();
-        getPointsCalculatorByAnnounce(announce).calculateTeamsPoints();
+        gameLock.writeLock().lock();
+        try {
+            Announce announce = game.getAnnounceList().getContractAnnounce();
+            getPointsCalculatorByAnnounce(announce).calculateTeamsPoints();
+        } finally {
+            gameLock.writeLock().unlock();
+        }
     }
 
     /**
      * Distributes points to the teams.
      */
     public void distributeTeamsPoints() {
-        getPointsDistributor().distributeTeamsPoints();
+        gameLock.writeLock().lock();
+        try {
+            getPointsDistributor().distributeTeamsPoints();
+        } finally {
+            gameLock.writeLock().unlock();
+        }
     }
 
     /**
      * Validates player card.
+     *
      * @param player provided player.
-     * @param card provided card.
+     * @param card   provided card.
      * @return boolean true if the card is valid, false otherwise.
      */
     public boolean validatePlayerCard(Player player, Card card) {
-        final Announce announce = game.getAnnounceList().getContractAnnounce();
-        return getHelperByAnnounce(announce).validatePlayerCard(player, card);
+        gameLock.readLock().lock();
+        try {
+            Announce announce = game.getAnnounceList().getContractAnnounce();
+            return getHelperByAnnounce(announce).validatePlayerCard(player, card);
+        } finally {
+            gameLock.readLock().unlock();
+        }
     }
 
     /**
      * Returns if the provided player has couple.
+     *
      * @param player provided player.
-     * @param card provided card.
+     * @param card   provided card.
      * @return boolean true if has a couple false otherwise.
      */
     public boolean hasPlayerCouple(Player player, Card card) {
-        final Announce announce = game.getAnnounceList().getContractAnnounce();
-        return getHelperByAnnounce(announce).hasPlayerCouple(player, card);
+        gameLock.readLock().lock();
+        try {
+            Announce announce = game.getAnnounceList().getContractAnnounce();
+            return getHelperByAnnounce(announce).hasPlayerCouple(player, card);
+        } finally {
+            gameLock.readLock().unlock();
+        }
     }
 }

@@ -10,17 +10,19 @@
 package belote.logic.play.strategy.validators;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 
 /**
  * NotTrumpCardValidator class.
+ *
  * @author Dimitar Karamanov
  */
 public class NotTrumpCardValidator extends BaseCardValidator {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public NotTrumpCardValidator(final Game game) {
@@ -29,8 +31,9 @@ public class NotTrumpCardValidator extends BaseCardValidator {
 
     /**
      * Validates player card.
-     * @param player provided player.
-     * @param card provided card.
+     *
+     * @param player     provided player.
+     * @param card       provided card.
      * @param attackCard attack card.
      * @return boolean true if the card is valid, false otherwise.
      */
@@ -39,14 +42,12 @@ public class NotTrumpCardValidator extends BaseCardValidator {
         if (isSameSuitCard(card, handCard)) {
             return true;
         }
-        if (isDifferentSuitAndHasNoFromSuit(player, card, handCard)) {
-            return true;
-        }
-        return false;
+        return isDifferentSuitAndHasNoFromSuit(player, card, handCard);
     }
 
     /**
      * Returns if the provided card is a couple card.
+     *
      * @param card provided card.
      * @return boolean true if the card is from a couple false otherwise.
      */

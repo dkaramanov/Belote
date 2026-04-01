@@ -11,18 +11,21 @@ package belote.bean.trick;
 
 /**
  * TrickListIterator interface.
+ *
  * @author Dimitar Karamanov
  */
 public interface TrickListIterator {
 
     /**
      * Returns true if the iteration has more elements.
+     *
      * @return boolean true if the iteration has more elements false otherwise.
      */
     boolean hasNext();
 
     /**
      * Returns the next element in the iteration or throws Exception.
+     *
      * @return Trick the next element in the iteration.
      */
     Trick next();

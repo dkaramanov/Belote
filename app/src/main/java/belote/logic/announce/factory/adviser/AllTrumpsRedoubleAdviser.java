@@ -10,7 +10,7 @@
 package belote.logic.announce.factory.adviser;
 
 import belote.bean.Game;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.sequence.SequenceType;
 import belote.logic.announce.factory.automat.methods.conditions.HasSuit;
 import belote.logic.announce.factory.automat.methods.conditions.PartnerRegularAnnounce;
@@ -21,25 +21,27 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.SequenceSu
 
 /**
  * AllTrumpsRedoubleAdviser class.
+ *
  * @author Dimitar Karamanov
  */
 public final class AllTrumpsRedoubleAdviser extends BaseRedoubleAdviser {
 
     /**
      * Constructor.
+     *
      * @param game Belote game instance.
      */
     public AllTrumpsRedoubleAdviser(final Game game) {
         super(game);
         // Player made last announce
-        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Rank.Jack, 4)));
-        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Rank.Jack, 1), new RankCount(Rank.Nine, 4)));
-        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Rank.Jack, 3), new RankCount(Rank.Nine, 1)));
-        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new HasSuit(new SequenceSuit(SequenceType.Quint, Rank.Ace))));
+        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Ranks.Jack, 4)));
+        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Ranks.Jack, 1), new RankCount(Ranks.Nine, 4)));
+        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Ranks.Jack, 3), new RankCount(Ranks.Nine, 1)));
+        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new HasSuit(new SequenceSuit(SequenceType.Quint, Ranks.Ace))));
         // Partner made last announce
-        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Rank.Jack, 2)));
-        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Rank.Jack, 1), new RankCount(Rank.Nine, 1)));
-        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Rank.Nine, 3)));
+        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Ranks.Jack, 2)));
+        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Ranks.Jack, 1), new RankCount(Ranks.Nine, 1)));
+        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Ranks.Nine, 3)));
         addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new HasSuit(new SequenceSuit(SequenceType.Quint))));
     }
 }

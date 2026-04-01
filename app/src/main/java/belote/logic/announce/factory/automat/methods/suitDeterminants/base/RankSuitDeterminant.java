@@ -1,22 +1,19 @@
 package belote.logic.announce.factory.automat.methods.suitDeterminants.base;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import belote.bean.Player;
 import belote.bean.pack.card.rank.Rank;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
+import belote.bean.player.Player;
 
 public abstract class RankSuitDeterminant implements SuitDeterminant {
 
-    private final ArrayList<Rank> ranks = new ArrayList<Rank>();
+    private final ArrayList<Rank> ranks = new ArrayList<>();
 
     @Override
     public final Suit determineSuit(Player player) {
-        for (SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
-
+        for (Suit suit : Suits.list()) {
             if (containRanks(player, suit)) {
                 return suit;
             }
@@ -29,8 +26,7 @@ public abstract class RankSuitDeterminant implements SuitDeterminant {
     }
 
     private boolean containRanks(Player player, Suit suit) {
-        for (Iterator<Rank> iterator = ranks.iterator(); iterator.hasNext();) {
-            final Rank rank = iterator.next();
+        for (final Rank rank : ranks) {
             if (player.getCards().findCard(rank, suit) == null) {
                 return false;
             }

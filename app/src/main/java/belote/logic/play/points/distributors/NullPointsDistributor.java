@@ -14,12 +14,14 @@ import belote.bean.announce.Announce;
 
 /**
  * WinGamePointsDistributor distributor class. Points distributor class for win game.
+ *
  * @author Dimitar Karamanov
  */
 public final class NullPointsDistributor extends PointsDistributor {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public NullPointsDistributor(Game game) {
@@ -28,6 +30,7 @@ public final class NullPointsDistributor extends PointsDistributor {
 
     /**
      * Distributes points when the game type is TP_NORMAL.
+     *
      * @param normalAnnounce announce.
      */
     public void distributeTeamsPointsNormalGame(Announce normalAnnounce) {
@@ -36,6 +39,7 @@ public final class NullPointsDistributor extends PointsDistributor {
 
     /**
      * Distributes points when the game type is TP_DOUBLE.
+     *
      * @param normalAnnounce announce.
      */
     public void distributeTeamsPointsDoubleGame(Announce normalAnnounce) {
@@ -44,6 +48,7 @@ public final class NullPointsDistributor extends PointsDistributor {
 
     /**
      * Distributes points when the game type is TP_REDOUBLE.
+     *
      * @param normalAnnounce announce.
      */
     public void distributeTeamsPointsRedoubleGame(Announce normalAnnounce) {

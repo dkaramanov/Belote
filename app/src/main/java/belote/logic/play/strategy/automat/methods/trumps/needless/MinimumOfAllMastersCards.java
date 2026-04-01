@@ -10,15 +10,16 @@
 package belote.logic.play.strategy.automat.methods.trumps.needless;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.PlayCardMethod;
 import belote.logic.play.strategy.automat.base.method.BaseTrumpMethod;
 import belote.logic.play.strategy.automat.methods.MinMeterSuitCard;
 
 /**
  * MinimumOfAllMastersCards class. PlayCardMethod which implements the logic of playing when all user's cards are master's in a color game.
+ *
  * @author Dimitar Karamanov
  */
 public final class MinimumOfAllMastersCards extends BaseTrumpMethod {
@@ -30,6 +31,7 @@ public final class MinimumOfAllMastersCards extends BaseTrumpMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public MinimumOfAllMastersCards(final Game game) {
@@ -39,8 +41,9 @@ public final class MinimumOfAllMastersCards extends BaseTrumpMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
-     * @param trump suit.
+     * @param trump  suit.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player, final Suit trump) {

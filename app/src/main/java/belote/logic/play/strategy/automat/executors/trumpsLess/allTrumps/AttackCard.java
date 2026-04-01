@@ -13,13 +13,15 @@ import belote.bean.Game;
 import belote.logic.play.strategy.automat.base.executor.PlayCardExecutor;
 
 /**
- * AllTrumpAttackCard executor. Used in AllTrumpPlayStategy getAttackCard().
+ * AllTrumpAttackCard executor. Used in AllTrumpPlayStrategy getAttackCard().
+ *
  * @author Dimitar Karamanov
  */
 public final class AttackCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public AttackCard(final Game game) {

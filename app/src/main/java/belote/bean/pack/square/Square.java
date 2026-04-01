@@ -9,20 +9,23 @@
  */
 package belote.bean.pack.square;
 
+import androidx.annotation.NonNull;
+
 import belote.base.ComparableObject;
 import belote.bean.pack.card.rank.Rank;
 
 /**
  * Square class. Represents 4 equal cards in the pack.
+ *
  * @author Dimitar Karamanov
  */
-public final class Square extends ComparableObject {
+public final class Square extends ComparableObject<Square> {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -3899337028903726108L;
-    
+
     /**
      * Square's rank.
      */
@@ -30,6 +33,7 @@ public final class Square extends ComparableObject {
 
     /**
      * Constructor.
+     *
      * @param rank - Square's rank.
      */
     public Square(final Rank rank) {
@@ -38,6 +42,7 @@ public final class Square extends ComparableObject {
 
     /**
      * Returns Square's rank.
+     *
      * @return Rank square rank.
      */
     public Rank getRank() {
@@ -46,6 +51,7 @@ public final class Square extends ComparableObject {
 
     /**
      * Returns Square points.
+     *
      * @return int square points.
      */
     public int getPoints() {
@@ -54,17 +60,18 @@ public final class Square extends ComparableObject {
 
     /**
      * Compares this Square with the specified object(Square) for order.
-     * @param obj - specified object (Square).
+     *
+     * @param square - specified object (Square).
      * @return int value which may be: = 0 if this Square and the specified object(Square) are equal > 0 if this Square is bigger than the specified
-     *         object(Square) < 0 if this EqSquareualCards is less than the specified object(Square)
+     * object(Square) < 0 if this EqSquareualCards is less than the specified object(Square)
      */
-    public int compareTo(final Object obj) {
-        final Square square = (Square) obj;
+    public int compareTo(final Square square) {
         return rank.compareToAT(square.rank);
     }
 
     /**
      * Returns hash code.
+     *
      * @return hash code.
      */
     public int hashCode() {
@@ -73,6 +80,7 @@ public final class Square extends ComparableObject {
 
     /**
      * The method checks if this Square and specified object (Square) are equal.
+     *
      * @param obj - specified object.
      * @return boolean true if this Square is equal to specified object and false otherwise.
      */
@@ -88,9 +96,11 @@ public final class Square extends ComparableObject {
      * Returns a string representation of the object. The return name is based on class short name. This method has to be used only for debug purpose when the
      * project is not compiled with obfuscating. Don't use this method to represent the object. When the project is compiled with obfuscating the class name is
      * not the same.
+     *
      * @return String a string representation of the object.
      */
+    @NonNull
     public String toString() {
-        return String.valueOf(rank.getSquarePoints()) + "(4x" + rank.getRankSign() + ")";
+        return rank.getSquarePoints() + "(4x" + rank.getRankSign() + ")";
     }
 }

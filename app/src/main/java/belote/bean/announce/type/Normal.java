@@ -11,15 +11,16 @@ package belote.bean.announce.type;
 
 /**
  * Normal class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Normal extends AnnounceType {
+final class Normal extends AnnounceType {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -4789292276565681053L;
-    
+
     /**
      * Unique object id.
      */

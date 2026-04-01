@@ -9,17 +9,18 @@
  */
 package belote.logic.announce.factory.automat.methods.suitDeterminants;
 
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.logic.announce.factory.automat.methods.suitDeterminants.base.RankSuitDeterminant;
 
 /**
  * Returns suit of which the player has Jack and Nine cards or null.
+ *
  * @author Dimitar Karamanov
  */
 public final class JackNineSuit extends RankSuitDeterminant {
 
     public JackNineSuit() {
-        addRank(Rank.Jack);
-        addRank(Rank.Nine);
+        addRank(Ranks.Jack);
+        addRank(Ranks.Nine);
     }
 }

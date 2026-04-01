@@ -18,6 +18,7 @@ import com.karamanov.framework.graphics.transformers.MixedColorImageTransformer;
 
 /**
  * ImageUtil class.
+ *
  * @author Dimitar Karamanov
  */
 public final class ImageUtil {
@@ -39,6 +40,7 @@ public final class ImageUtil {
 
     /**
      * Transforms provided image to disabled one.
+     *
      * @param image provided image.
      * @return Image transformed disabled image.
      */
@@ -48,6 +50,7 @@ public final class ImageUtil {
 
     /**
      * Transforms provided image to darkened one.
+     *
      * @param image provided image.
      * @return Image transformed darkened image.
      */
@@ -57,6 +60,7 @@ public final class ImageUtil {
 
     /**
      * Transforms provided image to inverted one.
+     *
      * @param image provided image.
      * @return Image transformed inverted image.
      */
@@ -66,7 +70,8 @@ public final class ImageUtil {
 
     /**
      * Transforms provided image to color mixed one.
-     * @param image provided image.
+     *
+     * @param image      provided image.
      * @param mixedColor which will be used for mixed.
      * @return Image transformed color mixed image.
      */
@@ -76,9 +81,10 @@ public final class ImageUtil {
 
     /**
      * Transforms provided image to color mixed one.
-     * @param image provided image.
+     *
+     * @param image      provided image.
      * @param mixedColor which will be used for mixed.
-     * @param rec rectangle which will be mixed.
+     * @param rec        rectangle which will be mixed.
      * @return Image transformed color mixed image.
      */
     public static Bitmap transformToMixedColorImage(final Bitmap image, final Color mixedColor, final Rectangle rec) {

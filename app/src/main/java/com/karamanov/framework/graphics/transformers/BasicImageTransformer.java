@@ -15,12 +15,14 @@ import com.karamanov.framework.graphics.Rectangle;
 
 /**
  * BasicImageTransformer class.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class BasicImageTransformer {
 
     /**
      * Transform method.
+     *
      * @param pixel which be transformed.
      * @return int transformed pixel value.
      */
@@ -28,6 +30,7 @@ public abstract class BasicImageTransformer {
 
     /**
      * Transforms image template method.
+     *
      * @param image which will be transformed.
      * @return Image transformed image.
      */
@@ -37,7 +40,8 @@ public abstract class BasicImageTransformer {
 
     /**
      * Transforms image template method.
-     * @param image which will be transformed.
+     *
+     * @param image     which will be transformed.
      * @param rectangle the rectangle of the image which will be transformed.
      * @return Image transformed image.
      */

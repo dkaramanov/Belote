@@ -10,13 +10,14 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * OppositeTeamDoubleAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class OppositeTeamDoubleAnnounce implements AnnounceCondition {
@@ -28,6 +29,7 @@ public final class OppositeTeamDoubleAnnounce implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public OppositeTeamDoubleAnnounce(final Game game) {
@@ -36,11 +38,12 @@ public final class OppositeTeamDoubleAnnounce implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */
     public boolean process(final Player player) {
         final Announce announce = game.getAnnounceList().getContractAnnounce();
-        return announce != null && !announce.getPlayer().isSameTeam(player) && announce.getType().equals(AnnounceType.Double);
+        return announce != null && !announce.getPlayer().isSameTeam(player) && announce.getType().equals(AnnounceTypes.Double);
     }
 }

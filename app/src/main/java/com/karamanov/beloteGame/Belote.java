@@ -1,5 +1,12 @@
 package com.karamanov.beloteGame;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import com.karamanov.framework.MessageApplication;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,14 +15,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import belote.bean.Game;
 import belote.logic.HumanBeloteFacade;
-
-import com.karamanov.framework.MessageApplication;
 
 public class Belote extends MessageApplication {
 
@@ -23,7 +24,7 @@ public class Belote extends MessageApplication {
      * BELOTE_DAT constant.
      */
     private static final String BELOTE_DAT = "belote.dat";
-    
+
     /**
      * Belote game facade (The enter point of game AI).
      */
@@ -33,7 +34,7 @@ public class Belote extends MessageApplication {
         super();
         beloteFacade = new HumanBeloteFacade();
     }
-    
+
     public static HumanBeloteFacade getBeloteFacade(Activity context) {
         if (context.getApplication() instanceof Belote) {
             return ((Belote) context.getApplication()).beloteFacade;
@@ -41,15 +42,15 @@ public class Belote extends MessageApplication {
 
         return new HumanBeloteFacade();
     }
-    
+
     public static synchronized void initBeloteFacade(Activity context) {
         if (!loadGame(context)) {
             getBeloteFacade(context).newGame();
         }
-        
+
         checkBlackRedCardOrder(context);
     }
-    
+
     public static void resetGame(Activity context) {
         getBeloteFacade(context).setGame(new Game());
         getBeloteFacade(context).newGame();
@@ -57,14 +58,14 @@ public class Belote extends MessageApplication {
 
         checkBlackRedCardOrder(context);
     }
-    
+
     private static void checkBlackRedCardOrder(Activity context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String key = context.getString(R.string.prefBlackRedOrder);
         boolean blackRedOrder = preferences.getBoolean(key, Boolean.FALSE);
         getBeloteFacade(context).setBlackRedCardOrder(blackRedOrder);
     }
-    
+
     public static boolean loadGame(Activity context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String key = context.getString(R.string.prefStoreGame);
@@ -120,10 +121,10 @@ public class Belote extends MessageApplication {
             }
         }
     }
-    
+
     public static void terminate(Activity context) {
         saveGame(context);
-        
+
         getBeloteFacade(context).setGame(new Game());
         getBeloteFacade(context).newGame();
     }

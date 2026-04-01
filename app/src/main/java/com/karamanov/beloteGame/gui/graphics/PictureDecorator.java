@@ -9,6 +9,7 @@
  */
 package com.karamanov.beloteGame.gui.graphics;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -21,10 +22,13 @@ import java.util.Hashtable;
 
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.pack.card.suit.Suits;
 
 /**
  * PictureDecorator class.
+ *
  * @author Dimitar Karamanov
  */
 public final class PictureDecorator {
@@ -55,131 +59,163 @@ public final class PictureDecorator {
     public PictureDecorator(Context context) {
         this.context = context;
 
-        suits.put(Suit.Club, R.drawable.club);
-        suits.put(Suit.Diamond, R.drawable.diamond);
-        suits.put(Suit.Heart, R.drawable.heart);
-        suits.put(Suit.Spade, R.drawable.spade);
+        suits.put(Suits.Club, R.drawable.club);
+        suits.put(Suits.Diamond, R.drawable.diamond);
+        suits.put(Suits.Heart, R.drawable.heart);
+        suits.put(Suits.Spade, R.drawable.spade);
 
         Hashtable<Suit, Integer> aces = new Hashtable<Suit, Integer>();
-        aces.put(Suit.Club, R.drawable.aceclub);
-        aces.put(Suit.Diamond, R.drawable.acediamond);
-        aces.put(Suit.Heart, R.drawable.aceheart);
-        aces.put(Suit.Spade, R.drawable.acespade);
-        ranks.put(Rank.Ace, aces);
+        aces.put(Suits.Club, R.drawable.aceclub);
+        aces.put(Suits.Diamond, R.drawable.acediamond);
+        aces.put(Suits.Heart, R.drawable.aceheart);
+        aces.put(Suits.Spade, R.drawable.acespade);
+        ranks.put(Ranks.Ace, aces);
 
         Hashtable<Suit, Integer> kings = new Hashtable<Suit, Integer>();
-        kings.put(Suit.Club, R.drawable.kingclub);
-        kings.put(Suit.Diamond, R.drawable.kingdiamond);
-        kings.put(Suit.Heart, R.drawable.kingheart);
-        kings.put(Suit.Spade, R.drawable.kingspade);
-        ranks.put(Rank.King, kings);
+        kings.put(Suits.Club, R.drawable.kingclub);
+        kings.put(Suits.Diamond, R.drawable.kingdiamond);
+        kings.put(Suits.Heart, R.drawable.kingheart);
+        kings.put(Suits.Spade, R.drawable.kingspade);
+        ranks.put(Ranks.King, kings);
 
         Hashtable<Suit, Integer> queens = new Hashtable<Suit, Integer>();
-        queens.put(Suit.Club, R.drawable.queenclub);
-        queens.put(Suit.Diamond, R.drawable.queendiamond);
-        queens.put(Suit.Heart, R.drawable.queenheart);
-        queens.put(Suit.Spade, R.drawable.queenspade);
-        ranks.put(Rank.Queen, queens);
+        queens.put(Suits.Club, R.drawable.queenclub);
+        queens.put(Suits.Diamond, R.drawable.queendiamond);
+        queens.put(Suits.Heart, R.drawable.queenheart);
+        queens.put(Suits.Spade, R.drawable.queenspade);
+        ranks.put(Ranks.Queen, queens);
 
         Hashtable<Suit, Integer> jacks = new Hashtable<Suit, Integer>();
-        jacks.put(Suit.Club, R.drawable.jackclub);
-        jacks.put(Suit.Diamond, R.drawable.jackdiamond);
-        jacks.put(Suit.Heart, R.drawable.jackheart);
-        jacks.put(Suit.Spade, R.drawable.jackspade);
-        ranks.put(Rank.Jack, jacks);
+        jacks.put(Suits.Club, R.drawable.jackclub);
+        jacks.put(Suits.Diamond, R.drawable.jackdiamond);
+        jacks.put(Suits.Heart, R.drawable.jackheart);
+        jacks.put(Suits.Spade, R.drawable.jackspade);
+        ranks.put(Ranks.Jack, jacks);
 
         Hashtable<Suit, Integer> tens = new Hashtable<Suit, Integer>();
-        tens.put(Suit.Club, R.drawable.tenclub);
-        tens.put(Suit.Diamond, R.drawable.tendiamond);
-        tens.put(Suit.Heart, R.drawable.tenheart);
-        tens.put(Suit.Spade, R.drawable.tenspade);
-        ranks.put(Rank.Ten, tens);
+        tens.put(Suits.Club, R.drawable.tenclub);
+        tens.put(Suits.Diamond, R.drawable.tendiamond);
+        tens.put(Suits.Heart, R.drawable.tenheart);
+        tens.put(Suits.Spade, R.drawable.tenspade);
+        ranks.put(Ranks.Ten, tens);
 
         Hashtable<Suit, Integer> nines = new Hashtable<Suit, Integer>();
-        nines.put(Suit.Club, R.drawable.nineclub);
-        nines.put(Suit.Diamond, R.drawable.ninediamond);
-        nines.put(Suit.Heart, R.drawable.nineheart);
-        nines.put(Suit.Spade, R.drawable.ninespade);
-        ranks.put(Rank.Nine, nines);
+        nines.put(Suits.Club, R.drawable.nineclub);
+        nines.put(Suits.Diamond, R.drawable.ninediamond);
+        nines.put(Suits.Heart, R.drawable.nineheart);
+        nines.put(Suits.Spade, R.drawable.ninespade);
+        ranks.put(Ranks.Nine, nines);
 
         Hashtable<Suit, Integer> eights = new Hashtable<Suit, Integer>();
-        eights.put(Suit.Club, R.drawable.eightclub);
-        eights.put(Suit.Diamond, R.drawable.eightdiamond);
-        eights.put(Suit.Heart, R.drawable.eightheart);
-        eights.put(Suit.Spade, R.drawable.eightspade);
-        ranks.put(Rank.Eight, eights);
+        eights.put(Suits.Club, R.drawable.eightclub);
+        eights.put(Suits.Diamond, R.drawable.eightdiamond);
+        eights.put(Suits.Heart, R.drawable.eightheart);
+        eights.put(Suits.Spade, R.drawable.eightspade);
+        ranks.put(Ranks.Eight, eights);
 
         Hashtable<Suit, Integer> sevens = new Hashtable<Suit, Integer>();
-        sevens.put(Suit.Club, R.drawable.sevenclub);
-        sevens.put(Suit.Diamond, R.drawable.sevendiamond);
-        sevens.put(Suit.Heart, R.drawable.sevenheart);
-        sevens.put(Suit.Spade, R.drawable.sevenspade);
-        ranks.put(Rank.Seven, sevens);
+        sevens.put(Suits.Club, R.drawable.sevenclub);
+        sevens.put(Suits.Diamond, R.drawable.sevendiamond);
+        sevens.put(Suits.Heart, R.drawable.sevenheart);
+        sevens.put(Suits.Spade, R.drawable.sevenspade);
+        ranks.put(Ranks.Seven, sevens);
 
-        couples.put(Suit.Club, R.drawable.belotclub);
-        couples.put(Suit.Diamond, R.drawable.belotdiamond);
-        couples.put(Suit.Heart, R.drawable.belotheart);
-        couples.put(Suit.Spade, R.drawable.belotspade);
+        couples.put(Suits.Club, R.drawable.belotclub);
+        couples.put(Suits.Diamond, R.drawable.belotdiamond);
+        couples.put(Suits.Heart, R.drawable.belotheart);
+        couples.put(Suits.Spade, R.drawable.belotspade);
     }
 
     /**
      * The method return associated image to the card.
+     *
      * @param card which image is retrieve.
      * @return Image the card's image.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public Bitmap getCardImage(final Card card) {
         if (card != null) {
             Hashtable<Suit, Integer> hashtable = ranks.get(card.getRank());
-            return ((BitmapDrawable) context.getResources().getDrawable(hashtable.get(card.getSuit()).intValue())).getBitmap();
+            if (hashtable != null) {
+                Integer id = hashtable.get(card.getSuit());
+                if (id != null) {
+                    return ((BitmapDrawable) context.getResources().getDrawable(id)).getBitmap();
+                }
+            }
         }
         return null;
     }
 
     /**
      * The method return associated image to the card.
+     *
      * @param rank which image is retrieve.
-     * @param suit
+     * @param suit suit
      * @return Image the card's image.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public Bitmap getCardImage(final Rank rank, final Suit suit) {
         Hashtable<Suit, Integer> hashtable = ranks.get(rank);
-        return ((BitmapDrawable) context.getResources().getDrawable(hashtable.get(suit).intValue())).getBitmap();
+        if (hashtable != null) {
+            Integer id = hashtable.get(suit);
+            if (id != null) {
+                return ((BitmapDrawable) context.getResources().getDrawable(id)).getBitmap();
+            }
+        }
+        return null;
     }
 
     /**
      * Returns suit's image.
+     *
      * @param suit which image is retrieved.
      * @return Image suit's image.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public Bitmap getSuitImage(final Suit suit) {
-        return ((BitmapDrawable) context.getResources().getDrawable(suits.get(suit).intValue())).getBitmap();
+        Integer id = suits.get(suit);
+        if (id != null) {
+            return ((BitmapDrawable) context.getResources().getDrawable(id)).getBitmap();
+        }
+        return null;
     }
 
     /**
-     * Returns couples image from provided suit.
-     * @param suit provided suit.
+     * Returns couples image from provided Suits.
+     *
+     * @param suit provided Suits.
      * @return Image couples image.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public Bitmap getCoupleImage(final Suit suit) {
-        return ((BitmapDrawable) context.getResources().getDrawable(couples.get(suit).intValue())).getBitmap();
+        Integer id = couples.get(suit);
+        if (id != null) {
+            return ((BitmapDrawable) context.getResources().getDrawable(id)).getBitmap();
+        }
+        return null;
     }
 
     /**
      * Returns the image of card desk.
+     *
      * @return desk image.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public Bitmap getCardBackImageSmall() {
         return ((BitmapDrawable) context.getResources().getDrawable(R.drawable.card_back_small)).getBitmap();
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public NinePatchDrawable getBubbleLeft() {
         return (NinePatchDrawable) context.getResources().getDrawable(R.drawable.bubble_left);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public NinePatchDrawable getBubbleRight() {
         return (NinePatchDrawable) context.getResources().getDrawable(R.drawable.bubble_right);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public GradientDrawable getMainBKG() {
         return ((GradientDrawable) context.getResources().getDrawable(R.drawable.main_bkg));
     }

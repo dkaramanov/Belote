@@ -11,13 +11,14 @@ package belote.bean.announce.suit;
 
 /**
  * Club class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Club extends ColorSuit {
+final class Club extends ColorSuit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -5225181680528614435L;
 
     /**

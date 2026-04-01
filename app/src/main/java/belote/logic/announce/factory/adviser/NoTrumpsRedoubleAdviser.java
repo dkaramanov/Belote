@@ -10,7 +10,7 @@
 package belote.logic.announce.factory.adviser;
 
 import belote.bean.Game;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.logic.announce.factory.automat.methods.conditions.PartnerRegularAnnounce;
 import belote.logic.announce.factory.automat.methods.conditions.PlayerRegularAnnounce;
 import belote.logic.announce.factory.automat.methods.conditions.RankCount;
@@ -18,21 +18,23 @@ import belote.logic.announce.factory.automat.methods.conditions.base.MultipleAnd
 
 /**
  * NoTrumpsRedoubleAdviser class.
+ *
  * @author Dimitar Karamanov
  */
 public final class NoTrumpsRedoubleAdviser extends BaseRedoubleAdviser {
 
     /**
      * Constructor.
+     *
      * @param game Belote game instance
      */
     public NoTrumpsRedoubleAdviser(final Game game) {
         super(game);
         // Player made last announce
-        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Rank.Ace, 4)));
-        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Rank.Ace, 3), new RankCount(Rank.Ten, 1)));
+        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Ranks.Ace, 4)));
+        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new RankCount(Ranks.Ace, 3), new RankCount(Ranks.Ten, 1)));
         // Partner made last announce
-        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Rank.Ace, 1)));
-        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Rank.Ten, 2)));
+        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Ranks.Ace, 1)));
+        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new RankCount(Ranks.Ten, 2)));
     }
 }

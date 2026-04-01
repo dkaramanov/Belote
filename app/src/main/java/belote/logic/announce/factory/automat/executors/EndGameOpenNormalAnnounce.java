@@ -9,6 +9,8 @@
  */
 package belote.logic.announce.factory.automat.executors;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 import belote.logic.announce.factory.automat.methods.EndGameOpenAllTrumpAnnounce;
@@ -16,19 +18,22 @@ import belote.logic.announce.factory.automat.methods.EndGameOpenNoTrumpAnnounce;
 
 /**
  * EngGameOpenNormalAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class EndGameOpenNormalAnnounce extends AnnounceExecutor {
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public EndGameOpenNormalAnnounce(final Game game) {
-        super(game);
+    public EndGameOpenNormalAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
 
         register(new EndGameOpenAllTrumpAnnounce(game));
         register(new EndGameOpenNoTrumpAnnounce(game));
-        register(new EndGameOpenTrumpAnnounce(game));
+        register(new EndGameOpenTrumpAnnounce(game, gameLock));
     }
 }

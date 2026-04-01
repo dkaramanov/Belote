@@ -9,30 +9,33 @@
  */
 package belote.bean.pack;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.CardComparableMode;
+import belote.bean.pack.card.CardComparableModes;
 import belote.bean.pack.card.rank.Rank;
-import belote.bean.pack.card.rank.RankIterator;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
 import belote.bean.pack.card.suit.SuitCountHashTable;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
 import belote.bean.pack.sequence.SequenceList;
 import belote.bean.pack.square.SquareList;
 
 /**
  * Pack class. Represents a collection of cards objects.
+ *
  * @author Dimitar Karamanov
  */
 public class Pack implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -5907720214058311509L;
 
     /**
@@ -64,7 +67,7 @@ public class Pack implements Serializable {
      * PackExtraAnnouncesManager announce manager.
      */
     private final PackExtraAnnouncesManager packExtraAnnouncesManager;
-    
+
     /**
      * Random generator.
      */
@@ -79,6 +82,7 @@ public class Pack implements Serializable {
 
     /**
      * Constructor.
+     *
      * @param full indicates if the pack will be filled with cards or empty
      */
     public Pack(final boolean full) {
@@ -90,6 +94,7 @@ public class Pack implements Serializable {
 
     /**
      * Copy constructor.
+     *
      * @param pack a copy from pack.
      */
     public Pack(final Pack pack) {
@@ -99,23 +104,24 @@ public class Pack implements Serializable {
 
     /**
      * Factory method which returns a new full pack.
+     *
      * @return Pack a full pack.
      */
-    public final static Pack createFullPack() {
-        fullPack.setCardsCompareMode(CardComparableMode.Standard);
+    public static Pack createFullPack() {
+        fullPack.setCardsCompareMode(CardComparableModes.Standard);
 
         return new Pack(fullPack);
     }
 
     /**
      * Returns a suit pack.
+     *
      * @param suit specified suit
      * @return Pack a suit pack
      */
     public final Pack getSuitPack(final Suit suit) {
         final Pack result = new Pack();
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : list()) {
             if (card.getSuit().equals(suit)) {
                 result.add(card);
             }
@@ -125,6 +131,7 @@ public class Pack implements Serializable {
 
     /**
      * Clear and copy all elements from another pack.
+     *
      * @param pack a copy from pack.
      */
     public final void copyFrom(final Pack pack) {
@@ -134,17 +141,18 @@ public class Pack implements Serializable {
 
     /**
      * Add all elements from another pack.
+     *
      * @param pack a copy from pack.
      */
     public final void addAll(final Pack pack) {
-        for (final PackIterator iterator = pack.iterator(); iterator.hasNext();) {
-            Card card = iterator.next();
+        for (final Card card : pack.list()) {
             add(card);
         }
     }
 
     /**
      * Returns true if the card is from couple, false otherwise.
+     *
      * @param card a checked card.
      * @return boolean true if the provided card is from a couple, false otherwise.
      */
@@ -153,12 +161,12 @@ public class Pack implements Serializable {
             return false;
         }
 
-        if (card.getRank().equals(Rank.Queen)) {
-            return findCard(Rank.King, card.getSuit()) != null;
+        if (card.getRank().equals(Ranks.Queen)) {
+            return findCard(Ranks.King, card.getSuit()) != null;
         }
 
-        if (card.getRank().equals(Rank.King)) {
-            return findCard(Rank.Queen, card.getSuit()) != null;
+        if (card.getRank().equals(Ranks.King)) {
+            return findCard(Ranks.Queen, card.getSuit()) != null;
         }
 
         return false;
@@ -166,22 +174,23 @@ public class Pack implements Serializable {
 
     /**
      * Checks if the pack has a couple from provided suit.
+     *
      * @param suit checked suit.
      * @return boolean true if the pack has couple from the provided suit, false otherwise.
      */
     public final boolean hasCouple(final Suit suit) {
-        return findCard(Rank.Queen, suit) != null && findCard(Rank.King, suit) != null;
+        return findCard(Ranks.Queen, suit) != null && findCard(Ranks.King, suit) != null;
     }
 
     /**
      * Returns the number of cards with specified suit.
+     *
      * @param suit specified suit.
      * @return int the number of cards with specified suit.
      */
     public final int getSuitCount(final Suit suit) {
         int result = 0;
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : list()) {
             if (card.getSuit().equals(suit)) {
                 result++;
             }
@@ -191,6 +200,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns true if has card(s) from the specified suit, otherwise false.
+     *
      * @param suit specified suit.
      * @return boolean true if has card(s) from the specified suit, otherwise false.
      */
@@ -200,13 +210,13 @@ public class Pack implements Serializable {
 
     /**
      * Returns the pack's dominant suit.
+     *
      * @return Suit pack's dominant suit.
      */
     public final Suit getDominantSuit() {
         Suit result = null;
 
-        for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
+        for (final Suit suit : Suits.list()) {
             if (result == null || getSuitCount(suit) > getSuitCount(result)) {
                 result = suit;
             }
@@ -221,10 +231,8 @@ public class Pack implements Serializable {
     public final void addAllCards() {
         collection.clear();
 
-        for (final SuitIterator suitIterator = Suit.iterator(); suitIterator.hasNext();) {
-            final Suit suit = suitIterator.next();
-            for (final RankIterator rankIterator = Rank.iterator(); rankIterator.hasNext();) {
-                final Rank rank = rankIterator.next();
+        for (final Suit suit : Suits.list()) {
+            for (final Rank rank : Ranks.list()) {
                 collection.add(new Card(suit, rank));
             }
         }
@@ -248,15 +256,17 @@ public class Pack implements Serializable {
      * Returns a string representation of the object. The return name is based on class short name. This method has to be used only for debug purpose when the
      * project is not compiled with obfuscating. Don't use this method to represent the object. When the project is compiled with obfuscating the class name is
      * not the same.
+     *
      * @return String a string representation of the object.
      */
+    @NonNull
     public final String toString() {
-        final StringBuffer sb = new StringBuffer();
-        for (final PackIterator it = iterator(); it.hasNext();) {
+        final StringBuilder sb = new StringBuilder();
+        for (final Card card : list()) {
             if (sb.length() != 0) {
                 sb.append(" : ");
             }
-            sb.append(it.next().toString());
+            sb.append(card.toString());
         }
         return sb.toString();
     }
@@ -265,13 +275,14 @@ public class Pack implements Serializable {
      * Prints the pack.
      */
     public final void printPack() {
-        for (final PackIterator it = iterator(); it.hasNext();) {
-            System.out.println(it.next());
+        for (final Card card : list()) {
+            System.out.println(card);
         }
     }
 
     /**
      * Gets a card by index.
+     *
      * @param index of the card which to be returned.
      * @return Card a card instance.
      */
@@ -281,6 +292,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns pack's size.
+     *
      * @return int the size of the pack.
      */
     public final int getSize() {
@@ -289,6 +301,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns true if the pack is empty false otherwise.
+     *
      * @return boolean true if the pack is empty false otherwise.
      */
     public final boolean isEmpty() {
@@ -297,6 +310,7 @@ public class Pack implements Serializable {
 
     /**
      * Removes a card by index from the pack.
+     *
      * @param index of the card which to be removed.
      * @return Card the removed card.
      */
@@ -308,6 +322,7 @@ public class Pack implements Serializable {
 
     /**
      * Removes the provided card from the pack.
+     *
      * @param card which to be removed.
      * @return Card the removed card.
      */
@@ -322,6 +337,7 @@ public class Pack implements Serializable {
 
     /**
      * Adds the provided card to the pack.
+     *
      * @param card which to be added.
      */
     public final void add(final Card card) {
@@ -330,13 +346,13 @@ public class Pack implements Serializable {
 
     /**
      * Removes all cards from the pack, which are stored in the provided pack.
+     *
      * @param pack which cards will be removed from the current one.
      * @return boolean true if all cards were removed, false otherwise.
      */
     public final boolean removeAll(final Pack pack) {
         boolean result = true;
-        for (final PackIterator iterator = pack.iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : list()) {
             final Card cardToRemove = findCard(card.getRank(), card.getSuit());
             if (cardToRemove == null) {
                 result = false;
@@ -381,7 +397,7 @@ public class Pack implements Serializable {
      * Arranges pack using NT order.
      */
     public final void arrangeNT() {
-        setCardsCompareMode(CardComparableMode.NotTrump);
+        setCardsCompareMode(CardComparableModes.NotTrump);
         arrange();
     }
 
@@ -389,12 +405,13 @@ public class Pack implements Serializable {
      * Arranges pack using AT order.
      */
     public final void arrangeAT() {
-        setCardsCompareMode(CardComparableMode.AllTrump);
+        setCardsCompareMode(CardComparableModes.AllTrump);
         arrange();
     }
 
     /**
      * Arranges pack using CL order.
+     *
      * @param suit trump suit.
      */
     public final void arrangeCL(final Suit suit) {
@@ -404,6 +421,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns true if the pack has the next rank order card, otherwise false.
+     *
      * @param card which is checked.
      * @return boolean true if the pack has the next rank order card, otherwise false.
      */
@@ -414,11 +432,11 @@ public class Pack implements Serializable {
 
     /**
      * Returns the next rank order card.
+     *
      * @param card base one.
      * @return Card the next rank order card or null.
      */
     public final Card getNextFromSameSuit(final Card card) {
-
         if (card.getCompareMode().getMaxRank().equals(card.getRank())) {
             return card;
         } else {
@@ -428,6 +446,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns true if the pack has the previous rank order card, otherwise false.
+     *
      * @param card base one.
      * @return boolean true if the pack has the previous rank order card, otherwise false.
      */
@@ -438,6 +457,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns the previous rank order card.
+     *
      * @param card which is checked.
      * @return Card the previous rank order card or null.
      */
@@ -451,13 +471,13 @@ public class Pack implements Serializable {
 
     /**
      * Returns specified by rank and suit card.
+     *
      * @param rank searching card's rank.
      * @param suit searching card's suit.
      * @return Card the searching card if the pack contains it, otherwise null.
      */
     public final Card findCard(final Rank rank, final Suit suit) {
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card currentCard = iterator.next();
+        for (final Card currentCard : list()) {
             if (currentCard.getRank().equals(rank) && currentCard.getSuit().equals(suit)) {
                 return currentCard;
             }
@@ -467,13 +487,13 @@ public class Pack implements Serializable {
 
     /**
      * Returns the card with the max rank from a specified suit.
+     *
      * @param suit the specified suit.
      * @return Card the max card or null.
      */
     public final Card findMaxSuitCard(final Suit suit) {
         Card result = null;
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : list()) {
             if (card.getSuit().equals(suit)) {
                 if (result == null || result.compareTo(card) < 0) {
                     result = card;
@@ -485,13 +505,13 @@ public class Pack implements Serializable {
 
     /**
      * Returns the card with the max rank smaller than a specified one.
+     *
      * @param card the specified card.
      * @return Card the max card or null.
      */
     public final Card findMaxUnderCard(final Card card) {
         Card result = null;
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card currentCard = iterator.next();
+        for (final Card currentCard : list()) {
             if (currentCard.getSuit().equals(card.getSuit()) && currentCard.compareTo(card) < 0) {
                 if (result == null || result.compareTo(currentCard) < 0) {
                     result = currentCard;
@@ -503,13 +523,13 @@ public class Pack implements Serializable {
 
     /**
      * Returns the card with the minimum rank bigger than a specified one.
+     *
      * @param card the specified card.
      * @return Card the minimum card or null.
      */
     public final Card findMinAboveCard(final Card card) {
         Card result = null;
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card currentCard = iterator.next();
+        for (final Card currentCard : list()) {
             if (currentCard.getSuit().equals(card.getSuit()) && currentCard.compareTo(card) > 0) {
                 if (result == null || result.compareTo(currentCard) > 0) {
                     result = currentCard;
@@ -521,13 +541,13 @@ public class Pack implements Serializable {
 
     /**
      * Returns the card with the minimum rank from a specified suit.
+     *
      * @param suit the specified suit.
      * @return Card the minimum card or null.
      */
     public final Card findMinSuitCard(final Suit suit) {
         Card result = null;
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : list()) {
             if (card.getSuit().equals(suit)) {
                 if (result == null || result.compareTo(card) > 0) {
                     result = card;
@@ -539,6 +559,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns the card with the minimum rank from all cards.
+     *
      * @return Card the minimum card or null.
      */
     public final Card findMinAllCard() {
@@ -547,6 +568,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns the card with the minimum rank from all cards except the cards with the specified suit.
+     *
      * @param suit the specified suit.
      * @return Card the minimum card or null.
      */
@@ -554,10 +576,8 @@ public class Pack implements Serializable {
         Card result = null;
         int resultCardPoints = 0;
 
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
-
-            if (suit == null || !card.getSuit().equals(suit)) {
+        for (final Card card : list()) {
+            if (!card.getSuit().equals(suit)) {
                 int cardPoints = card.getPoints();
 
                 if (result == null || cardPoints < resultCardPoints) {
@@ -571,6 +591,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns the card with the maximum rank from all cards.
+     *
      * @return Card the maximum card or null.
      */
     public final Card findMaxAllCard() {
@@ -579,6 +600,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns the card with the maximum rank from all cards except the cards with the specified suit.
+     *
      * @param suit the specified suit.
      * @return Card the maximum card or null.
      */
@@ -586,10 +608,8 @@ public class Pack implements Serializable {
         Card result = null;
         int resultCardPoints = 0;
 
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
-
-            if (suit == null || !card.getSuit().equals(suit)) {
+        for (final Card card : list()) {
+            if (!card.getSuit().equals(suit)) {
                 int cardPoints = card.getPoints();
 
                 if (result == null || cardPoints > resultCardPoints) {
@@ -603,6 +623,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns the max sequence card after the specified one.
+     *
      * @param card specified card.
      * @return Card max sequence card.
      */
@@ -616,6 +637,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns the minimum sequence card before the specified one.
+     *
      * @param card specified card.
      * @return Card minimum sequence card.
      */
@@ -629,11 +651,11 @@ public class Pack implements Serializable {
 
     /**
      * Returns first not null card from cards pack.
+     *
      * @return Card player's first not null card.
      */
     public final Card getFirstNoNullCard() {
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : list()) {
             if (card != null) {
                 return card;
             }
@@ -643,14 +665,15 @@ public class Pack implements Serializable {
 
     /**
      * Returns the number of the cards with the specified rank from the pack.
+     *
      * @param rank specified rank.
      * @return int the number of the cards with the specified rank from the pack.
      */
     public final int getRankCounts(final Rank rank) {
         int result = 0;
 
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            if (iterator.next().getRank().equals(rank)) {
+        for (final Card card : list()) {
+            if (card.getRank().equals(rank)) {
                 result++;
             }
         }
@@ -666,6 +689,7 @@ public class Pack implements Serializable {
 
     /**
      * Returns the extra announces points.
+     *
      * @return int the extra announces points.
      */
     public final int getAnnouncePoints() {
@@ -674,43 +698,43 @@ public class Pack implements Serializable {
 
     /**
      * Sets cards compare mode.
+     *
      * @param compareMode the specified CardComparableMode.
      */
     private void setCardsCompareMode(final CardComparableMode compareMode) {
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : list()) {
             card.setCompareMode(compareMode);
         }
     }
 
     /**
      * Sets cards compare mode for suit game.
+     *
      * @param suit the game's suit.
      */
     private void setCardsCompareMode(final Suit suit) {
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card currentCard = iterator.next();
+        for (final Card currentCard : list()) {
             if (currentCard.getSuit().equals(suit)) {
-                currentCard.setCompareMode(CardComparableMode.AllTrump);
+                currentCard.setCompareMode(CardComparableModes.AllTrump);
             } else {
-                currentCard.setCompareMode(CardComparableMode.NotTrump);
+                currentCard.setCompareMode(CardComparableModes.NotTrump);
             }
         }
     }
 
     /**
      * Returns a SuitCountHashTable holding suits and the count of pack cards with that suits.
+     *
      * @return a SuitCountHashTable holding suits and the count of pack cards with that suits, which may be empty.
      */
     public final SuitCountHashTable getSuitsDistribution() {
         final SuitCountHashTable result = new SuitCountHashTable();
 
-        for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
+        for (final Suit suit : Suits.list()) {
             int count = this.getSuitCount(suit);
 
             if (count > 0) {
-                result.put(suit, Integer.valueOf(count));
+                result.put(suit, count);
             }
         }
 
@@ -731,53 +755,13 @@ public class Pack implements Serializable {
         return squaresList;
     }
 
-    /**
-     * Returns the pack iterator.
-     * @return PackIterator the pack iterator.
-     */
-    public final PackIterator iterator() {
-        return new PackIteratorImpl(collection.iterator());
-    }
-    
     public final void nullCardAcquireMethod() {
-        for (final PackIterator iterator = iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : list()) {
             card.setCardAcquireMethod(null);
         }
     }
 
-    /**
-     * PackIteratorImpl class. Implements PackIterator interface.
-     */
-    private static class PackIteratorImpl implements PackIterator {
-
-        /**
-         * The internal collection enumerator.
-         */
-        private final Iterator<Card> enumeration;
-
-        /**
-         * Constructor.
-         * @param enumeration the internal collection enumerator.
-         */
-        public PackIteratorImpl(final Iterator<Card> enumeration) {
-            this.enumeration = enumeration;
-        }
-
-        /**
-         * Returns true if the iteration has more elements.
-         * @return boolean true if the iteration has more elements false otherwise.
-         */
-        public boolean hasNext() {
-            return enumeration.hasNext();
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         * @return Card the next element in the iteration.
-         */
-        public Card next() {
-            return enumeration.next();
-        }
+    public Iterable<Card> list() {
+        return collection;
     }
 }

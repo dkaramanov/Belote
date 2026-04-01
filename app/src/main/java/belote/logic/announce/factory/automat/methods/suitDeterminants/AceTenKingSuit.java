@@ -9,18 +9,19 @@
  */
 package belote.logic.announce.factory.automat.methods.suitDeterminants;
 
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.logic.announce.factory.automat.methods.suitDeterminants.base.RankSuitDeterminant;
 
 /**
  * Returns suit of which the player has Ace, Ten and King cards or null.
+ *
  * @author Dimitar Karamanov
  */
 public final class AceTenKingSuit extends RankSuitDeterminant {
 
     public AceTenKingSuit() {
-        addRank(Rank.Ace);
-        addRank(Rank.Ten);
-        addRank(Rank.King);
+        addRank(Ranks.Ace);
+        addRank(Ranks.Ten);
+        addRank(Ranks.King);
     }
 }

@@ -10,23 +10,25 @@
 package belote.logic.play.strategy;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
 import belote.bean.announce.AnnounceUnit;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.executors.trumps.AttackCard;
 import belote.logic.play.strategy.automat.executors.trumps.DefenceCard;
 import belote.logic.play.strategy.validators.TrumpGameCardValidator;
 
 /**
  * CLPlayCardStrategy class. Trump suit strategy playing class.
+ *
  * @author Dimitar Karamanov
  */
 public final class TrumpPlayStrategy extends BasePlayStrategy {
 
     /**
      * Constructor.
+     *
      * @param game belote game instance.
      */
     public TrumpPlayStrategy(final Game game) {
@@ -35,6 +37,7 @@ public final class TrumpPlayStrategy extends BasePlayStrategy {
 
     /**
      * Returns next attack player.
+     *
      * @param attack the round attack card.
      * @return Player next attack player.
      */
@@ -51,6 +54,7 @@ public final class TrumpPlayStrategy extends BasePlayStrategy {
 
     /**
      * Returns trump suit.
+     *
      * @return Suit trump suit.
      */
     private Suit getTrumpSuit() {

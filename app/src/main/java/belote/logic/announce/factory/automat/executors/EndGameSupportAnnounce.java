@@ -9,6 +9,8 @@
  */
 package belote.logic.announce.factory.automat.executors;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 import belote.logic.announce.factory.automat.methods.EndGameSupportAllTrumpAnnounce;
@@ -19,21 +21,24 @@ import belote.logic.announce.factory.automat.methods.conditions.base.MultipleOrC
 
 /**
  * EndGameSupportAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class EndGameSupportAnnounce extends AnnounceExecutor {
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public EndGameSupportAnnounce(final Game game) {
-        super(game);
+    public EndGameSupportAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
         // Preconditions
         addPreCondition(new MultipleOrCondition(new OppositeTeamEndGameZone(game), new PlayerTeamEndGameZone()));
         addPreCondition(new PartnerNormalTrumpAnnounce(game));
         // Methods
-        register(new EndGameSupportTrumpAnnounce(game));
+        register(new EndGameSupportTrumpAnnounce(game, gameLock));
         register(new EndGameSupportAllTrumpAnnounce(game));
         //register(new EndGameSupportNoTrumpAnnounce(game));
     }

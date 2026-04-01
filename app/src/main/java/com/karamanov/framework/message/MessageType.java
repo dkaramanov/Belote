@@ -11,10 +11,11 @@ package com.karamanov.framework.message;
 
 /**
  * UserMessageType class used in SystemMessage class as type.
+ *
  * @author Dimitar Karamanov
  */
 public final class MessageType {
- 
+
     /**
      * Type ID.
      */
@@ -22,6 +23,7 @@ public final class MessageType {
 
     /**
      * Constructor.
+     *
      * @param type ID.
      */
     public MessageType(final String type) {
@@ -30,6 +32,7 @@ public final class MessageType {
 
     /**
      * The method checks if this MessageType and specified object (MessageType) are equal.
+     *
      * @param obj specified object.
      * @return true if this MessageType is equal to specified object and false otherwise.
      */
@@ -43,6 +46,7 @@ public final class MessageType {
 
     /**
      * Returns hash code generated on message type ID value.
+     *
      * @return int hash code.
      */
     public int hashCode() {

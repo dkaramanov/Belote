@@ -11,15 +11,16 @@ package belote.bean.pack.card.suit;
 
 /**
  * Suit heart class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Heart extends Suit {
+final class Heart extends Suit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -7054021151876037143L;
-    
+
     /**
      * Heart ID constant.
      */
@@ -34,6 +35,7 @@ public final class Heart extends Suit {
 
     /**
      * Returns suit's color.
+     *
      * @return String suit's color.
      */
     public String getSuitColor() {

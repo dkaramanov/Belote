@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 /**
  * MessageQueue class.
+ *
  * @author Dimitar Karamanov
  */
 public final class MessageQueue {
@@ -31,6 +32,7 @@ public final class MessageQueue {
 
     /**
      * Adds message to the list.
+     *
      * @param message new message.
      */
     protected final void addMessage(final Message message) {
@@ -44,6 +46,7 @@ public final class MessageQueue {
 
     /**
      * Returns one message from the queue.
+     *
      * @return Message extracted from queue.
      */
     protected final Message getMessage() {
@@ -65,6 +68,7 @@ public final class MessageQueue {
 
     /**
      * Returns true if there are messages int the queue false otherwise.
+     *
      * @return boolean true if there are messages int the queue false otherwise.
      */
     public final boolean hasMessage() {

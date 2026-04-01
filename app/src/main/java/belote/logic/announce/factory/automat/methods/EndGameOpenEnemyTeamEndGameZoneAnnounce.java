@@ -9,9 +9,11 @@
  */
 package belote.logic.announce.factory.automat.methods;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.base.AnnounceMethod;
 import belote.logic.announce.factory.automat.executors.EndGameOpenNormalAnnounce;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
@@ -21,6 +23,7 @@ import belote.logic.announce.factory.automat.methods.conditions.base.MultipleAnd
 
 /**
  * EndGameOpenEnemyTeamEndGameZoneAnnounce class. Announce factory method which creates end game open announce.
+ *
  * @author Dimitar Karamanov
  */
 public final class EndGameOpenEnemyTeamEndGameZoneAnnounce extends ConditionListMethod {
@@ -32,16 +35,19 @@ public final class EndGameOpenEnemyTeamEndGameZoneAnnounce extends ConditionList
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public EndGameOpenEnemyTeamEndGameZoneAnnounce(final Game game) {
-        super(game);
+    public EndGameOpenEnemyTeamEndGameZoneAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
         addAnnounceCondition(new MultipleAndCondition(new TeamCanAnnounce(game), new OppositeTeamEndGameZone(game)));
-        engGameOpenNormalAnnounce = new EndGameOpenNormalAnnounce(game);
+        engGameOpenNormalAnnounce = new EndGameOpenNormalAnnounce(game, gameLock);
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

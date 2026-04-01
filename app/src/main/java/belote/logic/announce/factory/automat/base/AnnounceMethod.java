@@ -9,17 +9,19 @@
  */
 package belote.logic.announce.factory.automat.base;
 
-import belote.bean.Player;
 import belote.bean.announce.Announce;
+import belote.bean.player.Player;
 
 /**
  * AnnounceMethod base class. Base class of all classes which return Announce instance.
+ *
  * @author Dimitar Karamanov
  */
 public interface AnnounceMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Announce object instance or null.
      */

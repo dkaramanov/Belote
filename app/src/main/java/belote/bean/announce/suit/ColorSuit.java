@@ -11,13 +11,14 @@ package belote.bean.announce.suit;
 
 /**
  * TrumpSuit class. The abstract base class of all color announce suits.
+ *
  * @author Dimitar Karamanov
  */
-public abstract class ColorSuit extends AnnounceSuit {
+abstract class ColorSuit extends AnnounceSuit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -5476666027564282061L;
 
     /**
@@ -27,6 +28,7 @@ public abstract class ColorSuit extends AnnounceSuit {
 
     /**
      * Constructor.
+     *
      * @param type Type.
      */
     ColorSuit(final int type) {
@@ -36,6 +38,7 @@ public abstract class ColorSuit extends AnnounceSuit {
     /**
      * Trump suit classes are Club, Diamond, Heart and Spade. If the objects is instance of some of them the result is true otherwise is false. This is the base
      * class for all color suits so the method result is always true.
+     *
      * @return boolean true if is color suit false otherwise.
      */
     public final boolean isTrumpSuit() {
@@ -44,9 +47,15 @@ public abstract class ColorSuit extends AnnounceSuit {
 
     /**
      * Returns the game base points for that announce suit. The points are used in double and redouble calculation. For color suit the base points are the same.
+     *
      * @return int belote game base points.
      */
     public final int getBasePoints() {
         return GAME_BASE_POINTS;
+    }
+
+    @Override
+    public final boolean isColorless() {
+        return false;
     }
 }

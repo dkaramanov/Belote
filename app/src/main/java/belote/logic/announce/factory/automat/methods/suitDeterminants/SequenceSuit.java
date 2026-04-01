@@ -9,17 +9,19 @@
  */
 package belote.logic.announce.factory.automat.methods.suitDeterminants;
 
-import belote.bean.Player;
+import java.util.Iterator;
+
 import belote.bean.pack.card.rank.Rank;
 import belote.bean.pack.card.suit.Suit;
 import belote.bean.pack.sequence.Sequence;
-import belote.bean.pack.sequence.SequenceIterator;
 import belote.bean.pack.sequence.SequenceList;
 import belote.bean.pack.sequence.SequenceType;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.suitDeterminants.base.SuitDeterminant;
 
 /**
  * Returns suit of which the player has sequence. (Only one is possible during game announce).
+ *
  * @author Dimitar Karamanov
  */
 public final class SequenceSuit implements SuitDeterminant {
@@ -43,6 +45,7 @@ public final class SequenceSuit implements SuitDeterminant {
 
     /**
      * Constructor.
+     *
      * @param sequenceType looking for.
      */
     public SequenceSuit(final SequenceType sequenceType) {
@@ -51,8 +54,9 @@ public final class SequenceSuit implements SuitDeterminant {
 
     /**
      * Constructor
+     *
      * @param sequenceType looking for.
-     * @param rank Maximum sequence rank.
+     * @param rank         Maximum sequence rank.
      */
     public SequenceSuit(final SequenceType sequenceType, final Rank rank) {
         this.sequenceType = sequenceType;
@@ -61,6 +65,7 @@ public final class SequenceSuit implements SuitDeterminant {
 
     /**
      * Returns the determined suit.
+     *
      * @param player which has to declare the next announce.
      * @return Suit instance or null.
      */
@@ -76,6 +81,7 @@ public final class SequenceSuit implements SuitDeterminant {
 
     /**
      * Returns sequence suit.
+     *
      * @param player which has to declare next announce.
      * @return Suit instance or null.
      */
@@ -89,12 +95,13 @@ public final class SequenceSuit implements SuitDeterminant {
 
     /**
      * Returns first found sequence for provided player.
+     *
      * @param player which has to declare next announce.
      * @return Sequence instance or null.
      */
     private static Sequence getSequence(Player player) {
         final SequenceList sequencesList = player.getCards().getSequencesList();
-        final SequenceIterator iterator = sequencesList.iterator();
+        final Iterator<Sequence> iterator = sequencesList.list().iterator();
 
         if (iterator.hasNext()) {
             return iterator.next();

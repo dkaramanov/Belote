@@ -13,12 +13,14 @@ import com.karamanov.framework.graphics.Color;
 
 /**
  * DarkenImageTransformer class.
+ *
  * @author Dimitar Karamanov
  */
 public final class DarkenedImageTransformer extends BasicImageTransformer {
 
     /**
      * Transform method.
+     *
      * @param pixel which be transformed.
      * @return int transformed pixel value.
      */

@@ -9,14 +9,18 @@
  */
 package belote.logic.announce;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
+import belote.bean.player.Player;
+import belote.bean.player.Players;
 import belote.logic.announce.factory.automat.executors.BeloteGameAnnounceFactory;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 
 /**
  * AnnounceFactoryFacade class. Facade for methods related with game announce.
+ *
  * @author Dimitar Karamanov
  */
 public final class AnnounceGameLogic {
@@ -31,35 +35,50 @@ public final class AnnounceGameLogic {
      */
     private final AnnounceExecutor announceFactory;
 
+    private final ReentrantReadWriteLock gameLock;
+
     /**
      * Constructor.
+     *
      * @param game Instance of BelotGame for which the AnnounceFactory will create announce.
      */
-    public AnnounceGameLogic(final Game game) {
+    public AnnounceGameLogic(final Game game, final ReentrantReadWriteLock gameLock) {
         this.game = game;
-        announceFactory = new BeloteGameAnnounceFactory(game);
+        this.gameLock = gameLock;
+        announceFactory = new BeloteGameAnnounceFactory(game, gameLock);
     }
 
     /**
      * Add one more announce to the announce list.
      */
     public void processNextAnnounce() {
-        final Player player = getAnnounceOrderPlayer();
-        final Announce announce = announceFactory.getAnnounce(player);
-        game.getAnnounceList().add(announce);
+        gameLock.writeLock().lock();
+        try {
+            final Player player = getAnnounceOrderPlayer();
+            final Announce announce = announceFactory.getAnnounce(player);
+            game.getAnnounceList().add(announce);
+        } finally {
+            gameLock.writeLock().unlock();
+        }
     }
 
     /**
      * Returns next orderer player.
+     *
      * @return Player the next announce player which have to order.
      */
     public Player getAnnounceOrderPlayer() {
-        final int announceCount = game.getAnnounceList().getCount();
-        if (announceCount == 0) {
-            return game.getDealAttackPlayer();
-        } else {
-            final Announce announce = game.getAnnounceList().getAnnounce(announceCount - 1);
-            return game.getPlayerAfter(announce.getPlayer());
+        gameLock.readLock().lock();
+        try {
+            final int announceCount = game.getAnnounceList().getCount();
+            if (announceCount == 0) {
+                return game.getDealAttackPlayer();
+            } else {
+                final Announce announce = game.getAnnounceList().getAnnounce(announceCount - 1);
+                return Players.getPlayerAfter(announce.getPlayer());
+            }
+        } finally {
+            gameLock.readLock().unlock();
         }
     }
 }

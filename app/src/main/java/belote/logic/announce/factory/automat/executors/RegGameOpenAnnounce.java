@@ -9,22 +9,27 @@
  */
 package belote.logic.announce.factory.automat.executors;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 
 /**
  * RegGameOpenAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameOpenAnnounce extends AnnounceExecutor {
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public RegGameOpenAnnounce(final Game game) {
-        super(game);
+    public RegGameOpenAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
 
-        register(new RegGameNormalAnnounce(game));
+        register(new RegGameNormalAnnounce(game, gameLock));
     }
 }

@@ -10,10 +10,10 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.HasCard;
 import belote.logic.announce.factory.automat.methods.conditions.SuitCount;
@@ -23,6 +23,7 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.base.SuitD
 
 /**
  * RegGameSupportDominantSuitAnnounce class. Announce factory method which creates support dominant suit announce.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameSupportDominantSuitAnnounce extends ConditionListMethod {
@@ -31,20 +32,22 @@ public final class RegGameSupportDominantSuitAnnounce extends ConditionListMetho
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public RegGameSupportDominantSuitAnnounce(final Game game) {
         super(game);
         suitDeterminant = new DominantSuit();
-        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 3), new HasCard(Rank.Jack, suitDeterminant), new HasCard(Rank.Nine,
+        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 3), new HasCard(Ranks.Jack, suitDeterminant), new HasCard(Ranks.Nine,
                 suitDeterminant)));
-        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 3), new HasCard(Rank.Jack, suitDeterminant), new HasCard(Rank.Ace,
+        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 3), new HasCard(Ranks.Jack, suitDeterminant), new HasCard(Ranks.Ace,
                 suitDeterminant)));
-        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 4), new HasCard(Rank.Jack, suitDeterminant)));
+        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 4), new HasCard(Ranks.Jack, suitDeterminant)));
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

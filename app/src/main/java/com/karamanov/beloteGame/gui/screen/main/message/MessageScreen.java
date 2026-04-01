@@ -1,17 +1,18 @@
 package com.karamanov.beloteGame.gui.screen.main.message;
 
-import java.util.ArrayList;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
-import belote.bean.Player;
 
 import com.karamanov.beloteGame.R;
 import com.karamanov.framework.BooleanFlag;
+
+import java.util.List;
+
+import belote.bean.player.Player;
 
 public class MessageScreen extends Dialog {
 
@@ -19,7 +20,7 @@ public class MessageScreen extends Dialog {
 
     private final Player player;
 
-    public MessageScreen(Context context, Player player, ArrayList<MessageData> messages, BooleanFlag flag) {
+    public MessageScreen(Context context, Player player, List<MessageData> messages, BooleanFlag flag) {
         super(context);
 
         this.player = player;
@@ -31,7 +32,7 @@ public class MessageScreen extends Dialog {
         this.flag = flag;
         MessagePanel messagePanel = new MessagePanel(context, player, messages);
         setContentView(messagePanel);
-        
+
         setCancelable(true);
         setCanceledOnTouchOutside(true);
     }
@@ -51,8 +52,9 @@ public class MessageScreen extends Dialog {
 
     /**
      * Invoked when the navigational action is selected.
+     *
      * @param status - Bitfield of values defined by KeypadListener.
-     * @param time - Number of milliseconds since the device was turned on.
+     * @param time   - Number of milliseconds since the device was turned on.
      */
     public boolean onTouchEvent(MotionEvent event) {
         dismiss();

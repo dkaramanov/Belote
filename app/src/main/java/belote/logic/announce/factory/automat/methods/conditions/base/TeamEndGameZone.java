@@ -8,6 +8,7 @@ public abstract class TeamEndGameZone implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

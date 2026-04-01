@@ -10,20 +10,21 @@
 package belote.logic.play.strategy.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
-import belote.bean.pack.PackIterator;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * MaxSingleNoHandCard class. PlayCardMethod which implements the logic of playing the maximum rank single no hand card (to give it to the partner hand).
+ *
  * @author Dimitar Karamanov
  */
 public final class MaxSingleNoHandCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public MaxSingleNoHandCard(final Game game) {
@@ -32,15 +33,14 @@ public final class MaxSingleNoHandCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
-     * @param trump suit.
      * @return Card object instance or null.
      */
     protected Card getPlayMethodCard(final Player player) {
         Card result = null;
         final Suit trump = getTrump();
-        for (final PackIterator iterator = player.getCards().iterator(); iterator.hasNext();) {
-            final Card card = iterator.next();
+        for (final Card card : player.getCards().list()) {
             if (trump == null || !trump.equals(card.getSuit())) {
                 final int suitCount = player.getCards().getSuitCount(card.getSuit());
                 if (suitCount == SINGLE_CARD_COUNT && !isMaxSuitCardLeft(card, true)) {

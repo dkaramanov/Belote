@@ -9,27 +9,30 @@
  */
 package belote.logic.play.strategy.validators;
 
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 
 /**
  * Validatable interface used from all play strategies to validate the players move.
+ *
  * @author Dimitar Karamanov
  */
 public interface Validatable {
 
     /**
      * Validates player card.
+     *
      * @param player provided player.
-     * @param card provided card.
+     * @param card   provided card.
      * @return boolean true if the card is valid, false otherwise.
      */
     boolean validatePlayerCard(final Player player, final Card card);
 
     /**
      * Returns if the provided player has couple.
+     *
      * @param player provided player.
-     * @param card provided card.
+     * @param card   provided card.
      * @return boolean true if has a couple false otherwise.
      */
     boolean hasPlayerCouple(final Player player, final Card card);

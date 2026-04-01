@@ -9,28 +9,31 @@
  */
 package belote.bean.pack.square;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * SquareList class. Wrapper class of system collection used to hold and access Square instances.
+ *
  * @author Dimitar Karamanov
  */
 public final class SquareList implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 2716681164194070603L;
-    
+
     /**
      * Internal container collection.
      */
-    private ArrayList<Square> collection = new ArrayList<Square>();
+    private final ArrayList<Square> collection = new ArrayList<Square>();
 
     /**
      * Appends Square element to the end of the collection.
+     *
      * @param square - element to be appended to this list.
      */
     public void add(final Square square) {
@@ -46,6 +49,7 @@ public final class SquareList implements Serializable {
 
     /**
      * Returns whether the collection is empty.
+     *
      * @return boolean true if the collection is empty false otherwise.
      */
     public boolean isEmpty() {
@@ -53,63 +57,26 @@ public final class SquareList implements Serializable {
     }
 
     /**
-     * Returns an iterator over the elements in the collection.
-     * @return SquareIterator iterator.
-     */
-    public SquareIterator iterator() {
-        return new SquareIteratorImpl(collection.iterator());
-    }
-
-    /**
      * Returns a string representation of the object. The return name is based on class short name. This method has to be used only for debug purpose when the
      * project is not compiled with obfuscating. Don't use this method to represent the object. When the project is compiled with obfuscating the class name is
      * not the same.
+     *
      * @return String a string representation of the object.
      */
+    @NonNull
     public String toString() {
         final StringBuffer sb = new StringBuffer();
 
-        for (final SquareIterator iterator = iterator(); iterator.hasNext();) {
+        for (final Square square : list()) {
             if (sb.length() != 0) {
                 sb.append(" ");
             }
-            sb.append(iterator.next().toString());
+            sb.append(square.toString());
         }
         return sb.toString();
     }
 
-    /**
-     * SquareIteratorImpl class. Implements SquareIterator interface.
-     */
-    private class SquareIteratorImpl implements SquareIterator {
-
-        /**
-         * The internal collection enumerator.
-         */
-        private final Iterator<Square> enumeration;
-
-        /**
-         * Constructor.
-         * @param enumeration the internal collection enumerator.
-         */
-        public SquareIteratorImpl(final Iterator<Square> enumeration) {
-            this.enumeration = enumeration;
-        }
-
-        /**
-         * Returns true if the iteration has more elements.
-         * @return boolean true if the iteration has more elements false otherwise.
-         */
-        public boolean hasNext() {
-            return enumeration.hasNext();
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         * @return Square the next element in the iteration.
-         */
-        public Square next() {
-            return enumeration.next();
-        }
+    public Iterable<Square> list() {
+        return collection;
     }
 }

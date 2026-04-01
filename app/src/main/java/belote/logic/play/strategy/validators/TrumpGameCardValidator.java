@@ -10,20 +10,22 @@
 package belote.logic.play.strategy.validators;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
 import belote.bean.announce.AnnounceUnit;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 
 /**
  * TrumpGameCardValidator class.
+ *
  * @author Dimitar Karamanov
  */
 public class TrumpGameCardValidator extends BaseCardValidator {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public TrumpGameCardValidator(final Game game) {
@@ -32,8 +34,9 @@ public class TrumpGameCardValidator extends BaseCardValidator {
 
     /**
      * Validates player card.
+     *
      * @param player provided player.
-     * @param card provided card.
+     * @param card   provided card.
      * @return boolean true if the card is valid, false otherwise.
      */
     public boolean validateNoAttackPlayerCard(final Player player, final Card card, final Card attackCard) {
@@ -47,6 +50,7 @@ public class TrumpGameCardValidator extends BaseCardValidator {
 
     /**
      * Returns if the provided card is a couple card.
+     *
      * @param card provided card.
      * @return boolean true if the card is from a couple false otherwise.
      */
@@ -56,8 +60,9 @@ public class TrumpGameCardValidator extends BaseCardValidator {
 
     /**
      * Validates player card on trump attack card.
-     * @param player provided player.
-     * @param card provided card.
+     *
+     * @param player     provided player.
+     * @param card       provided card.
      * @param attackCard attack card.
      * @return boolean true if the card is valid, false otherwise.
      */
@@ -70,16 +75,14 @@ public class TrumpGameCardValidator extends BaseCardValidator {
         if (isSameSuitCardAndHasNoBigger(player, card, handCard)) {
             return true;
         }
-        if (isDifferentSuitAndHasNoFromSuit(player, card, handCard)) {
-            return true;
-        }
-        return false;
+        return isDifferentSuitAndHasNoFromSuit(player, card, handCard);
     }
 
     /**
      * Validates player card on no trump attack card.
-     * @param player provided player.
-     * @param card provided card.
+     *
+     * @param player     provided player.
+     * @param card       provided card.
      * @param attackCard attack card.
      * @return boolean true if the card is valid, false otherwise.
      */
@@ -91,16 +94,12 @@ public class TrumpGameCardValidator extends BaseCardValidator {
             // Return true if the player has no trump card
             if (!player.getCards().hasSuitCard(getTrumpSuit())) {
                 return true; // Check if is played trump card yet (somebody had
-                             // played trump card before the player)
+                // played trump card before the player)
             }
             if (game.getTrickCards().hasSuitCard(getTrumpSuit())) {
-                if (validatePlayBiggerTrumpCard(player, card, attackCard)) {
-                    return true;
-                }
+                return validatePlayBiggerTrumpCard(player, card, attackCard);
             } else {
-                if (validatePlayTrumpCard(player, card, attackCard)) {
-                    return true;
-                }
+                return validatePlayTrumpCard(player, card, attackCard);
             }
         }
 
@@ -109,8 +108,9 @@ public class TrumpGameCardValidator extends BaseCardValidator {
 
     /**
      * Validates player when have to play bigger trump card if has or other.
-     * @param player provided player.
-     * @param card provided card.
+     *
+     * @param player     provided player.
+     * @param card       provided card.
      * @param attackCard attack card.
      * @return boolean true if the card is valid, false otherwise.
      */
@@ -125,16 +125,14 @@ public class TrumpGameCardValidator extends BaseCardValidator {
         if (card.isSameSuitBiggerCard(maxTrumpCard)) {
             return true;
         }
-        if (player.getCards().findMaxSuitCard(getTrumpSuit()).compareRankTo(maxTrumpCard) < 0) {
-            return true;
-        }
-        return false;
+        return player.getCards().findMaxSuitCard(getTrumpSuit()).compareRankTo(maxTrumpCard) < 0;
     }
 
     /**
      * Validates player card when have to play obligatory trump card if has.
-     * @param player provided player.
-     * @param card provided card.
+     *
+     * @param player     provided player.
+     * @param card       provided card.
      * @param attackCard attack card.
      * @return boolean true if the card is valid, false otherwise.
      */
@@ -144,14 +142,12 @@ public class TrumpGameCardValidator extends BaseCardValidator {
         }
 
         Player handPlayer = game.getPlayerByCard(game.getTrickCards().getHandAttackSuitCard());
-        if (player.isSameTeam(handPlayer)) {
-            return true;
-        }
-        return false;
+        return player.isSameTeam(handPlayer);
     }
 
     /**
      * Returns trump suit.
+     *
      * @return Suit trump suit.
      */
     private Suit getTrumpSuit() {

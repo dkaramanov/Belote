@@ -11,6 +11,7 @@ package com.karamanov.framework.graphics;
 
 /**
  * Rectangle class.
+ *
  * @author Dimitar Karamanov
  */
 public final class Rectangle {
@@ -37,9 +38,10 @@ public final class Rectangle {
 
     /**
      * Constructor.
-     * @param x position.
-     * @param y position.
-     * @param width of the rectangle.
+     *
+     * @param x      position.
+     * @param y      position.
+     * @param width  of the rectangle.
      * @param height of the rectangle.
      */
     public Rectangle(final int x, final int y, final int width, final int height) {
@@ -51,6 +53,7 @@ public final class Rectangle {
 
     /**
      * Validates size to be fixed into another rectangle size.
+     *
      * @param validator a rectangle which is the validate object.
      */
     public void validate(final Rectangle validator) {
@@ -62,6 +65,7 @@ public final class Rectangle {
 
     /**
      * Returns true if the current rectangle includes the provided one, false otherwise.
+     *
      * @param rectangle which will be checked for include.
      * @return boolean true or false.
      */
@@ -83,6 +87,7 @@ public final class Rectangle {
 
     /**
      * Returns true if the current rectangle includes the provided one, false otherwise.
+     *
      * @param pX x coordinate of the object.
      * @param pY y coordinate of the object.
      * @return boolean true or false.
@@ -105,6 +110,7 @@ public final class Rectangle {
 
     /**
      * Returns union of current rectangle and provided one.
+     *
      * @param rectangle which will be united with current.
      * @return Rectangle union of both.
      */
@@ -120,6 +126,7 @@ public final class Rectangle {
 
     /**
      * Validates X to be fixed into another rectangle size.
+     *
      * @param validator a rectangle which is the validate object.
      */
     private void validateX(final Rectangle validator) {
@@ -130,6 +137,7 @@ public final class Rectangle {
 
     /**
      * Validates Y to be fixed into another rectangle size.
+     *
      * @param validator a rectangle which is the validate object.
      */
     private void validateY(final Rectangle validator) {
@@ -140,6 +148,7 @@ public final class Rectangle {
 
     /**
      * Validates Width to be fixed into another rectangle size.
+     *
      * @param validator a rectangle which is the validate object.
      */
     private void validateWidth(final Rectangle validator) {
@@ -150,6 +159,7 @@ public final class Rectangle {
 
     /**
      * Validates Height to be fixed into another rectangle size.
+     *
      * @param validator a rectangle which is the validate object.
      */
     private void validateHeight(final Rectangle validator) {

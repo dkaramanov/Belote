@@ -11,18 +11,21 @@ package belote.base;
 
 /**
  * IntegerIterator interface.
+ *
  * @author Dimitar Karamanov
  */
 public interface IntegerIterator {
 
     /**
      * Returns true if the iteration has more elements.
+     *
      * @return boolean true if the iteration has more elements false otherwise.
      */
     boolean hasNext();
 
     /**
      * Returns the next element in the iteration or throws Exception.
+     *
      * @return Integer object which is the next element in the iteration.
      */
     Integer next();

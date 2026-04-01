@@ -13,6 +13,7 @@ import com.karamanov.framework.graphics.Color;
 
 /**
  * MixedColorImageTransformer class.
+ *
  * @author Dimitar Karamanov
  */
 public final class MixedColorImageTransformer extends BasicImageTransformer {
@@ -34,6 +35,7 @@ public final class MixedColorImageTransformer extends BasicImageTransformer {
 
     /**
      * Constructor.
+     *
      * @param color mix color.
      */
     public MixedColorImageTransformer(final Color color) {
@@ -44,6 +46,7 @@ public final class MixedColorImageTransformer extends BasicImageTransformer {
 
     /**
      * Transform method.
+     *
      * @param pixel which be transformed.
      * @return int transformed pixel value.
      */

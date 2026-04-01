@@ -11,8 +11,8 @@ package belote.logic.play.strategy.automat.executors.trumpsLess;
 
 import belote.bean.Game;
 import belote.logic.play.strategy.automat.base.executor.PlayCardExecutor;
-import belote.logic.play.strategy.automat.methods.MaxSingleNoHandCardToPartner;
 import belote.logic.play.strategy.automat.methods.MaxSingleDoubleReCardToPartner;
+import belote.logic.play.strategy.automat.methods.MaxSingleNoHandCardToPartner;
 import belote.logic.play.strategy.automat.methods.MinMeterSuitCard;
 import belote.logic.play.strategy.automat.methods.MinimumOfAllCard;
 import belote.logic.play.strategy.automat.methods.trumpsLess.ChooseTwoSuitsCard;
@@ -25,12 +25,14 @@ import belote.logic.play.strategy.automat.methods.trumpsLess.SingleNoMaxCard;
 /**
  * NeedlessCard class. Implements the logic to play no needed card and is called after obligatory rules. Used in AllTrumptXXX and NoTrumpXXX
  * executors.
+ *
  * @author Dimitar Karamanov
  */
 public final class NeedlessCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public NeedlessCard(final Game game) {

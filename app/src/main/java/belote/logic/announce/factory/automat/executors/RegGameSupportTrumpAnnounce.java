@@ -9,9 +9,11 @@
  */
 package belote.logic.announce.factory.automat.executors;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 import belote.logic.announce.factory.automat.methods.RegGameSupportFiftyOrHundredAnnounce;
 import belote.logic.announce.factory.automat.methods.RegGameSupportTerzaAnnounce;
@@ -20,6 +22,7 @@ import belote.logic.announce.factory.transformers.SuitToAllTrumpAnnounce;
 
 /**
  * RegGameSupportTrumpAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameSupportTrumpAnnounce extends AnnounceExecutor {
@@ -28,21 +31,24 @@ public final class RegGameSupportTrumpAnnounce extends AnnounceExecutor {
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public RegGameSupportTrumpAnnounce(final Game game) {
-        super(game);
+    public RegGameSupportTrumpAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
 
         suitToAllTrumpAnnounce = new SuitToAllTrumpAnnounce(game);
 
         register(new RegGameSupportFiftyOrHundredAnnounce(game));
         register(new RegGameSupportTerzaAnnounce(game));
-        register(new RegGameSupportSimpleAnnounce(game));
+        register(new RegGameSupportSimpleAnnounce(game, gameLock));
     }
 
     /**
      * Handler method providing the user to write additional code which is executed after the getPlayerCard(Player).
-     * @param player for which is called the executor
+     *
+     * @param player   for which is called the executor
      * @param announce the result of the method getAnnounce(Player)
      * @return Announce - the same or transformed one.
      */

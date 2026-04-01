@@ -1,7 +1,7 @@
 package belote.logic.play.strategy.automat.executors.trumpsLess.allTrumps;
 
 import belote.bean.Game;
-import belote.bean.Player;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.executor.PlayCardExecutor;
 import belote.logic.play.strategy.automat.executors.PossiblePartnerSuitCard;
 import belote.logic.play.strategy.automat.executors.trumpsLess.NeedlessCard;
@@ -17,6 +17,7 @@ class AttackCardOnDoubleRedouble extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public AttackCardOnDoubleRedouble(final Game game) {
@@ -35,10 +36,11 @@ class AttackCardOnDoubleRedouble extends PlayCardExecutor {
 
     /**
      * Handler method providing the user facility to check custom condition for methods executions.
+     *
      * @param player for which is called the executor
      * @return true to process method execution false to not.
      */
     protected boolean fitPreCondition(final Player player) {
-         return game.getAnnounceList().getRedoubleAnnounce() != null || game.getAnnounceList().getDoubleAnnounce() != null;
+        return game.getAnnounceList().getRedoubleAnnounce() != null || game.getAnnounceList().getDoubleAnnounce() != null;
     }
 }

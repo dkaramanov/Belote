@@ -15,6 +15,7 @@ import belote.bean.points.PointsInfo;
 
 /**
  * PointsCalculator class. Base class of all game calculators.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class PointsCalculator {
@@ -31,6 +32,7 @@ public abstract class PointsCalculator {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public PointsCalculator(Game game) {
@@ -42,31 +44,34 @@ public abstract class PointsCalculator {
      */
     public final void calculateTeamsPoints() {
         // Calculate each team points
-        for (int i = 0; i < game.getTeamsCount(); i++) {
-            calculateTeamPoints(game.getTeam(i));
+        for (final Team team : game.teams()) {
+            calculateTeamPoints(team);
         }
 
         // Round each team points (For AT and CL needs to be separated for NT
         // doesn't matter)
-        for (int i = 0; i < game.getTeamsCount(); i++) {
-            trickTeamPoints(game.getTeam(i));
+        for (final Team team : game.teams()) {
+            trickTeamPoints(team);
         }
     }
 
     /**
      * Calculates team points.
+     *
      * @param team for which the points will be calculated.
      */
     public abstract void calculateTeamPoints(Team team);
 
     /**
      * Tricks team points.
+     *
      * @param team for which the points will be rounded.
      */
     public abstract void trickTeamPoints(Team team);
 
     /**
      * Calculates announce points for provided team.
+     *
      * @param team provided one
      */
     protected final void calculateAnnouncePoints(Team team) {
@@ -77,6 +82,7 @@ public abstract class PointsCalculator {
 
     /**
      * Calculates last hand.
+     *
      * @param team for which the last hand points are calculating.
      */
     protected final void calculateLastHand(Team team) {
@@ -87,7 +93,8 @@ public abstract class PointsCalculator {
 
     /**
      * Rounds team points.
-     * @param team for which the points will be rounded.
+     *
+     * @param team        for which the points will be rounded.
      * @param ROUND_DIGID which is used in points rounding.
      */
     protected final void roundTrumpTeamPoints(Team team, final int ROUND_DIGID) {
@@ -110,6 +117,7 @@ public abstract class PointsCalculator {
 
     /**
      * Calculates team points for Trump or AT game.
+     *
      * @param team for which the points will be calculated.
      */
     protected final void calculateTrumpTeamPoints(Team team) {

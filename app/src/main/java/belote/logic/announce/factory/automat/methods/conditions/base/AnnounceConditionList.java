@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 /**
  * AnnounceConditionList class. Wrapper class of system collection used to hold and access AnnounceConditions instances.
+ *
  * @author Dimitar Karamanov
  */
 public final class AnnounceConditionList {
@@ -39,6 +40,7 @@ public final class AnnounceConditionList {
 
     /**
      * Adds a condition to the collection.
+     *
      * @param condition to be added
      */
     public void add(AnnounceCondition condition) {
@@ -47,6 +49,7 @@ public final class AnnounceConditionList {
 
     /**
      * Returns collection size.
+     *
      * @return int size of the method's collection
      */
     public int size() {
@@ -55,6 +58,7 @@ public final class AnnounceConditionList {
 
     /**
      * Returns iterator for the collection.
+     *
      * @return PlayCardMethodIterator iterator.
      */
     public AnnounceConditionIterator iterator() {
@@ -73,6 +77,7 @@ public final class AnnounceConditionList {
 
         /**
          * Constructor.
+         *
          * @param enumeration the internal collection enumerator.
          */
         public AnnounceConditionIteratorImpl(Iterator<AnnounceCondition> enumeration) {
@@ -81,6 +86,7 @@ public final class AnnounceConditionList {
 
         /**
          * Returns true if the iteration has more elements.
+         *
          * @return boolean true if the iteration has more elements false otherwise.
          */
         public boolean hasNext() {
@@ -89,6 +95,7 @@ public final class AnnounceConditionList {
 
         /**
          * Returns the next element in the iteration.
+         *
          * @return Playable the next element in the iteration.
          */
         public AnnounceCondition next() {

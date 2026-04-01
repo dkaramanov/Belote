@@ -15,12 +15,14 @@ import belote.bean.announce.Announce;
 
 /**
  * WinGamePointsDistributor distributor class. Points distributor class for equal game.
+ *
  * @author Dimitar Karamanov
  */
 public final class EqualGamePointsDistributor extends PointsDistributor {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public EqualGamePointsDistributor(Game game) {
@@ -29,6 +31,7 @@ public final class EqualGamePointsDistributor extends PointsDistributor {
 
     /**
      * Distributes points when the game type is TP_NORMAL.
+     *
      * @param normalAnnounce announce.
      */
     public void distributeTeamsPointsNormalGame(Announce normalAnnounce) {
@@ -48,6 +51,7 @@ public final class EqualGamePointsDistributor extends PointsDistributor {
 
     /**
      * Distributes points when the game type is TP_DOUBLE.
+     *
      * @param normalAnnounce announce.
      */
     public void distributeTeamsPointsDoubleGame(Announce normalAnnounce) {
@@ -56,6 +60,7 @@ public final class EqualGamePointsDistributor extends PointsDistributor {
 
     /**
      * Distributes points when the game type is TP_REDOUBLE.
+     *
      * @param normalAnnounce announce.
      */
     public void distributeTeamsPointsRedoubleGame(Announce normalAnnounce) {
@@ -64,8 +69,9 @@ public final class EqualGamePointsDistributor extends PointsDistributor {
 
     /**
      * Distributes points when the game type is TP_REDOUBLE.
+     *
      * @param normalAnnounce Announce instance.
-     * @param multiplicator used to multiply the points.
+     * @param multiplicator  used to multiply the points.
      */
     private void distributeTeamsPointsRedoubleGame(Announce normalAnnounce, int multiplicator) {
         final Team announceTeam = normalAnnounce.getPlayer().getTeam();

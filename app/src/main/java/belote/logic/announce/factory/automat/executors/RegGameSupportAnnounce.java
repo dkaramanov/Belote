@@ -9,6 +9,8 @@
  */
 package belote.logic.announce.factory.automat.executors;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 import belote.logic.announce.factory.automat.methods.RegGameSupportAllTrumpAnnounce;
@@ -16,20 +18,23 @@ import belote.logic.announce.factory.automat.methods.conditions.PartnerTrumpAnno
 
 /**
  * RegGameSupportAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameSupportAnnounce extends AnnounceExecutor {
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public RegGameSupportAnnounce(final Game game) {
-        super(game);
+    public RegGameSupportAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
         // Preconditions
         addPreCondition(new PartnerTrumpAnnounce(game));
         // Methods
-        register(new RegGameSupportTrumpAnnounce(game));
+        register(new RegGameSupportTrumpAnnounce(game, gameLock));
         register(new RegGameSupportAllTrumpAnnounce(game));
         //register(new RegGameSupportNoTrumpAnnounce(game));
     }

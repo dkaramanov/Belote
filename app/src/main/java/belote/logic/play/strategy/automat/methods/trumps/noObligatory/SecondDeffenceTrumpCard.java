@@ -10,20 +10,23 @@
 package belote.logic.play.strategy.automat.methods.trumps.noObligatory;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
+import belote.bean.player.Players;
 import belote.logic.play.strategy.automat.base.method.BaseTrumpMethod;
 
 /**
  * SecondDeffenceTrumpCard class. PlayCardMethod which implements the logic of playing a card when the player is on second defense position.
  * (Analyze if to play trump or not).
+ *
  * @author Dimitar Karamanov
  */
 public final class SecondDeffenceTrumpCard extends BaseTrumpMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public SecondDeffenceTrumpCard(final Game game) {
@@ -32,8 +35,9 @@ public final class SecondDeffenceTrumpCard extends BaseTrumpMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
-     * @param trump suit.
+     * @param trump  suit.
      * @return Card object instance or null.
      */
     protected Card getPlayMethodCard(final Player player, final Suit trump) {
@@ -41,7 +45,7 @@ public final class SecondDeffenceTrumpCard extends BaseTrumpMethod {
             final int count = player.getCards().getSuitCount(trump);
             final Card maxTrumpCard = player.getCards().findMaxSuitCard(trump);
             final Card maxAttackSuitCard = game.getTrickCards().getHandAttackSuitCard();
-            final Player lastPlayer = game.getPlayerAfter(player);
+            final Player lastPlayer = Players.getPlayerAfter(player);
             final boolean isAnnouncePlayer = lastPlayer.equals(game.getAnnounceList().getOpenContractAnnouncePlayer());
 
             // If the last(the 4th round position) player is the color game

@@ -1,16 +1,17 @@
 package com.karamanov.beloteGame;
 
+import android.os.Environment;
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import android.os.Environment;
-import android.util.Log;
 import belote.base.BelotException;
 import belote.bean.GameMode;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.BeloteFacade;
 
 public class BeloteLogicTest {
@@ -28,6 +29,7 @@ public class BeloteLogicTest {
 
     /**
      * Start test point
+     *
      * @param args
      */
     public static void test() {
@@ -85,7 +87,7 @@ public class BeloteLogicTest {
         } else if (game.canDeal()) {
             processSingleAnnounceDeal(game);
         } else {
-            if (game.getGame().getAnnounceList().getContractAnnounce() == null) {
+            if (game.getContractAnnounce() == null) {
                 newAnnounceDeal(game);
             } else {
                 newGame(game);
@@ -128,9 +130,9 @@ public class BeloteLogicTest {
     }
 
     private static void playOneRound(BeloteFacade game) throws BelotException {
-        Player player = game.getGame().getTrickAttackPlayer();
+        Player player = game.getTrickAttackPlayer();
 
-        for (int i = 0; i < game.getGame().getPlayersCount(); i++) {
+        for (int i = 0; i < game.getPlayersCount(); i++) {
             addLog("Player -> " + player.getID() + " see logic");
 
             Card card = game.playSingleHand(player);
@@ -147,27 +149,27 @@ public class BeloteLogicTest {
 
     private static void saveLogInfo(BeloteFacade game) {
         // System.out.println("saveLogInfo");
-        Announce announce = game.getGame().getAnnounceList().getContractAnnounce();
+        Announce announce = game.getContractAnnounce();
         if (announce != null) {
             gameCount++;
 
             /*
              * StringBuffer sb = new StringBuffer(8000);
-             * 
+             *
              * Pack[] packs = new Pack[game.getPlayersCount()]; for (int i = 0; i < game.getPlayersCount(); i++) { packs[i] = new Pack(); for (TrickListIterator
              * rli = game.getTrickList().iterator(); rli.hasNext();) { Trick trick = rli.next(); packs[i].add(trick.getPlayerCard(game.getPlayer(i))); }
-             * 
+             *
              * if (announce.getAnnounceSuit().equals(AnnounceSuit.AllTrump)) { packs[i].arrangeAT(); } if
              * (announce.getAnnounceSuit().equals(AnnounceSuit.NotTrump)) { packs[i].arrangeNT(); } if (announce.isColorAnnounce()) { packs[i]
              * .arrangeCL(AnnounceUnit.transformFromAnnounceSuitToSuit(announce .getAnnounceSuit())); } }
-             * 
+             *
              * String count = "" + gameCount; int n = 7 - count.length(); for (int i = 0; i < n; i++) { count = "0" + count; }
-             * 
+             *
              * // String fileName = "LOG/game_" + count + "_" + announce.toString() + ".htm";
-             * 
+             *
              * sb.append("<html>"); sb.append("<body>"); sb.append("<table width = '100%'>"); sb.append("<tr><td>"); //sb.append("<b>" +
              * game.getAnnounceList().get .getAnnounceText() + "</b>"); sb.append("</td></tr>"); sb.append("</table>");
-             * 
+             *
              * sb.append("<br>"); sb.append("<table width = '100%' border='1' bgcolor = '#FFE6CC'>" ); sb.append("<tr>"); for (int i = 0; i <
              * game.getPlayersCount(); i++) { sb.append("<td width='25%'>"); sb.append("<b>" + game.getPlayer(i).toString() + "</b> "); sb.append("</td>"); }
              * sb.append("</tr>"); sb.append("<tr>"); for (int i = 0; i < game.getPlayersCount(); i++) { sb.append("<td width='25%'>"); sb.append("<b>P: " +
@@ -176,27 +178,27 @@ public class BeloteLogicTest {
              * "</b> "); sb.append("</td>"); } sb.append("</tr>"); sb.append("<tr>"); for (int i = 0; i < game.getPlayersCount(); i++) {
              * sb.append("<td width='25%'>"); sb.append("<b>M: " + game.getPlayer(i).getMissedSuits().toHTMLString() + "</b> "); sb.append("</td>"); }
              * sb.append("</tr>"); sb.append("</table>");
-             * 
+             *
              * for (TrickListIterator rli = game.getTrickList().iterator(); rli.hasNext();) { Trick round = rli.next(); Player player = round.getAttackPlayer();
-             * 
+             *
              * sb.append("<br>"); sb.append("<table width = '100%' border='1' bgcolor = '#FFE6CC'>" );
-             * 
+             *
              * sb.append("<tr>"); for (int i = 0; i < game.getPlayersCount(); i++) { sb.append("<td width='25%'>"); sb.append("<b>" + player.toString() +
              * "</b> "); // sb.append(packs[player.getID()].toHTMLString()); sb.append("</td>");
-             * 
+             *
              * packs[player.getID()].remove(round.getPlayerCard(player));
-             * 
+             *
              * player = game.getPlayerAfter(player); } sb.append("</tr>");
-             * 
+             *
              * sb.append("<tr>"); for (PackIterator pi = round.iterator(); pi.hasNext();) { Card card = pi.next(); sb.append("<td width='25%'>");
              * sb.append("<b>" + card.getCardAcquireMethod() + "</b>"); sb.append("</td>"); } sb.append("</tr>");
-             * 
+             *
              * sb.append("<tr>"); for (PackIterator pi = round.iterator(); pi.hasNext();) { Card card = pi.next(); sb.append("<td width='25%'>");
              * sb.append("<b>" + card.toString() + "</b>"); sb.append(" - "); sb.append(card.getRank().getRankSign()); sb.append(" ");
              * sb.append(card.getSuit().getSuitImageTag()); sb.append("</td>"); } sb.append("</tr>");
-             * 
+             *
              * sb.append("</table>"); }
-             * 
+             *
              * sb.append("</body>"); sb.append("</html>");
              */
             // Belot.addLog("Success !");
@@ -215,13 +217,13 @@ public class BeloteLogicTest {
         /*
          * try { File root = Environment.getExternalStorageDirectory(); if (root.canWrite()){ File file = new File(root, "test.txt"); if (!file.exists()) {
          * file.createNewFile(); } FileWriter fileWriter = new FileWriter(file, true);
-         * 
+         *
          * SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss"); String gc = String.valueOf(gameCount);
-         * 
+         *
          * while (gc.length() < 3) { gc = "0" + gc; }
-         * 
+         *
          * fileWriter.write(gc + " [" + f.format(new Date()) + "] " + string + "\n");
-         * 
+         *
          * fileWriter.flush(); fileWriter.close(); } } catch (IOException e) { //D.N. }
          */
     }

@@ -17,12 +17,16 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.RelativeLayout;
+import android.widget.Toolbar;
+
+import androidx.core.view.WindowCompat;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.R;
@@ -36,7 +40,7 @@ import com.karamanov.framework.message.Messageable;
 
 /**
  * BelotGameCanvas class.
- * 
+ *
  * @author Dimitar Karamanov
  */
 public final class BeloteActivity extends MessageActivity implements OnSharedPreferenceChangeListener {
@@ -56,34 +60,37 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
     //private RelativeLayout buttonsView;
     private RelativeLayout bodyView;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         addMessageListener(Belote.MT_KEY_PRESSED, new KeyPressedListener());
         addMessageListener(Belote.MT_TOUCH_EVENT, new TouchListener());
         addMessageListener(Belote.MT_EXIT_EVENT, new ExitListener());
         addMessageListener(Belote.MT_PAINT_EVENT, new PaintListener());
         addMessageListener(Belote.MT_CLOSE_END_GAME, new CloseEndGameListener());
-        
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String key = getString(R.string.prefBlackRedOrder);
         boolean blackRedOrder = preferences.getBoolean(key, Boolean.FALSE);
         Belote.getBeloteFacade(this).setBlackRedCardOrder(blackRedOrder);
 
         beloteView = new BeloteView(this);
-        
+
         dealer = new DealerFacade(this, beloteView);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         beloteView.setLayoutParams(rlp);
-        
         bodyView = new RelativeLayout(this);
-        bodyView.addView(beloteView);
 
+        bodyView.setLayoutParams(rlp);
+        bodyView.addView(beloteView);
         setContentView(bodyView);
 
         preferences.registerOnSharedPreferenceChangeListener(this);
+
+
     }
 
     @Override
@@ -96,7 +103,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
 
     /**
      * Initialize the contents of the Activity's standard options menu. You should place your menu items in to menu.
-     * 
+     *
      * @param menu - The options menu in which you place your items.
      */
     @Override
@@ -119,7 +126,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
     public boolean onPrepareOptionsMenu(Menu menu) {
         int base = Menu.CATEGORY_SECONDARY;
 
-        boolean showTricks = !Belote.getBeloteFacade(this).getGame().getTrickList().isEmpty();
+        boolean showTricks = !Belote.getBeloteFacade(this).isTrickListEmpty();
 
         MenuItem historyMenu = menu.findItem(base + MENU_CARDS_INDEX);
         if (showTricks) {
@@ -134,7 +141,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
         }
 
         MenuItem resetAnnounceMenu = menu.findItem(base + MENU_RESET_INDEX);
-        if (Belote.getBeloteFacade(this).getGame().isAnnounceGameMode() && Belote.getBeloteFacade(this).getGame().getAnnounceList().getCount() > 0) {
+        if (Belote.getBeloteFacade(this).isAnnounceGameMode() && Belote.getBeloteFacade(this).getAnnonceCount() > 0) {
             if (resetAnnounceMenu == null) {
                 resetAnnounceMenu = menu.add(base, base + MENU_RESET_INDEX, base + MENU_RESET_INDEX, getString(R.string.ResetAnnounce));
                 resetAnnounceMenu.setIcon(android.R.drawable.ic_menu_close_clear_cancel);
@@ -170,7 +177,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
                     //
                 }
             });
-            
+
             myAlertDialog.setCancelable(false);
             myAlertDialog.show();
         }
@@ -196,7 +203,12 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
         }
 
         if (item.getItemId() == base + MENU_RESET_INDEX) {
-            Belote.getBeloteFacade(this).getGame().getAnnounceList().clear();
+            Belote.getBeloteFacade(this).getGameLock().writeLock().lock();
+            try {
+                Belote.getBeloteFacade(this).getGame().getAnnounceList().clear();
+            } finally {
+                Belote.getBeloteFacade(this).getGameLock().writeLock().unlock();
+            }
             repaint();
         }
 
@@ -209,7 +221,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
         public void performMessage(Message message) {
             if (message.getData() instanceof Integer) {
                 Integer integer = (Integer) message.getData();
-                dealer.checkKeyPressed(integer.intValue());
+                dealer.checkKeyPressed(integer);
             }
         }
     }
@@ -240,7 +252,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
             dealer.invalidateGame();
         }
     }
-    
+
     private class CloseEndGameListener implements Messageable {
 
         @Override
@@ -248,7 +260,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
             dealer.onCloseEndGame();
         }
     }
-    
+
     @Override
     public void onBackPressed() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -260,20 +272,20 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
             myAlertDialog.setIcon(R.drawable.ic_launcher);
             myAlertDialog.setTitle(getString(R.string.Confirm));
             myAlertDialog.setMessage(getString(R.string.ExitQuestion));
-            
+
             myAlertDialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     Message tMessage = new Message(Belote.MT_EXIT_EVENT);
                     triggerMessage(tMessage);
                 }
             });
-            
+
             myAlertDialog.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     //
                 }
             });
-            
+
             myAlertDialog.setCancelable(false);
             myAlertDialog.show();
         } else {
@@ -310,7 +322,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
             triggerMessage(tMessage);
         }
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();

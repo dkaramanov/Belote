@@ -10,17 +10,19 @@
 package belote.logic.play.strategy.validators;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 
 /**
  * NullValidator class.
+ *
  * @author Dimitar Karamanov
  */
 public class NullValidator extends BaseCardValidator {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public NullValidator(final Game game) {
@@ -29,8 +31,9 @@ public class NullValidator extends BaseCardValidator {
 
     /**
      * Validates player card.
-     * @param player provided player.
-     * @param card provided card.
+     *
+     * @param player     provided player.
+     * @param card       provided card.
      * @param attackCard attack card.
      * @return boolean true if the card is valid, false otherwise.
      */
@@ -40,6 +43,7 @@ public class NullValidator extends BaseCardValidator {
 
     /**
      * Returns if the provided card is a couple card.
+     *
      * @param card provided card.
      * @return boolean true if the card is from a couple false otherwise.
      */

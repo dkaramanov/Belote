@@ -9,23 +9,18 @@
  */
 package belote.logic.announce.factory.automat.methods.conditions;
 
-import belote.bean.Player;
-import belote.bean.pack.square.SquareIterator;
-import belote.bean.pack.square.SquareList;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * PlayerSquare class.
+ *
  * @author Dimitar Karamanov
  */
 public final class HasSquare implements AnnounceCondition {
 
     public boolean process(final Player player) {
-        final SquareList equalCardsList = player.getCards().getSquaresList();
-        for (final SquareIterator iterator = equalCardsList.iterator(); iterator.hasNext();) {
-            return true;
-        }
-        return false;
+        return player.getCards().getSquaresList().list().iterator().hasNext();
     }
 
 }

@@ -11,15 +11,16 @@ package belote.bean.pack.card.suit;
 
 /**
  * Suit diamond class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Diamond extends Suit {
+final class Diamond extends Suit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -1654169925121692794L;
-    
+
     /**
      * Diamond ID constant.
      */
@@ -34,6 +35,7 @@ public final class Diamond extends Suit {
 
     /**
      * Returns suit's color.
+     *
      * @return String suit's color.
      */
     public String getSuitColor() {

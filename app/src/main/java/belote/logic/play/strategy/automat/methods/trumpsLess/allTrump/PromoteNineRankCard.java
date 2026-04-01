@@ -10,22 +10,24 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess.allTrump;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * AllTrumpMakePowerNineCard class. PlayCardMethod which implements the logic of playing a card from suit that the player has Rank.Nine card. The aim is to make
  * it power one by eliminating the Rank.Jack card.
+ *
  * @author Dimitar Karamanov
  */
 public final class PromoteNineRankCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public PromoteNineRankCard(final Game game) {
@@ -34,15 +36,15 @@ public final class PromoteNineRankCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player) {
-        for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
+        for (final Suit suit : Suits.list()) {
             final int count = player.getCards().getSuitCount(suit);
-            final Card jack = player.getCards().findCard(Rank.Jack, suit);
-            final Card nine = player.getCards().findCard(Rank.Nine, suit);
+            final Card jack = player.getCards().findCard(Ranks.Jack, suit);
+            final Card nine = player.getCards().findCard(Ranks.Nine, suit);
 
             if (jack == null && nine != null && count > SINGLE_CARD_COUNT && !isMaxSuitCardLeft(nine, false)) {
                 Player thirdDefencePlayer = getThirdDefencePlayer();

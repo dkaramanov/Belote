@@ -9,12 +9,13 @@
  */
 package belote.logic.announce.factory.automat.methods.conditions;
 
-import belote.bean.Player;
 import belote.bean.pack.card.rank.Rank;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * RankCount class. Returns true if the announce player has at minimum rank count.
+ *
  * @author Dimitar Karamanov
  */
 public final class RankCount implements AnnounceCondition {
@@ -31,7 +32,8 @@ public final class RankCount implements AnnounceCondition {
 
     /**
      * Constructor.
-     * @param rank which
+     *
+     * @param rank  which
      * @param count the minimum count of rank needed.
      */
     public RankCount(final Rank rank, final int count) {
@@ -41,6 +43,7 @@ public final class RankCount implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

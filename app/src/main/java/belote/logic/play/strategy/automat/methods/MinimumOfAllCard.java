@@ -10,18 +10,20 @@
 package belote.logic.play.strategy.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * MinAllCard class. PlayCardMethod which implements the logic of playing the minimum by rank of all cards.
+ *
  * @author Dimitar Karamanov
  */
 public final class MinimumOfAllCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public MinimumOfAllCard(final Game game) {
@@ -30,6 +32,7 @@ public final class MinimumOfAllCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */

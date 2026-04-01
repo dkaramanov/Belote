@@ -11,13 +11,14 @@ package belote.bean.announce.suit;
 
 /**
  * TrumplessSuit class. The abstract base class of "all trump" and "not trump" announce suits.
+ *
  * @author Dimitar Karamanov
  */
-public abstract class ColorlessSuit extends AnnounceSuit {
+abstract class ColorlessSuit extends AnnounceSuit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -1853693277831872107L;
 
     /**
@@ -27,6 +28,7 @@ public abstract class ColorlessSuit extends AnnounceSuit {
 
     /**
      * Constructor.
+     *
      * @param type Type.
      */
     ColorlessSuit(final int type) {
@@ -36,6 +38,7 @@ public abstract class ColorlessSuit extends AnnounceSuit {
     /**
      * Trump suit classes are Club, Diamond, Heart and Spade. If the objects is instance of some of them the result is true otherwise is false. This is the base
      * class for AllTrump and NotTrump announce suits so the method result is always false.
+     *
      * @return boolean true if is color suit false otherwise.
      */
     public final boolean isTrumpSuit() {
@@ -45,9 +48,15 @@ public abstract class ColorlessSuit extends AnnounceSuit {
     /**
      * Returns the game base points for that announce suit. The points are used in double and redouble calculation. For AllTrump and NotTrump announce suits the
      * base points are the same.
+     *
      * @return int belote game base points.
      */
     public final int getBasePoints() {
         return GAME_BASE_POINTS;
+    }
+
+    @Override
+    public final boolean isColorless() {
+        return true;
     }
 }

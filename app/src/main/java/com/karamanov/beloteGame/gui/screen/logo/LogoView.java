@@ -1,8 +1,8 @@
 package com.karamanov.beloteGame.gui.screen.logo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,15 +15,17 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.util.DisplayMetrics;
 import android.view.View;
-import belote.bean.pack.Pack;
-import belote.bean.pack.card.Card;
-import belote.bean.pack.card.suit.Suit;
+
+import androidx.annotation.NonNull;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.R;
 import com.karamanov.framework.graphics.ImageUtil;
+
+import belote.bean.pack.Pack;
+import belote.bean.pack.card.Card;
+import belote.bean.pack.card.suit.Suits;
 
 public final class LogoView extends View {
 
@@ -47,14 +49,14 @@ public final class LogoView extends View {
     public LogoView(Context context) {
         super(context);
 
-        Drawable d = getResources().getDrawable(R.drawable.acespade);
+        @SuppressLint("UseCompatLoadingForDrawables") Drawable d = getResources().getDrawable(R.drawable.acespade);
         desk = ((BitmapDrawable) d).getBitmap();
 
         logoPainter = new LogoPainter(context);
     }
 
     @Override
-    public void draw(Canvas canvas) {
+    public void draw(@NonNull Canvas canvas) {
         drawBufferedImage(canvas);
     }
 
@@ -65,7 +67,7 @@ public final class LogoView extends View {
     }
 
     private void drawBackground(Canvas canvas) {
-        GradientDrawable gradientDrawable = (GradientDrawable) getResources().getDrawable(R.drawable.score_bkg);
+        @SuppressLint("UseCompatLoadingForDrawables") GradientDrawable gradientDrawable = (GradientDrawable) getResources().getDrawable(R.drawable.score_bkg);
         gradientDrawable.setBounds(0, 0, getWidth(), getHeight());
         gradientDrawable.draw(canvas);
     }
@@ -95,19 +97,19 @@ public final class LogoView extends View {
         paint.setTypeface(Typeface.SERIF);
         Rect bounds = new Rect();
 
-        String autor = getResources().getString(R.string.Autor);
-        paint.getTextBounds(autor, 0, autor.length(), bounds);
+        String author = getResources().getString(R.string.Author);
+        paint.getTextBounds(author, 0, author.length(), bounds);
 
-        float x = (getWidth() - bounds.width()) / 2;
-        float y = 2 * getHeight() / 3 + (getHeight() / 3 - bounds.height() * 2 - bounds.height()) / 2;
-        canvas.drawText(autor, x, y, paint);
+        float x = (float) (getWidth() - bounds.width()) / 2;
+        float y = (float) (2 * getHeight()) / 3 + (float) (getHeight() / 3 - bounds.height() * 2 - bounds.height()) / 2;
+        canvas.drawText(author, x, y, paint);
         y += bounds.bottom;
 
         // draw email;
         bounds = new Rect();
         String email = getResources().getString(R.string.Email);
         paint.getTextBounds(email, 0, email.length(), bounds);
-        x = (getWidth() - bounds.width()) / 2;
+        x = (float) (getWidth() - bounds.width()) / 2;
         y += bounds.height();
         canvas.drawText(email, x, y, paint);
         y += bounds.bottom;
@@ -115,7 +117,7 @@ public final class LogoView extends View {
         bounds = new Rect();
         String copyRight = getResources().getString(R.string.Copyright);
         paint.getTextBounds(copyRight, 0, copyRight.length(), bounds);
-        x = (getWidth() - bounds.width()) / 2;
+        x = (float) (getWidth() - bounds.width()) / 2;
         y += bounds.height();
         canvas.drawText(copyRight, x, y, paint);
         y += bounds.bottom;
@@ -131,7 +133,7 @@ public final class LogoView extends View {
         String version = getResources().getString(R.string.Version) + " " + systemVersion;
 
         paint.getTextBounds(version, 0, version.length(), bounds);
-        x = (getWidth() - bounds.width()) / 2;
+        x = (float) (getWidth() - bounds.width()) / 2;
         y += bounds.height();
         canvas.drawText(version, x, y, paint);
     }
@@ -141,13 +143,13 @@ public final class LogoView extends View {
 
         int dip5 = Belote.fromPixelToDip(getContext(), 5);
 
-        Bitmap b = logoPainter.getSuitImage(Suit.Spade);
+        Bitmap b = logoPainter.getSuitImage(Suits.Spade);
         canvas.drawBitmap(b, dip5, dip5, paint);
-        b = logoPainter.getSuitImage(Suit.Heart);
+        b = logoPainter.getSuitImage(Suits.Heart);
         canvas.drawBitmap(b, getWidth() - dip5 - b.getScaledWidth(canvas), dip5, paint);
-        b = logoPainter.getSuitImage(Suit.Diamond);
+        b = logoPainter.getSuitImage(Suits.Diamond);
         canvas.drawBitmap(b, dip5, getHeight() - dip5 - b.getScaledHeight(canvas), paint);
-        b = logoPainter.getSuitImage(Suit.Club);
+        b = logoPainter.getSuitImage(Suits.Club);
         b = ImageUtil.transformToDisabledImage(b);
         canvas.drawBitmap(b, getWidth() - dip5 - b.getScaledWidth(canvas), getHeight() - dip5 - b.getScaledHeight(canvas), paint);
     }
@@ -183,7 +185,7 @@ public final class LogoView extends View {
 
         Bitmap gradientBitmap = Bitmap.createBitmap(beloteWidth, rect.height(), Bitmap.Config.ARGB_8888);
         Canvas gradientCanvas = new Canvas(gradientBitmap);
-        int colors[] = { Color.YELLOW, Color.RED };
+        int[] colors = {Color.YELLOW, Color.RED};
         GradientDrawable gradientDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors);
         gradientDrawable.setBounds(0, 0, beloteWidth, rect.height());
         gradientDrawable.draw(gradientCanvas);
@@ -202,8 +204,8 @@ public final class LogoView extends View {
         textBitmap.recycle();
 
         paint.setColor(Color.BLACK);
-        float pictureTop = ((getHeight() - cardHeight) / 2 - bitmapXfermode.getHeight()) / 2;
-        float pictureLeft = (getWidth() - bitmapXfermode.getWidth()) / 2;
+        float pictureTop = (float) ((getHeight() - cardHeight) / 2 - bitmapXfermode.getHeight()) / 2;
+        float pictureLeft = (float) (getWidth() - bitmapXfermode.getWidth()) / 2;
         canvas.drawText(bridgeBelote, pictureLeft + dip5, pictureTop + dip5 + rect.height() - rect.bottom, paint);
         canvas.drawBitmap(bitmapXfermode, pictureLeft, pictureTop, paint);
     }

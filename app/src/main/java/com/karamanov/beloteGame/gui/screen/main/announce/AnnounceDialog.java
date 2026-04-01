@@ -9,6 +9,7 @@
  */
 package com.karamanov.beloteGame.gui.screen.main.announce;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -22,24 +23,24 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import belote.bean.Player;
-import belote.bean.announce.Announce;
-import belote.bean.announce.suit.AnnounceSuit;
-import belote.bean.announce.type.AnnounceType;
-import belote.logic.BeloteFacade;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.R;
 import com.karamanov.beloteGame.text.TextDecorator;
 import com.karamanov.framework.MessageActivity;
 
+import belote.bean.announce.Announce;
+import belote.bean.announce.suit.AnnounceSuits;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.player.Player;
+import belote.logic.BeloteFacade;
+
 /**
  * AnnouncePanel class.
+ *
  * @author Dimitar Karamanov
  */
 public class AnnounceDialog extends Dialog {
-
-    private final LinearLayout vertical;
 
     /**
      * Pass button.
@@ -142,12 +143,14 @@ public class AnnounceDialog extends Dialog {
     private final TextDecorator decorator;
 
     private final MessageActivity activity;
-    
+
     /**
      * Constructor
+     *
      * @param context component.
-     * @param game a BelotGame instance.
+     * @param game    a BelotGame instance.
      */
+    @SuppressLint("ResourceType")
     public AnnounceDialog(MessageActivity context, final BeloteFacade game) {
         super(context);
         activity = context;
@@ -158,7 +161,7 @@ public class AnnounceDialog extends Dialog {
         int dip5 = Belote.fromPixelToDip(context, 5);
         int dip10 = Belote.fromPixelToDip(context, 10);
 
-        vertical = new LinearLayout(context);
+        LinearLayout vertical = new LinearLayout(context);
         vertical.setOrientation(LinearLayout.VERTICAL);
         vertical.setPadding(dip5, dip5, dip5, dip5);
 
@@ -245,7 +248,7 @@ public class AnnounceDialog extends Dialog {
 
         pAllJacks = new ImageView(context);
         pAllJacks.setImageResource(R.drawable.all_jacks);
-        
+
         trlp = new TableRow.LayoutParams();
         trlp.gravity = Gravity.CENTER;
         trlp.weight = 0.25f;
@@ -290,7 +293,7 @@ public class AnnounceDialog extends Dialog {
         pDouble.setText("x 2");
         pDouble.setTypeface(Typeface.DEFAULT_BOLD);
         pDouble.setTextColor(Color.RED);
-        
+
         trlp = new TableRow.LayoutParams();
         trlp.gravity = Gravity.CENTER;
         trlp.weight = 0.25f;
@@ -363,11 +366,12 @@ public class AnnounceDialog extends Dialog {
         row.addView(relative);
 
         tl.addView(row);
+        tl.setPadding(dip5, dip5, dip5, dip5);
 
         vertical.addView(tl);
 
         setContentView(vertical);
-        
+
         setCancelable(false);
         setCanceledOnTouchOutside(false);
     }
@@ -383,7 +387,12 @@ public class AnnounceDialog extends Dialog {
 
         @Override
         public void onClick(View view) {
-            game.getGame().getAnnounceList().add(generatePlayerAnnounce(view));
+            game.getGameLock().writeLock().lock();
+            try {
+                game.getGame().getAnnounceList().add(generatePlayerAnnounce(view));
+            } finally {
+                game.getGameLock().writeLock().unlock();
+            }
             AnnounceDialog.this.dismiss();
         }
     }
@@ -426,7 +435,7 @@ public class AnnounceDialog extends Dialog {
         jrbAllTrump.setEnabled(true);
         pAllJacks.setEnabled(true);
 
-        Announce last = game.getGame().getAnnounceList().getContractAnnounce();
+        Announce last = game.getContractAnnounce();
 
         if (last != null) {
             Player lastAnnouncePlayer = last.getPlayer();
@@ -434,42 +443,42 @@ public class AnnounceDialog extends Dialog {
 
             boolean sameTeam = announcePlayer.getTeam() == lastAnnouncePlayer.getTeam();
 
-            if (!sameTeam && last.getType().equals(AnnounceType.Normal)) {
+            if (!sameTeam && last.getType().equals(AnnounceTypes.Normal)) {
                 jrbDouble.setEnabled(true);
                 pDouble.setEnabled(true);
             }
 
-            if (!sameTeam && last.getType().equals(AnnounceType.Double)) {
+            if (!sameTeam && last.getType().equals(AnnounceTypes.Double)) {
                 jrbRedouble.setEnabled(true);
                 pRedouble.setEnabled(true);
             }
 
-            if (last.getAnnounceSuit().compareTo(AnnounceSuit.Club) >= 0) {
+            if (last.getAnnounceSuit().compareTo(AnnounceSuits.Club) >= 0) {
                 jrbClubs.setEnabled(false);
                 pClub.setEnabled(false);
             }
 
-            if (last.getAnnounceSuit().compareTo(AnnounceSuit.Diamond) >= 0) {
+            if (last.getAnnounceSuit().compareTo(AnnounceSuits.Diamond) >= 0) {
                 jrbDiamonds.setEnabled(false);
                 pDiamond.setEnabled(false);
             }
 
-            if (last.getAnnounceSuit().compareTo(AnnounceSuit.Heart) >= 0) {
+            if (last.getAnnounceSuit().compareTo(AnnounceSuits.Heart) >= 0) {
                 jrbHearts.setEnabled(false);
                 pHeart.setEnabled(false);
             }
 
-            if (last.getAnnounceSuit().compareTo(AnnounceSuit.Spade) >= 0) {
+            if (last.getAnnounceSuit().compareTo(AnnounceSuits.Spade) >= 0) {
                 jrbSpades.setEnabled(false);
                 pSpade.setEnabled(false);
             }
 
-            if (last.getAnnounceSuit().compareTo(AnnounceSuit.NotTrump) >= 0) {
+            if (last.getAnnounceSuit().compareTo(AnnounceSuits.NotTrump) >= 0) {
                 jrbNotTrump.setEnabled(false);
                 pAllAces.setEnabled(false);
             }
 
-            if (last.getAnnounceSuit().compareTo(AnnounceSuit.AllTrump) >= 0) {
+            if (last.getAnnounceSuit().compareTo(AnnounceSuits.AllTrump) >= 0) {
                 jrbAllTrump.setEnabled(false);
                 pAllJacks.setEnabled(false);
             }
@@ -489,6 +498,7 @@ public class AnnounceDialog extends Dialog {
 
     /**
      * Generates player announce by the receiver component.
+     *
      * @param receiver - the button which was pressed.
      * @return Announce instance.
      */
@@ -500,16 +510,16 @@ public class AnnounceDialog extends Dialog {
             return Announce.createPassAnnounce(player);
         }
         if (receiver == jrbClubs) {
-            return Announce.createSuitNormalAnnounce(player, AnnounceSuit.Club);
+            return Announce.createSuitNormalAnnounce(player, AnnounceSuits.Club);
         }
         if (receiver == jrbDiamonds) {
-            return Announce.createSuitNormalAnnounce(player, AnnounceSuit.Diamond);
+            return Announce.createSuitNormalAnnounce(player, AnnounceSuits.Diamond);
         }
         if (receiver == jrbHearts) {
-            return Announce.createSuitNormalAnnounce(player, AnnounceSuit.Heart);
+            return Announce.createSuitNormalAnnounce(player, AnnounceSuits.Heart);
         }
         if (receiver == jrbSpades) {
-            return Announce.createSuitNormalAnnounce(player, AnnounceSuit.Spade);
+            return Announce.createSuitNormalAnnounce(player, AnnounceSuits.Spade);
         }
 
         if (receiver == jrbNotTrump) {
@@ -521,14 +531,14 @@ public class AnnounceDialog extends Dialog {
         }
 
         if (receiver == jrbDouble) {
-            Announce announce = game.getGame().getAnnounceList().getContractAnnounce();
+            Announce announce = game.getContractAnnounce();
             if (announce != null) {
                 return Announce.createDoubleAnnounce(announce, player);
             }
         }
 
         if (receiver == jrbRedouble) {
-            Announce announce = game.getGame().getAnnounceList().getContractAnnounce();
+            Announce announce = game.getContractAnnounce();
             if (announce != null) {
                 return Announce.createRedoubleAnnounce(announce, player);
             }

@@ -20,12 +20,14 @@ import belote.logic.play.strategy.automat.methods.TeamSuitCard;
 
 /**
  * PartnerPossibleSuitCard class. Used in XXXAttackCard executors.
+ *
  * @author Dimitar Karamanov
  */
 public final class PossiblePartnerSuitCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public PossiblePartnerSuitCard(final Game game) {

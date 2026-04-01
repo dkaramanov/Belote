@@ -36,6 +36,7 @@ public final class Sentence {
 
     /**
      * Constructor.
+     *
      * @param separator - which is used between last and new one words.
      */
     public Sentence(String separator) {
@@ -44,6 +45,7 @@ public final class Sentence {
 
     /**
      * Adds word to sentence using default separator.
+     *
      * @param word - to be added.
      */
     public void addWord(String word) {
@@ -60,7 +62,8 @@ public final class Sentence {
 
     /**
      * Adds word to sentence using the provided separator.
-     * @param word - to be added.
+     *
+     * @param word      - to be added.
      * @param separator - which is used between last and new one words.
      */
     public void addWord(String word, String separator) {
@@ -74,6 +77,7 @@ public final class Sentence {
 
     /**
      * Adds word to sentence in new line.
+     *
      * @param word - to be added.
      */
     public void addNewLineWord(String word) {
@@ -94,6 +98,7 @@ public final class Sentence {
 
     /**
      * Returns if the sentence is empty.
+     *
      * @return true if the sentence is empty, false otherwise.
      */
     public boolean isEmpty() {

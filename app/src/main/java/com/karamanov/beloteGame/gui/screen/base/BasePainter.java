@@ -9,14 +9,14 @@
  */
 package com.karamanov.beloteGame.gui.screen.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.DisplayMetrics;
 
+import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.R;
 import com.karamanov.beloteGame.gui.graphics.PictureDecorator;
 import com.karamanov.beloteGame.text.TextDecorator;
@@ -24,37 +24,21 @@ import com.karamanov.framework.graphics.Color;
 import com.karamanov.framework.graphics.ImageUtil;
 import com.karamanov.framework.graphics.Rectangle;
 
+import java.util.Objects;
+
 import belote.bean.pack.card.Card;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.pack.card.suit.Suits;
 import belote.bean.pack.sequence.SequenceType;
 import belote.bean.pack.square.Square;
 
 /**
  * BasePainter class.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class BasePainter {
-
-    /**
-     * Cashed card width.
-     */
-    protected final int cardWidth;
-
-    /**
-     * Cashed card height.
-     */
-    protected final int cardHeight;
-
-    /**
-     * Cashed card width.
-     */
-    protected final int cardBackWidth;
-
-    /**
-     * Cashed card height.
-     */
-    protected final int cardBackHeight;
 
     /**
      * Text decorator of game beans object (Suit, Rank, Announce ...)
@@ -68,6 +52,20 @@ public abstract class BasePainter {
 
     protected final Context context;
 
+    protected final int dip1;
+
+    protected final int dip3;
+    protected final int dip2;
+    protected final int dip4;
+
+    protected final int dip5;
+    protected final int dip6;
+
+    protected final int dip10;
+
+    protected final float dipF12;
+    protected final float dipF14;
+
     /**
      * mSmooth
      */
@@ -75,17 +73,24 @@ public abstract class BasePainter {
 
     /**
      * Constructor.
-     * @param context canvas width.
+     *
+     * @param context Context object.
      */
     protected BasePainter(Context context) {
         this.context = context;
 
-        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        dip1 = Belote.fromPixelToDip(context, 1);
+        dip2 = Belote.fromPixelToDip(context, 2);
+        dip3 = Belote.fromPixelToDip(context, 2);
+        dip4 = Belote.fromPixelToDip(context, 4);
+        dip5 = Belote.fromPixelToDip(context, 5);
+        dip6 = Belote.fromPixelToDip(context, 6);
+        dip10 = Belote.fromPixelToDip(context, 10);
+
+        dipF12 = Belote.fromPixelToDipF(context, 12);
+        dipF14 = Belote.fromPixelToDipF(context, 14);
+
         pictureDecorator = new PictureDecorator(context);
-        cardWidth = pictureDecorator.getCardImage(Rank.Ace, Suit.Spade).getScaledWidth(metrics);
-        cardHeight = pictureDecorator.getCardImage(Rank.Ace, Suit.Spade).getScaledHeight(metrics);
-        cardBackWidth = pictureDecorator.getCardBackImageSmall().getScaledWidth(metrics);
-        cardBackHeight = pictureDecorator.getCardBackImageSmall().getScaledHeight(metrics);
         textDecorator = new TextDecorator(context);
 
         mSmooth = new Paint(Paint.FILTER_BITMAP_FLAG);
@@ -93,20 +98,20 @@ public abstract class BasePainter {
         mSmooth.setDither(true);
     }
 
-    public final int getCardWidth() {
-        return cardWidth;
+    public final int getCardWidth(Canvas canvas) {
+        return Objects.requireNonNull(pictureDecorator.getCardImage(Ranks.Ace, Suits.Spade)).getScaledWidth(canvas);
     }
 
-    public final int getCardHeight() {
-        return cardHeight;
+    public final int getCardHeight(Canvas canvas) {
+        return Objects.requireNonNull(pictureDecorator.getCardImage(Ranks.Ace, Suits.Spade)).getScaledHeight(canvas);
     }
 
-    public final int getDeskWidth() {
-        return cardBackWidth;
+    public final int getDeskWidth(Canvas canvas) {
+        return pictureDecorator.getCardBackImageSmall().getScaledWidth(canvas);
     }
 
-    public final int getDeskHeight() {
-        return cardBackHeight;
+    public final int getDeskHeight(Canvas canvas) {
+        return pictureDecorator.getCardBackImageSmall().getScaledHeight(canvas);
     }
 
     public final Context getContext() {
@@ -115,9 +120,10 @@ public abstract class BasePainter {
 
     /**
      * Draws desk image.
-     * @param canvas
-     * @param x position.
-     * @param y position.
+     *
+     * @param canvas for drawing
+     * @param x      position.
+     * @param y      position.
      */
     protected void drawCardBackImage(final Canvas canvas, final int x, final int y) {
         Bitmap b = pictureDecorator.getCardBackImageSmall();
@@ -137,10 +143,11 @@ public abstract class BasePainter {
 
     /**
      * Draw card to the canvas.
-     * @param canvas
-     * @param card which image is retrieve.
-     * @param x - x coordinate.
-     * @param y - y coordinate.
+     *
+     * @param canvas for drawing
+     * @param card   which image is retrieve.
+     * @param x      - x coordinate.
+     * @param y      - y coordinate.
      */
     public final void drawCard(final Canvas canvas, final Card card, final int x, final int y) {
         Bitmap bitmap = pictureDecorator.getCardImage(card);
@@ -151,10 +158,11 @@ public abstract class BasePainter {
 
     /**
      * Draw card darkened to the canvas.
-     * @param canvas
-     * @param card which image is retrieve.
-     * @param x - x coordinate.
-     * @param y - y coordinate.
+     *
+     * @param canvas for drawing
+     * @param card   which image is retrieve.
+     * @param x      - x coordinate.
+     * @param y      - y coordinate.
      */
     public final void drawDarkenedCard(final Canvas canvas, final Card card, final int x, final int y) {
         Bitmap picture = pictureDecorator.getCardImage(card);
@@ -167,10 +175,11 @@ public abstract class BasePainter {
 
     /**
      * Draw card mixed with color to the canvas.
-     * @param canvas
-     * @param card which image is retrieve.
-     * @param x - x coordinate.
-     * @param y - y coordinate. param mixedColor used to transform the image.
+     *
+     * @param canvas for drawing
+     * @param card   which image is retrieve.
+     * @param x      - x coordinate.
+     * @param y      - y coordinate. param mixedColor used to transform the image.
      */
     public final void drawMixedColorCard(final Canvas canvas, final Card card, final int x, final int y, final Color mixedColor) {
         Bitmap picture = pictureDecorator.getCardImage(card);
@@ -184,15 +193,17 @@ public abstract class BasePainter {
 
     /**
      * Returns equal cards image.
+     *
      * @param equalCards which picture is retrieved.
      * @return Image equal cards image.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public final Bitmap getEqualCardsImage(final Square equalCards) {
-        if (equalCards.getRank().equals(Rank.Jack)) {
+        if (equalCards.getRank().equals(Ranks.Jack)) {
             return ((BitmapDrawable) context.getResources().getDrawable(R.drawable.equal200)).getBitmap();
         }
 
-        if (equalCards.getRank().equals(Rank.Nine)) {
+        if (equalCards.getRank().equals(Ranks.Nine)) {
             return ((BitmapDrawable) context.getResources().getDrawable(R.drawable.equal150)).getBitmap();
         }
 
@@ -201,9 +212,11 @@ public abstract class BasePainter {
 
     /**
      * Returns Image sequence's type image.
+     *
      * @param sequenceType which image is retrieved.
      * @return Image sequence's type image.
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     public final Bitmap getSequenceTypeImage(final SequenceType sequenceType) {
         if (sequenceType.equals(SequenceType.Quint)) {
             return ((BitmapDrawable) context.getResources().getDrawable(R.drawable.sequence100)).getBitmap();
@@ -218,6 +231,7 @@ public abstract class BasePainter {
 
     /**
      * Returns couple image for provided suit.
+     *
      * @param suit instance.
      * @return Image instance.
      */
@@ -227,6 +241,7 @@ public abstract class BasePainter {
 
     /**
      * Returns suit's image.
+     *
      * @param suit which image is retrieved.
      * @return Image suit's image.
      */

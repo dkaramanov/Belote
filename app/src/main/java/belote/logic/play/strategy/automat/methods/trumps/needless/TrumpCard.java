@@ -10,19 +10,21 @@
 package belote.logic.play.strategy.automat.methods.trumps.needless;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseTrumpMethod;
 
 /**
  * TrumpCard class. PlayCardMethod which implements the logic of playing a trump card when there is not what other to play.
+ *
  * @author Dimitar Karamanov.
  */
 public final class TrumpCard extends BaseTrumpMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public TrumpCard(final Game game) {
@@ -31,8 +33,9 @@ public final class TrumpCard extends BaseTrumpMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
-     * @param trump suit.
+     * @param trump  suit.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player, final Suit trump) {
@@ -44,14 +47,14 @@ public final class TrumpCard extends BaseTrumpMethod {
                 return card;
             }
         }
-        
+
         if (count == SINGLE_CARD_COUNT) {
             final Card card = player.getCards().findMaxSuitCard(trump);
             if (card != null && isMaxSuitCardLeft(card, true)) {
                 return null;
             }
         }
-        
+
         return player.getCards().findMinSuitCard(trump);
     }
 }

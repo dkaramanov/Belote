@@ -11,15 +11,16 @@ package belote.bean.announce.type;
 
 /**
  * Double class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Redouble extends AnnounceType {
+final class Redouble extends AnnounceType {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 8761962864858525925L;
-    
+
     /**
      * Unique object id.
      */

@@ -10,7 +10,7 @@
 package belote.logic.announce.factory.adviser;
 
 import belote.bean.Game;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.sequence.SequenceType;
 import belote.logic.announce.factory.automat.methods.conditions.HasSquare;
 import belote.logic.announce.factory.automat.methods.conditions.HasSuit;
@@ -21,20 +21,22 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.SequenceSu
 
 /**
  * TrumpRedoubleAdviser class.
+ *
  * @author Dimitar Karamanov
  */
 public final class TrumpRedoubleAdviser extends BaseRedoubleAdviser {
 
     /**
      * Constructor.
+     *
      * @param game Belote game instance.
      */
     public TrumpRedoubleAdviser(final Game game) {
         super(game);
         // Player made last announce
-        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new HasSuit(new SequenceSuit(SequenceType.Quint, Rank.Ace))));
+        addAnnounceCondition(new MultipleAndCondition(new PlayerRegularAnnounce(game), new HasSuit(new SequenceSuit(SequenceType.Quint, Ranks.Ace))));
         // Partner made last announce
-        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new HasSuit(new SequenceSuit(SequenceType.Quint, Rank.Ace))));
+        addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new HasSuit(new SequenceSuit(SequenceType.Quint, Ranks.Ace))));
         addAnnounceCondition(new MultipleAndCondition(new PartnerRegularAnnounce(game), new HasSquare()));
     }
 }

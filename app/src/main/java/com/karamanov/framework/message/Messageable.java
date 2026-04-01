@@ -11,12 +11,14 @@ package com.karamanov.framework.message;
 
 /**
  * Messageable interface.
+ *
  * @author Dimitar Karamanov
  */
 public interface Messageable {
 
     /**
      * Performs message.
+     *
      * @param message performing message.
      */
     void performMessage(Message message);

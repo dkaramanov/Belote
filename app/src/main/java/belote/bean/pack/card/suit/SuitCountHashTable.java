@@ -10,20 +10,20 @@
 package belote.bean.pack.card.suit;
 
 import java.io.Serializable;
-import java.util.Enumeration;
+import java.util.Collection;
 import java.util.Hashtable;
-
-import belote.base.IntegerIterator;
+import java.util.Set;
 
 /**
  * SuitCountHashTable class.
+ *
  * @author Dimitar Karamanov
  */
 public final class SuitCountHashTable implements Serializable {
 
     /**
-	 * Serial versionUID.
-	 */
+     * Serial versionUID.
+     */
     private static final long serialVersionUID = 1804382243836131584L;
 
     /**
@@ -40,7 +40,8 @@ public final class SuitCountHashTable implements Serializable {
 
     /**
      * Puts an element with provided key and count.
-     * @param suit provided suit key.
+     *
+     * @param suit  provided suit key.
      * @param count associated key count value.
      */
     public void put(final Suit suit, final Integer count) {
@@ -52,6 +53,7 @@ public final class SuitCountHashTable implements Serializable {
 
     /**
      * Removes element by key suit.
+     *
      * @param suit elements key.
      */
     public void remove(final Suit suit) {
@@ -60,6 +62,7 @@ public final class SuitCountHashTable implements Serializable {
 
     /**
      * Returns true if the Hashtable contains element with provided key, false otherwise.
+     *
      * @param suit element key.
      * @return true if the Hashtable contains element with provided key, false otherwise.
      */
@@ -69,6 +72,7 @@ public final class SuitCountHashTable implements Serializable {
 
     /**
      * Returns collection size.
+     *
      * @return collection size.
      */
     public int size() {
@@ -84,87 +88,20 @@ public final class SuitCountHashTable implements Serializable {
 
     /**
      * Returns iterator for the list.
+     *
      * @return SuitIterator iterator.
      */
-    public SuitIterator suitIterator() {
-        return new SuitIteratorImpl(hashTable.keys());
+    public Set<Suit> suits() {
+        return hashTable.keySet();
     }
 
     /**
      * Returns iterator for the collection.
+     *
      * @return IntegerIterator iterator.
      */
-    public IntegerIterator countIterator() {
-        return new IntegerIteratorImpl(hashTable.elements());
+    public Collection<Integer> counts() {
+        return hashTable.values();
     }
 
-    /**
-     * SuitIteratorImpl class. Implements SuitIterator interface.
-     */
-    private class SuitIteratorImpl implements SuitIterator {
-
-        /**
-         * The internal collection enumerator.
-         */
-        private final Enumeration<Suit> enumeration;
-
-        /**
-         * Constructor.
-         * @param enumeration the internal collection enumerator.
-         */
-        public SuitIteratorImpl(final Enumeration<Suit> enumeration) {
-            this.enumeration = enumeration;
-        }
-
-        /**
-         * Returns true if the iteration has more elements.
-         * @return boolean true if the iteration has more elements false otherwise.
-         */
-        public boolean hasNext() {
-            return enumeration.hasMoreElements();
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         * @return Suit the next element in the iteration.
-         */
-        public Suit next() {
-            return enumeration.nextElement();
-        }
-    }
-
-    /**
-     * IntegerIteratorImpl class. Implements IntegerIterator interface.
-     */
-    private class IntegerIteratorImpl implements IntegerIterator {
-
-        /**
-         * The internal collection enumerator.
-         */
-        private final Enumeration<Integer> enumeration;
-
-        /**
-         * Constructor.
-         * @param enumeration the internal collection enumerator.
-         */
-        public IntegerIteratorImpl(final Enumeration<Integer> enumeration) {
-            this.enumeration = enumeration;
-        }
-
-        /**
-         * Returns true if the iteration has more elements.
-         * @return boolean true if the iteration has more elements false otherwise.
-         */
-        public boolean hasNext() {
-            return enumeration.hasMoreElements();
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         * @return Integer the next element in the iteration.
-         */
-        public Integer next() {
-            return enumeration.nextElement();
-        }
-    }
 }

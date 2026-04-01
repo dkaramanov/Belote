@@ -9,8 +9,6 @@
  */
 package com.karamanov.beloteGame.gui.screen.main.message;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -20,23 +18,28 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import belote.bean.Player;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.R;
 import com.karamanov.beloteGame.text.PlayerNameDecorator;
 
+import java.util.List;
+
+import belote.bean.player.Player;
+
 /**
  * MessagePanel class.
+ *
  * @author Dimitar Karamanov
  */
 public class MessagePanel extends TableLayout {
 
     /**
      * Constructor.
-     * @param parent component.
+     *
+     * @param context component.
      */
-    public MessagePanel(Context context, Player player, ArrayList<MessageData> messages) {
+    public MessagePanel(Context context, Player player, List<MessageData> messages) {
         super(context);
 
         TableRow row = new TableRow(context);
@@ -69,8 +72,9 @@ public class MessagePanel extends TableLayout {
 
     /**
      * Adds a message to list.
+     *
      * @param image of message.
-     * @param text of message.
+     * @param text  of message.
      */
     private void addMessage(final Bitmap image, final String text) {
         int dip3 = Belote.fromPixelToDip(getContext(), 3);

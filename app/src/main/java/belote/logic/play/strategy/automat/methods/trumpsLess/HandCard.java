@@ -10,20 +10,22 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * HandCard class. PlayCardMethod which implements the logic of playing a hand card in a not color game.
+ *
  * @author Dimitar Karamanov.
  */
 public final class HandCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public HandCard(final Game game) {
@@ -32,12 +34,12 @@ public final class HandCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player) {
-        for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
+        for (final Suit suit : Suits.list()) {
             final Card card = player.getCards().findMaxSuitCard(suit);
 
             if (card != null && isMaxSuitCardLeft(card, true)) {

@@ -10,19 +10,21 @@
 package belote.logic.play.strategy;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.methods.NullPlayMethod;
 import belote.logic.play.strategy.validators.NullValidator;
 
 /**
  * NullPlayCardStrategy class.
+ *
  * @author Dimitar Karamanov
  */
 public class NullPlayCardStrategy extends BasePlayStrategy {
 
     /**
      * Constructor.
+     *
      * @param game belote game instance.
      */
     public NullPlayCardStrategy(final Game game) {
@@ -31,6 +33,7 @@ public class NullPlayCardStrategy extends BasePlayStrategy {
 
     /**
      * Returns next attack player.
+     *
      * @param attack the trick attack card.
      * @return next attack player.
      */

@@ -9,17 +9,20 @@
  */
 package belote.bean.pack.sequence;
 
+import androidx.annotation.NonNull;
+
 import belote.base.ComparableObject;
 
 /**
  * SequenceType class.
+ *
  * @author Dimitar Karamanov
  */
-public final class SequenceType extends ComparableObject {
+public final class SequenceType extends ComparableObject<SequenceType> {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 961246918139208205L;
 
     /**
@@ -59,6 +62,7 @@ public final class SequenceType extends ComparableObject {
 
     /**
      * Constructor.
+     *
      * @param type sequence type.
      */
     private SequenceType(final int type) {
@@ -67,6 +71,7 @@ public final class SequenceType extends ComparableObject {
 
     /**
      * Returns sequence's points.
+     *
      * @return sequence's points.
      */
     public int getSequencePoints() {
@@ -75,23 +80,18 @@ public final class SequenceType extends ComparableObject {
 
     /**
      * Compares this sequence type with the specified sequence type.
-     * @param obj specified object.
+     *
+     * @param sequenceType specified object.
      * @return int value which may be = 0 if this sequence type and the specified sequence type are equal > 0 if this sequence type is bigger than the specified
-     *         sequence type < 0 if this sequence type is less than the specified sequence type
+     * sequence type < 0 if this sequence type is less than the specified sequence type
      */
-    public int compareTo(final Object obj) {
-        final SequenceType sequenceType = (SequenceType) obj;
-        if (sequenceType.type < type) {
-            return 1;
-        }
-        if (sequenceType.type > type) {
-            return -1;
-        }
-        return 0;
+    public int compareTo(final SequenceType sequenceType) {
+        return Integer.compare(type, sequenceType.type);
     }
 
     /**
      * Returns hash code.
+     *
      * @return hash code.
      */
     public int hashCode() {
@@ -100,6 +100,7 @@ public final class SequenceType extends ComparableObject {
 
     /**
      * The method checks if this SequenceType and specified object (SequenceType) are equal.
+     *
      * @param obj specified object.
      * @return boolean true if this SequenceType is equal to specified object and false otherwise.
      */
@@ -113,11 +114,13 @@ public final class SequenceType extends ComparableObject {
 
     /**
      * Returns a string representation of the object. The return name is based on class short name. This method has to be used only for debug purpose when the
-     * project is not compiled with ofbuscating. Don't use this method to represent the object. When the project is compiled with ofbuscating the class name is
+     * project is not compiled with obfuscating. Don't use this method to represent the object. When the project is compiled with ofbuscating the class name is
      * not the same.
+     *
      * @return String a string representation of the object.
      */
+    @NonNull
     public String toString() {
-        return String.valueOf(getSequencePoints()) + "(" + getClassShortName() + ")";
+        return getSequencePoints() + "(" + getClassShortName() + ")";
     }
 }

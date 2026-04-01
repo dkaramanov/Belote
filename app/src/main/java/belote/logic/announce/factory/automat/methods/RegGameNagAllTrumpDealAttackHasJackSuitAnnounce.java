@@ -10,9 +10,9 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.DealAttackPlayer;
 import belote.logic.announce.factory.automat.methods.conditions.HasCard;
@@ -24,6 +24,7 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.base.SuitD
 
 /**
  * RegGameNagAllTrumpWhenFirstAndHasJackSuitAnnounce class. Announce factory method which creates nag all trump jack suit announce.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameNagAllTrumpDealAttackHasJackSuitAnnounce extends ConditionListMethod {
@@ -32,18 +33,20 @@ public final class RegGameNagAllTrumpDealAttackHasJackSuitAnnounce extends Condi
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public RegGameNagAllTrumpDealAttackHasJackSuitAnnounce(final Game game) {
         super(game);
         suitDeterminant = new DominantSuit();
-        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 5), new HasCard(Rank.Jack, suitDeterminant), new DealAttackPlayer(game)));
-        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 4), new HasCard(Rank.Jack, suitDeterminant), new DealAttackPlayer(game),
-                new RankCount(Rank.Jack, 2)));
+        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 5), new HasCard(Ranks.Jack, suitDeterminant), new DealAttackPlayer(game)));
+        addAnnounceCondition(new MultipleAndCondition(new SuitCount(suitDeterminant, 4), new HasCard(Ranks.Jack, suitDeterminant), new DealAttackPlayer(game),
+                new RankCount(Ranks.Jack, 2)));
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

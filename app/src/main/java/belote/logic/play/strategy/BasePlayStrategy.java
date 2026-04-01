@@ -11,13 +11,15 @@ package belote.logic.play.strategy;
 
 import belote.base.Assert;
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
+import belote.bean.player.Players;
 import belote.logic.play.strategy.automat.base.PlayCardMethod;
 import belote.logic.play.strategy.validators.Validatable;
 
 /**
  * BasePlayCardStrategy class. Base strategy playing class.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class BasePlayStrategy {
@@ -54,8 +56,9 @@ public abstract class BasePlayStrategy {
 
     /**
      * Constructor.
-     * @param game belote game instance.
-     * @param validator a game validator instance.
+     *
+     * @param game           belote game instance.
+     * @param validator      a game validator instance.
      * @param playCardMethod
      */
     public BasePlayStrategy(final Game game, final Validatable validator, final PlayCardMethod playCardMethod) {
@@ -64,28 +67,30 @@ public abstract class BasePlayStrategy {
 
     /**
      * Constructor.
-     * @param game belote game instance.
-     * @param validator a game validator instance.
+     *
+     * @param game                              belote game instance.
+     * @param validator                         a game validator instance.
      * @param attackCardMethodExecutor
      * @param defencePositionCardMethodExecutor
      */
     public BasePlayStrategy(final Game game, final Validatable validator, final PlayCardMethod attackCardMethodExecutor,
-            final PlayCardMethod defencePositionCardMethodExecutor) {
+                            final PlayCardMethod defencePositionCardMethodExecutor) {
         this(game, validator, attackCardMethodExecutor, defencePositionCardMethodExecutor, defencePositionCardMethodExecutor, defencePositionCardMethodExecutor);
     }
 
     /**
      * Constructor.
-     * @param game belote game instance.
-     * @param validator a game validator instance.
+     *
+     * @param game                                    belote game instance.
+     * @param validator                               a game validator instance.
      * @param attackCardMethodExecutor
      * @param firstDefencePositionCardMethodExecutor
      * @param secondDefencePositionCardMethodExecutor
      * @param thirdDefencePositionCardMethodExecutor
      */
     public BasePlayStrategy(final Game game, final Validatable validator, final PlayCardMethod attackCardMethodExecutor,
-            final PlayCardMethod firstDefencePositionCardMethodExecutor, final PlayCardMethod secondDefencePositionCardMethodExecutor,
-            final PlayCardMethod thirdDefencePositionCardMethodExecutor) {
+                            final PlayCardMethod firstDefencePositionCardMethodExecutor, final PlayCardMethod secondDefencePositionCardMethodExecutor,
+                            final PlayCardMethod thirdDefencePositionCardMethodExecutor) {
         this.game = game;
         this.validator = validator;
         this.attackCardMethodExecutor = attackCardMethodExecutor;
@@ -96,6 +101,7 @@ public abstract class BasePlayStrategy {
 
     /**
      * Returns next attack player.
+     *
      * @return Player next attack player.
      */
     public final Player getNextAttackPlayer() {
@@ -108,6 +114,7 @@ public abstract class BasePlayStrategy {
 
     /**
      * Returns next attack player.
+     *
      * @param attack the trick attack one.
      * @return Player next attack player.
      */
@@ -115,6 +122,7 @@ public abstract class BasePlayStrategy {
 
     /**
      * Returns playing card for the provided player.
+     *
      * @param player provided player.
      * @return Card playing card for the provided player.
      */
@@ -125,12 +133,12 @@ public abstract class BasePlayStrategy {
             return getAttackCard(player);
         }
         // first defense player
-        trickPlayer = game.getPlayerAfter(trickPlayer);
+        trickPlayer = Players.getPlayerAfter(trickPlayer);
         if (player.equals(trickPlayer)) {
             return getFirstDefencePositionCard(player);
         }
         // second defense player
-        trickPlayer = game.getPlayerAfter(trickPlayer);
+        trickPlayer = Players.getPlayerAfter(trickPlayer);
         if (player.equals(trickPlayer)) {
             return getSecondDefencePositionCard(player);
         }
@@ -140,6 +148,7 @@ public abstract class BasePlayStrategy {
 
     /**
      * Returns attack playing card for the provided player (AI).
+     *
      * @param player provided player.
      * @return Card attack playing card for the provided player (AI).
      */
@@ -149,6 +158,7 @@ public abstract class BasePlayStrategy {
 
     /**
      * Returns first defense position playing card for the provided player (AI).
+     *
      * @param player provided player.
      * @return Card first defense position playing card for the provided player (AI).
      */
@@ -158,6 +168,7 @@ public abstract class BasePlayStrategy {
 
     /**
      * Returns second defense position playing card for the provided player (AI).
+     *
      * @param player provided player.
      * @return Card second defense position playing card for the provided player (AI).
      */
@@ -167,6 +178,7 @@ public abstract class BasePlayStrategy {
 
     /**
      * Returns third defense position playing card for the provided player (AI).
+     *
      * @param player provided player.
      * @return Card third defense position playing card for the provided player (AI).
      */
@@ -176,8 +188,9 @@ public abstract class BasePlayStrategy {
 
     /**
      * Validates player card.
+     *
      * @param player provided player.
-     * @param card provided card.
+     * @param card   provided card.
      * @return boolean true if the card is valid, false otherwise.
      */
     public final boolean validatePlayerCard(final Player player, final Card card) {
@@ -186,8 +199,9 @@ public abstract class BasePlayStrategy {
 
     /**
      * Returns if the provided player has couple.
+     *
      * @param player provided player.
-     * @param card provided card.
+     * @param card   provided card.
      * @return boolean true if has a couple false otherwise.
      */
     public final boolean hasPlayerCouple(final Player player, final Card card) {

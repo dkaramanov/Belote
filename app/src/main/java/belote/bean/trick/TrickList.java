@@ -13,20 +13,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import belote.bean.Player;
 import belote.bean.Team;
+import belote.bean.player.Player;
 
 /**
  * TrickList class. Wrapper class of system collection used to hold and access Trick instances.
+ *
  * @author Dimitar Karamanov
  */
 public final class TrickList implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -8020613612899133438L;
-    
+
     /**
      * Internal container object.
      */
@@ -43,7 +44,7 @@ public final class TrickList implements Serializable {
      * Clears the announce list.
      */
     public void clear() {
-        for (final TrickListIterator iterator = iterator(); iterator.hasNext();) {
+        for (final TrickListIterator iterator = iterator(); iterator.hasNext(); ) {
             final Trick trick = iterator.next();
             trick.getTrickCards().clear();
         }
@@ -53,6 +54,7 @@ public final class TrickList implements Serializable {
 
     /**
      * Adds a trick to the list.
+     *
      * @param trick which to be added.
      */
     public void add(final Trick trick) {
@@ -61,6 +63,7 @@ public final class TrickList implements Serializable {
 
     /**
      * Returns true if the trick list contains no elements false otherwise.
+     *
      * @return boolean true if the trick list is empty false otherwise.
      */
     public boolean isEmpty() {
@@ -69,11 +72,12 @@ public final class TrickList implements Serializable {
 
     /**
      * Returns team of the player who win the last trick.
+     *
      * @return Team which win the last trick.
      */
     public Team getLastTrickWinnerTeam() {
         Team result = null;
-        for (final TrickListIterator iterator = iterator(); iterator.hasNext();) {
+        for (final TrickListIterator iterator = iterator(); iterator.hasNext(); ) {
             final Trick trick = iterator.next();
 
             if (!iterator.hasNext()) {
@@ -82,10 +86,10 @@ public final class TrickList implements Serializable {
         }
         return result;
     }
-    
+
     public int getAttackCount(final Player player) {
         int result = 0;
-        for (final TrickListIterator iterator = iterator(); iterator.hasNext();) {
+        for (final TrickListIterator iterator = iterator(); iterator.hasNext(); ) {
             final Trick trick = iterator.next();
             if (player.equals(trick.getAttackPlayer())) {
                 result++;
@@ -96,6 +100,7 @@ public final class TrickList implements Serializable {
 
     /**
      * Returns a trick list iterator.
+     *
      * @return TrickListIterator instance.
      */
     public TrickListIterator iterator() {
@@ -114,6 +119,7 @@ public final class TrickList implements Serializable {
 
         /**
          * Constructor.
+         *
          * @param enumeration the internal collection enumerator.
          */
         public TrickListIteratorImpl(final Iterator<Trick> enumeration) {
@@ -122,6 +128,7 @@ public final class TrickList implements Serializable {
 
         /**
          * Returns true if the iteration has more elements.
+         *
          * @return boolean true if the iteration has more elements false otherwise.
          */
         public boolean hasNext() {
@@ -130,6 +137,7 @@ public final class TrickList implements Serializable {
 
         /**
          * Returns the next element in the iteration.
+         *
          * @return Trick the next element in the iteration.
          */
         public Trick next() {

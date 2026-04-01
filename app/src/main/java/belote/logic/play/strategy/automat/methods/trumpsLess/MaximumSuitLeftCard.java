@@ -10,18 +10,20 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * MaxSuitLeftCard class. PlayCardMethod which implements the logic of playing the maximum by rank suit left card.
+ *
  * @author Dimitar Karamanov
  */
 public final class MaximumSuitLeftCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public MaximumSuitLeftCard(final Game game) {
@@ -30,6 +32,7 @@ public final class MaximumSuitLeftCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */

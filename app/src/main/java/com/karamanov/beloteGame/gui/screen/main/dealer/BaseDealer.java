@@ -2,6 +2,7 @@ package com.karamanov.beloteGame.gui.screen.main.dealer;
 
 import android.graphics.Canvas;
 import android.os.Handler;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.WindowManager;
 
@@ -10,28 +11,31 @@ import com.karamanov.beloteGame.R;
 import com.karamanov.beloteGame.gui.screen.main.BeloteView;
 import com.karamanov.beloteGame.gui.screen.main.message.MessageData;
 import com.karamanov.beloteGame.gui.screen.main.message.MessageScreen;
+import com.karamanov.beloteGame.gui.screen.main.painters.BelotePainter;
 import com.karamanov.framework.BooleanFlag;
 import com.karamanov.framework.MessageActivity;
 import com.karamanov.framework.graphics.Rectangle;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.announce.suit.AnnounceSuit;
+import belote.bean.announce.suit.AnnounceSuits;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.sequence.Sequence;
-import belote.bean.pack.sequence.SequenceIterator;
 import belote.bean.pack.sequence.SequenceType;
-import belote.bean.pack.square.SquareIterator;
+import belote.bean.pack.square.Square;
+import belote.bean.player.Player;
 import belote.logic.HumanBeloteFacade;
 
 /**
  * BaseDealer class.
+ *
  * @author Dimitar Karamanov
  */
 abstract class BaseDealer {
-    
+
     /**
      * Handler to GUI thread.
      */
@@ -59,7 +63,9 @@ abstract class BaseDealer {
     protected final HumanBeloteFacade beloteFacade;
 
     private MessageScreen messageScreen;
-    
+
+    private final int actionBarHeight;
+
     protected BaseDealer(MessageActivity context, BeloteView belotPanel) {
         this.context = context;
         this.belotPanel = belotPanel;
@@ -67,21 +73,30 @@ abstract class BaseDealer {
 
         belotPainter = new BelotePainter(context);
         handler = new Handler();
+
+        TypedValue tv = new TypedValue();
+        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+        } else {
+            actionBarHeight = 0;
+        }
     }
 
     /**
      * Checks key click.
+     *
      * @param keyCode pressed key code.
      */
     public abstract void checkKeyPressed(int keyCode);
-    
+
     /**
      * Checks pointer click.
+     *
      * @param x position.
      * @param y position.
      */
     public abstract void checkPointerPressed(float x, float y);
-    
+
     /**
      * Invalidate game on belote panel.
      */
@@ -99,40 +114,42 @@ abstract class BaseDealer {
             belotPanel.refresh();
         }
     }
-    
+
     /**
      * Creates a message list for provided player.
-     * @param player
-     * @param card
-     * @return
+     *
+     * @param player Player
+     * @param card   Card
+     * @return List of messages
      */
-    protected final ArrayList<MessageData> getMessageList(final Player player, final Card card) {
+    protected final List<MessageData> getMessageList(final Player player, final Card card) {
         ArrayList<MessageData> result = new ArrayList<MessageData>();
 
-        if (player.equals(beloteFacade.getGame().getTrickCouplePlayer())) {
+        if (player.equals(beloteFacade.getTrickCouplePlayer())) {
             result.add(new MessageData(belotPainter.getCoupleImage(card.getSuit()), context.getString(R.string.Belote)));
         }
         // Add equals and sequences messages on first round and when the game is
         // not NT.
-        Announce announce = beloteFacade.getGame().getAnnounceList().getOpenContractAnnounce();
-        if (announce != null && !announce.getAnnounceSuit().equals(AnnounceSuit.NotTrump) && beloteFacade.getGame().getTrickList().isEmpty()) {
-            for (SquareIterator it = player.getCards().getSquaresList().iterator(); it.hasNext();) {
-                result.add(new MessageData(belotPainter.getEqualCardsImage(it.next()), context.getString(R.string.FourCards)));
+        Announce announce = beloteFacade.getOpenContractAnnounce();
+        if (announce != null && !announce.getAnnounceSuit().equals(AnnounceSuits.NotTrump) && beloteFacade.isTrickListEmpty()) {
+            for (final Square square : player.getCards().getSquaresList().list()) {
+                result.add(new MessageData(belotPainter.getEqualCardsImage(square), context.getString(R.string.FourCards)));
             }
 
-            for (SequenceIterator it = player.getCards().getSequencesList().iterator(); it.hasNext();) {
-                Sequence sequence = it.next();
+            for (final Sequence sequence : player.getCards().getSequencesList().list()) {
                 result.add(new MessageData(belotPainter.getSequenceTypeImage(sequence.getType()), getSequenceString(sequence.getType())));
             }
         }
 
         return result;
     }
-    
+
     /**
      * Gets sequence text by type.
-     * @param type
-     * @return
+     * l
+     *
+     * @param type SequenceType.
+     * @return sequence text.
      */
     private String getSequenceString(SequenceType type) {
         if (SequenceType.Tierce.equals(type)) {
@@ -148,13 +165,14 @@ abstract class BaseDealer {
         }
         return context.getString(R.string.Sequence);
     }
-    
+
     /**
      * Displays a message.
-     * @param player which call the message function.
+     *
+     * @param player   which call the message function.
      * @param messages played by player.
      */
-    protected final void displayMessage(final Player player, final ArrayList<MessageData> messages) {
+    protected final void displayMessage(final Player player, final List<MessageData> messages) {
         final BooleanFlag flag = new BooleanFlag();
         handler.post(new Runnable() {
             public void run() {
@@ -169,9 +187,10 @@ abstract class BaseDealer {
             sleep(PLAY_DELAY);
         }
     }
-    
+
     /**
      * Sleeps for provided millisecond.
+     *
      * @param ms provided millisecond.
      */
     protected final void sleep(final long ms) {
@@ -183,8 +202,8 @@ abstract class BaseDealer {
             }
         }
     }
-    
-    
+
+
     public final int getUpperCardY() {
         Canvas canvas = belotPanel.getBufferedCanvas();
         int dip4 = Belote.fromPixelToDip(context, 4);
@@ -192,61 +211,56 @@ abstract class BaseDealer {
             Rectangle rect = belotPainter.getPlayerCardRectangle(canvas, beloteFacade, 0, beloteFacade.getHumanPlayer().getPartner());
             return rect.y + dip4;
         }
-        
+
         return 0;
     }
-    
+
     /**
      * Place message screen on position related to provided player.
-     * @param messageScreen
-     * @param player
+     *
+     * @param messageScreen view
+     * @param player        message announcer
      */
     private void positionMessageScreen(MessageScreen messageScreen, Player player) {
         Canvas canvas = belotPanel.getBufferedCanvas();
 
         if (canvas != null) {
             Rectangle rect = belotPainter.getPlayerCardRectangle(canvas, beloteFacade, 0, player);
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(Objects.requireNonNull(messageScreen.getWindow()).getAttributes());
 
             switch (player.getID()) {
-            case 0:
-                WindowManager.LayoutParams lp = messageScreen.getWindow().getAttributes();
-                lp.gravity |= Gravity.TOP;
-                lp.y = rect.y + rect.height;
-                messageScreen.getWindow().setAttributes(lp);
-                break;
+                case 0:
+                    lp.gravity |= Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+                    lp.y = rect.y + rect.height + belotPanel.getTop() + actionBarHeight;
+                    break;
 
-            case 1:
-                lp = messageScreen.getWindow().getAttributes();
-                lp.gravity |= Gravity.LEFT;
-                lp.x = rect.x + rect.width;
-                lp.y = lp.y / 2;
-                messageScreen.getWindow().setAttributes(lp);
-                break;
+                case 1:
+                    lp.gravity |= Gravity.START | Gravity.CENTER_VERTICAL;
+                    lp.x = rect.x + rect.width;
+                    lp.y = actionBarHeight / 2;
+                    break;
 
-            case 2:
-                lp = messageScreen.getWindow().getAttributes();
-                lp.gravity |= Gravity.BOTTOM;
-                lp.y = belotPanel.getHeight() - rect.y;
-                messageScreen.getWindow().setAttributes(lp);
-                break;
+                case 2:
+                    lp.gravity |= Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+                    lp.y = belotPanel.getHeight() - rect.y;
+                    break;
 
-            case 3:
-                messageScreen.getWindow().setGravity(Gravity.CENTER_VERTICAL);
-                lp = messageScreen.getWindow().getAttributes();
-                lp.gravity |= Gravity.RIGHT;
-                lp.x = belotPanel.getWidth() - rect.x;
-                lp.y = lp.y / 2;
-                messageScreen.getWindow().setAttributes(lp);
-                break;
+                case 3:
+                    lp.gravity |= Gravity.END | Gravity.CENTER_VERTICAL;
+                    lp.x = belotPanel.getWidth() - rect.x;
+                    lp.y = actionBarHeight / 2;
+                    break;
             }
+            messageScreen.getWindow().setAttributes(lp);
         }
     }
-    
+
     /**
      * New announce deal.
      */
     protected final void newAnnounceDealRound() {
-        if (beloteFacade.getGame().getAnnounceList().getContractAnnounce() != null) {
+        if (beloteFacade.getContractAnnounce() != null) {
             beloteFacade.processTrickData();
         }
         beloteFacade.setNextDealAttackPlayer();
@@ -259,7 +273,7 @@ abstract class BaseDealer {
             invalidateGame();
         }
     }
-    
+
     /**
      * On surface change (reposition message screen if is visible)
      */
@@ -268,14 +282,14 @@ abstract class BaseDealer {
             positionMessageScreen(messageScreen, messageScreen.getPlayer());
         }
     }
-    
+
     /**
      * Called when end game activity is closed.
      */
     public final void onCloseEndGame() {
         //save game log
         //BeloteLog.saveGameInfo(beloteFacade.getGame(), context);
-        
+
         sleep(PLAY_DELAY);
         newAnnounceDealRound();
     }

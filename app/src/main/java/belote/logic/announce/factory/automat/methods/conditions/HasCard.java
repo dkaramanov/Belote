@@ -9,14 +9,15 @@
  */
 package belote.logic.announce.factory.automat.methods.conditions;
 
-import belote.bean.Player;
 import belote.bean.pack.card.rank.Rank;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 import belote.logic.announce.factory.automat.methods.suitDeterminants.base.SuitDeterminant;
 
 /**
  * PlayerCard class. Returns true if the announce player has card from provided rank and suit.
+ *
  * @author Dimitar Karamanov
  */
 public final class HasCard implements AnnounceCondition {
@@ -33,7 +34,8 @@ public final class HasCard implements AnnounceCondition {
 
     /**
      * Constructor.
-     * @param rank of the card.
+     *
+     * @param rank            of the card.
      * @param suitDeterminant used to determine the suit.
      */
     public HasCard(final Rank rank, final SuitDeterminant suitDeterminant) {
@@ -43,6 +45,7 @@ public final class HasCard implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

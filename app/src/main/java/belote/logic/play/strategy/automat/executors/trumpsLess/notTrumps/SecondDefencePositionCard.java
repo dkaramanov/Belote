@@ -19,13 +19,15 @@ import belote.logic.play.strategy.automat.methods.trumpsLess.PartnerAttackMaxSui
 import belote.logic.play.strategy.automat.methods.trumpsLess.notTrump.HookCard;
 
 /**
- * NotTrumpSecondDefencePositionCard executor. Used in NotTrumpPlayStategy getSecondDefencePositionCard().
+ * NotTrumpSecondDefencePositionCard executor. Used in NotTrumpPlayStrategy getSecondDefencePositionCard().
+ *
  * @author Dimitar Karamanov
  */
 public final class SecondDefencePositionCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public SecondDefencePositionCard(final Game game) {

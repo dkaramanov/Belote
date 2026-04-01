@@ -10,10 +10,10 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.sequence.SequenceType;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.HasSuit;
 import belote.logic.announce.factory.automat.methods.conditions.RankCount;
@@ -25,34 +25,37 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.SequenceSu
 
 /**
  * RegGameSupportAllTrumpAnnounce class. Announce factory method which creates support all trump announce.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameSupportAllTrumpAnnounce extends ConditionListMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public RegGameSupportAllTrumpAnnounce(final Game game) {
         super(game);
         addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quint)));
-        addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Rank.Ace)));
-        addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Rank.King)));
-        addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Rank.Queen)));
-        addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Rank.Jack)));
+        addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Ranks.Ace)));
+        addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Ranks.King)));
+        addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Ranks.Queen)));
+        addAnnounceCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Ranks.Jack)));
 
-        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Rank.Jack, 2)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Rank.Jack, 1), new RankCount(Rank.Nine, 1)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Rank.Nine, 3)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Ranks.Jack, 2)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Ranks.Jack, 1), new RankCount(Ranks.Nine, 1)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Ranks.Nine, 3)));
 
-        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Rank.Jack, 2)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Rank.Jack, 1), new RankCount(Rank.Nine, 2)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Ranks.Jack, 2)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Ranks.Jack, 1), new RankCount(Ranks.Nine, 2)));
         addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new HasSuit(new JackNineAceSuit())));
-        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Rank.Nine, 4)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Ranks.Nine, 4)));
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

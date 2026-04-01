@@ -10,19 +10,21 @@
 package belote.logic.announce.factory.adviser;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.ProcessRedouble;
 
 /**
  * BaseRedoubleAdviser class.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class BaseRedoubleAdviser extends ConditionListMethod {
 
     /**
      * Constructor.
+     *
      * @param game Belote game instance.
      */
     public BaseRedoubleAdviser(final Game game) {
@@ -32,6 +34,7 @@ public abstract class BaseRedoubleAdviser extends ConditionListMethod {
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

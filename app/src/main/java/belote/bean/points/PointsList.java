@@ -15,15 +15,16 @@ import java.util.Iterator;
 
 /**
  * PointList class. Wrapper class of system collection used to hold and access points instances.
+ *
  * @author Dimitar Karamanov
  */
 public final class PointsList implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 8379973340881747881L;
-    
+
     /**
      * Internal container object.
      */
@@ -38,6 +39,7 @@ public final class PointsList implements Serializable {
 
     /**
      * Adds points to the list.
+     *
      * @param points new points.
      */
     public void add(final int points) {
@@ -50,11 +52,12 @@ public final class PointsList implements Serializable {
 
     /**
      * Returns all points sum.
+     *
      * @return int all points sum.
      */
     public int getAllPoints() {
         int result = 0;
-        for (final PointsIterator iterator = iterator(); iterator.hasNext();) {
+        for (final PointsIterator iterator = iterator(); iterator.hasNext(); ) {
             result += iterator.next();
         }
         return result;
@@ -69,6 +72,7 @@ public final class PointsList implements Serializable {
 
     /**
      * Returns elements count.
+     *
      * @return int elements count.
      */
     public int size() {
@@ -77,6 +81,7 @@ public final class PointsList implements Serializable {
 
     /**
      * Returns points list iterator.
+     *
      * @return PointsIterator points list iterator.
      */
     public PointsIterator iterator() {
@@ -95,6 +100,7 @@ public final class PointsList implements Serializable {
 
         /**
          * Constructor.
+         *
          * @param enumeration the internal collection enumerator.
          */
         public PointsIteratorImpl(final Iterator<Integer> enumeration) {
@@ -103,6 +109,7 @@ public final class PointsList implements Serializable {
 
         /**
          * Returns true if the iteration has more elements.
+         *
          * @return boolean true if the iteration has more elements false otherwise.
          */
         public boolean hasNext() {
@@ -111,6 +118,7 @@ public final class PointsList implements Serializable {
 
         /**
          * Returns the next element in the iteration.
+         *
          * @return int the next element in the iteration.
          */
         public int next() {

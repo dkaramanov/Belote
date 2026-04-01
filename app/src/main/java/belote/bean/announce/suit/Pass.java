@@ -11,15 +11,16 @@ package belote.bean.announce.suit;
 
 /**
  * Pass class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Pass extends AnnounceSuit {
+final class Pass extends AnnounceSuit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -4241790610370358080L;
-    
+
     /**
      * Announce suit type unique constant.
      */
@@ -34,17 +35,25 @@ public final class Pass extends AnnounceSuit {
 
     /**
      * Trump suit classes are Club, Diamond, Heart and Spade. If the objects is instance of some of them the result is true otherwise is false.
+     *
      * @return boolean true if is color suit false otherwise.
      */
     public boolean isTrumpSuit() {
         return false;
     }
 
+
+    @Override
+    public boolean isColorless() {
+        return false;
+    }
+
     /**
      * Returns base points.
+     *
      * @return int base points.
      */
-    public final int getBasePoints() {
+    public int getBasePoints() {
         return 0;
     }
 }

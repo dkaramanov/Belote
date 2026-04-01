@@ -10,13 +10,14 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * PartnerNormalTrumpAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class PartnerNormalTrumpAnnounce implements AnnounceCondition {
@@ -28,6 +29,7 @@ public final class PartnerNormalTrumpAnnounce implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public PartnerNormalTrumpAnnounce(final Game game) {
@@ -36,12 +38,13 @@ public final class PartnerNormalTrumpAnnounce implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */
     public boolean process(final Player player) {
         final Player partner = player.getPartner();
         final Announce partnerAnnounce = game.getAnnounceList().getContractAnnounce(partner);
-        return partnerAnnounce != null && partnerAnnounce.isTrumpAnnounce() && partnerAnnounce.getType().equals(AnnounceType.Normal);
+        return partnerAnnounce != null && partnerAnnounce.isTrumpAnnounce() && partnerAnnounce.getType().equals(AnnounceTypes.Normal);
     }
 }

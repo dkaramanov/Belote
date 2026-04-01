@@ -9,9 +9,11 @@
  */
 package belote.logic.announce.factory.automat.methods.base;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.base.AnnounceMethod;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceConditionIterator;
@@ -20,6 +22,7 @@ import belote.logic.announce.factory.automat.methods.conditions.base.MultipleAnd
 
 /**
  * ConditionListMethod class. Class which contains several Announce conditions and return announce if one of them fits the conditions.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class ConditionListMethod implements AnnounceMethod {
@@ -28,6 +31,11 @@ public abstract class ConditionListMethod implements AnnounceMethod {
      * Belote game internal object.
      */
     protected final Game game;
+
+    /**
+     * Game lock.
+     */
+    protected final ReentrantReadWriteLock gameLock;
 
     /**
      * List with AnnounceCondition
@@ -41,16 +49,28 @@ public abstract class ConditionListMethod implements AnnounceMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public ConditionListMethod(final Game game) {
+        this(game, null);
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param game     BelotGame instance.
+     * @param gameLock game lock.
+     */
+    public ConditionListMethod(final Game game, final ReentrantReadWriteLock gameLock) {
         this.game = game;
+        this.gameLock = gameLock;
     }
 
     public final Announce getAnnounce(final Player player) {
         Announce result = null;
         if (preConditionsList.process(player)) {
-            for (final AnnounceConditionIterator iterator = announceConditionsList.iterator(); iterator.hasNext() && result == null;) {
+            for (final AnnounceConditionIterator iterator = announceConditionsList.iterator(); iterator.hasNext() && result == null; ) {
                 if (iterator.next().process(player)) {
                     result = createAnnounce(player);
                 }
@@ -66,6 +86,7 @@ public abstract class ConditionListMethod implements AnnounceMethod {
 
     /**
      * Adds announce condition to the internal container.
+     *
      * @param announceCondition which to be added.
      */
     protected final void addAnnounceCondition(final AnnounceCondition announceCondition) {
@@ -74,6 +95,7 @@ public abstract class ConditionListMethod implements AnnounceMethod {
 
     /**
      * Adds precondition to the internal container.
+     *
      * @param announceCondition which to be added.
      */
     protected final void addPreCondition(final AnnounceCondition announceCondition) {
@@ -82,6 +104,7 @@ public abstract class ConditionListMethod implements AnnounceMethod {
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

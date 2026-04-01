@@ -13,13 +13,14 @@ import java.io.Serializable;
 
 /**
  * GameMode class.
+ *
  * @author Dimitar Karamanov
  */
 public final class GameMode implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -5609712288998797955L;
 
     /**
@@ -59,6 +60,7 @@ public final class GameMode implements Serializable {
 
     /**
      * Constructor.
+     *
      * @param gameMode game mode constant.
      */
     private GameMode(final int gameMode) {
@@ -67,6 +69,7 @@ public final class GameMode implements Serializable {
 
     /**
      * Returns hash code.
+     *
      * @return int hash code value.
      */
     public int hashCode() {
@@ -77,6 +80,7 @@ public final class GameMode implements Serializable {
 
     /**
      * The method checks if this game mode and specified object (GameMode) are equal.
+     *
      * @param obj specified object.
      * @return boolean true if this game mode is equal to specified object and false otherwise.
      */

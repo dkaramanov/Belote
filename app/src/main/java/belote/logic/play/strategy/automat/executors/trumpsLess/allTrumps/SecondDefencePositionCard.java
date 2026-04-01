@@ -21,13 +21,15 @@ import belote.logic.play.strategy.automat.methods.trumpsLess.allTrump.HookCard;
 import belote.logic.play.strategy.automat.methods.trumpsLess.allTrump.PartnerAttackPosibleQuintOrQuarteCard;
 
 /**
- * AllTrumpFirstDefencePositionCard executor. Used in AllTrumpPlayStategy getSecondDefencePositionCard().
+ * AllTrumpFirstDefencePositionCard executor. Used in AllTrumpPlayStrategy getSecondDefencePositionCard().
+ *
  * @author Dimitar Karamanov
  */
 public final class SecondDefencePositionCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public SecondDefencePositionCard(final Game game) {

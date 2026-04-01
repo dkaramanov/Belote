@@ -11,23 +11,24 @@ package belote.bean.pack.card.rank;
 
 /**
  * Rank nine class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Nine extends Rank {
+final class Nine extends Rank {
 
     private static final long serialVersionUID = -3720349922471078723L;
-    
-	private static final int STANDARD_RANK = 2;
 
-	private static final int ALL_TRUMP_RANK = 6;
+    private static final int STANDARD_RANK = 2;
 
-	private static final int NOT_TRUMP_RANK = 2;
+    private static final int ALL_TRUMP_RANK = 6;
 
-	private static final int ALL_TRUMP_POINTS = 14;
+    private static final int NOT_TRUMP_RANK = 2;
 
-	private static final int NOT_TRUMP_POINTS = 0;
+    private static final int ALL_TRUMP_POINTS = 14;
 
-	private static final int SQUARE_POINTS = 150;
+    private static final int NOT_TRUMP_POINTS = 0;
+
+    private static final int SQUARE_POINTS = 150;
 
     /**
      * Constructor.

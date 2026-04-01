@@ -20,6 +20,7 @@ public final class BelotePreferencesActivity extends PreferenceActivity {
 
     /**
      * Called when the activity is first created.
+     *
      * @param saveInstanceState - Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
      */
     @Override

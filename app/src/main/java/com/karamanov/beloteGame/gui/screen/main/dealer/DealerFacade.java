@@ -11,9 +11,9 @@ public final class DealerFacade {
     private final MessageActivity context;
 
     private HumanBeloteFacade beloteFacade;
-    
+
     private final BaseDealer announceDealer;
-    
+
     private final BaseDealer playDealer;
 
     public DealerFacade(MessageActivity context, BeloteView belotPanel) {
@@ -23,13 +23,14 @@ public final class DealerFacade {
         announceDealer = new AnnounceDealer(context, belotPanel);
         playDealer = new PlayDealer(context, belotPanel);
     }
-    
+
     private BaseDealer getDealer() {
         return beloteFacade.isAnnounceGameMode() ? announceDealer : playDealer;
     }
 
     /**
      * Checks pointer click.
+     *
      * @param x position.
      * @param y position.
      */
@@ -39,7 +40,7 @@ public final class DealerFacade {
 
     /**
      * Checks key click.
-     * 
+     *
      * @param keyCode pressed key code.
      */
     public void checkKeyPressed(int keyCode) {
@@ -53,7 +54,7 @@ public final class DealerFacade {
     public void invalidateGame(int delay) {
         getDealer().invalidateGame(delay);
     }
-    
+
     public final int getUpperCardY() {
         return getDealer().getUpperCardY();
     }

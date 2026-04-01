@@ -10,20 +10,21 @@
 package belote.logic.play.strategy.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * PartnerPreferredSuitCard class. PlayCardMethod which implements the logic of playing card from partner preferred and not missed suit.
+ *
  * @author Dimitar Karamanov.
  */
 public final class PartnerPreferredSuitCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public PartnerPreferredSuitCard(final Game game) {
@@ -32,6 +33,7 @@ public final class PartnerPreferredSuitCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
@@ -39,8 +41,7 @@ public final class PartnerPreferredSuitCard extends BaseMethod {
         final Player partner = player.getPartner();
         final Suit trump = getTrump();
         // Prefer suits
-        for (final SuitIterator iterator = partner.getPreferredSuits().iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
+        for (final Suit suit : partner.getPreferredSuits()) {
             if ((trump == null || !trump.equals(suit)) && !partner.getMissedSuits().contains(suit)) {
                 final Card card = player.getCards().findMinSuitCard(suit);
                 if (card != null) {

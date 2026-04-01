@@ -12,10 +12,11 @@ import belote.bean.GameMode;
 
 /**
  * AnnounceDealer class.
+ *
  * @author Dimitar Karamanov
  */
 final class AnnounceDealer extends BaseDealer {
-    
+
     /**
      * Announce dialog.
      */
@@ -23,26 +24,29 @@ final class AnnounceDealer extends BaseDealer {
 
     /**
      * Constructor
+     *
      * @param context
      * @param belotPanel
      */
     public AnnounceDealer(MessageActivity context, BeloteView belotPanel) {
         super(context, belotPanel);
-        
+
         announceDialog = new AnnounceDialog(context, beloteFacade);
     }
 
     /**
      * Checks key click.
+     *
      * @param keyCode pressed key code.
      */
     @Override
     public void checkKeyPressed(int keyCode) {
         processAnnounceDealRound();
     }
-    
+
     /**
      * Checks pointer click.
+     *
      * @param x position.
      * @param y position.
      */
@@ -50,7 +54,7 @@ final class AnnounceDealer extends BaseDealer {
     public void checkPointerPressed(float x, float y) {
         processAnnounceDealRound();
     }
-    
+
     /**
      * Process announce deal round (Until 3 or 4 last pass announces).
      */
@@ -58,14 +62,14 @@ final class AnnounceDealer extends BaseDealer {
         if (beloteFacade.canDeal()) {
             processSingleAnnounceDeal();
         } else {
-            if (beloteFacade.getGame().getAnnounceList().getContractAnnounce() == null) {
+            if (beloteFacade.getContractAnnounce() == null) {
                 newAnnounceDealRound();
             } else {
                 newGame();
             }
         }
     }
-    
+
     /**
      * Process single announce deal.
      */
@@ -78,7 +82,7 @@ final class AnnounceDealer extends BaseDealer {
 
         invalidateGame();
     }
-    
+
     /**
      * New game.
      */
@@ -87,20 +91,20 @@ final class AnnounceDealer extends BaseDealer {
         beloteFacade.manageRestCards();
         invalidateGame();
     }
-    
+
     /**
      * Shows announce panel.
      */
     private void showAnnounceDialog() {
         beloteFacade.setPlayerIsAnnouncing(true);
         invalidateGame();
-        
+
         handler.post(new Runnable() {
             public void run() {
                 announceDialog.init();
                 WindowManager.LayoutParams layoutParams = announceDialog.getWindow().getAttributes();
                 layoutParams.gravity = Gravity.BOTTOM;
-                layoutParams.y = belotPainter.getFontHeight() + belotPainter.getCardHeight();
+                layoutParams.y = belotPainter.getFontHeight() + belotPainter.getCardHeight(belotPanel.getBufferedCanvas());
                 announceDialog.getWindow().setAttributes(layoutParams);
                 announceDialog.show();
             }

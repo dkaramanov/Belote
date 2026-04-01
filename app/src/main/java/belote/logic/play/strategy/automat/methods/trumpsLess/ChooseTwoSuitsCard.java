@@ -9,18 +9,17 @@
  */
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
-import belote.base.IntegerIterator;
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
 import belote.bean.pack.card.suit.SuitCountHashTable;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * ChooseTwoSuitsCard class. PlayCardMethod which implements the logic of playing a card in the situation when the player has 4 cards and 2 of them are
  * from one suits the other 2 from another.
+ *
  * @author Dimitar Karamanov
  */
 public final class ChooseTwoSuitsCard extends BaseMethod {
@@ -32,6 +31,7 @@ public final class ChooseTwoSuitsCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public ChooseTwoSuitsCard(final Game game) {
@@ -40,6 +40,7 @@ public final class ChooseTwoSuitsCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
@@ -49,14 +50,13 @@ public final class ChooseTwoSuitsCard extends BaseMethod {
 
         if (isTwoSuitsWithTwoCasrdsDistribution(suits)) {
             final Player partner = player.getPartner();
-            for (final SuitIterator iterator = suits.suitIterator(); iterator.hasNext();) {
-                final Suit suit = iterator.next();
+            for (final Suit suit : suits.suits()) {
                 if (result == null) {
                     result = player.getCards().findMinSuitCard(suit);
                 } else {
                     if (partner.getUnwantedSuits().contains(suit)) {
-                        final int suitIndex = partner.getUnwantedSuits().getSuitIndex(suit);
-                        final int resultIndex = partner.getUnwantedSuits().getSuitIndex(result.getSuit());
+                        final int suitIndex = partner.getUnwantedSuits().indexOf(suit);
+                        final int resultIndex = partner.getUnwantedSuits().indexOf(result.getSuit());
 
                         if (suitIndex > resultIndex && resultIndex != -1) {
                             result = player.getCards().findMinSuitCard(suit);
@@ -72,13 +72,14 @@ public final class ChooseTwoSuitsCard extends BaseMethod {
 
     /**
      * Returns if the provided hashtable contains 2 suits with 2 counts.
+     *
      * @param suits SuitCountHashTable which contains Suit as key and Integer value.
      * @return true if suits contains 2 suit with counts == 2, false otherwise.
      */
     private boolean isTwoSuitsWithTwoCasrdsDistribution(final SuitCountHashTable suits) {
         if (suits.size() == TWO) {
-            for (final IntegerIterator iterator = suits.countIterator(); iterator.hasNext();) {
-                if (iterator.next().intValue() != TWO) {
+            for (final Integer count : suits.counts()) {
+                if (count != TWO) {
                     return false;
                 }
             }

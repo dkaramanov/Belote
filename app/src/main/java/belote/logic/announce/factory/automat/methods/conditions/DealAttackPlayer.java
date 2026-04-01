@@ -10,11 +10,12 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * PlayerAttack class. Returns true if the announce player is the card attack player, false otherwise.
+ *
  * @author Dimitar Karamanov
  */
 public final class DealAttackPlayer implements AnnounceCondition {
@@ -26,6 +27,7 @@ public final class DealAttackPlayer implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public DealAttackPlayer(final Game game) {
@@ -34,6 +36,7 @@ public final class DealAttackPlayer implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

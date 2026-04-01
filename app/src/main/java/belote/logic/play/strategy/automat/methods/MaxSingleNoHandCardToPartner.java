@@ -10,15 +10,16 @@
 package belote.logic.play.strategy.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.PlayCardMethod;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * SingleCardToPartner class. PlayCardMethod which implements the logic of playing single card to partner if he is the best card player and have played the
  * maximum left suit card.
+ *
  * @author Dimitar Karamanov
  */
 public final class MaxSingleNoHandCardToPartner extends BaseMethod {
@@ -30,6 +31,7 @@ public final class MaxSingleNoHandCardToPartner extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public MaxSingleNoHandCardToPartner(final Game game) {
@@ -40,6 +42,7 @@ public final class MaxSingleNoHandCardToPartner extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */

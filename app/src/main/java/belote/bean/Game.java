@@ -10,16 +10,19 @@
 package belote.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import belote.bean.announce.AnnounceList;
 import belote.bean.pack.Pack;
-import belote.bean.pack.PackIterator;
 import belote.bean.pack.TrickPack;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
+import belote.bean.player.Players;
 import belote.bean.trick.TrickList;
 
 /**
  * Game class.
+ *
  * @author Dimitar Karamanov
  */
 public final class Game implements Serializable {
@@ -28,16 +31,6 @@ public final class Game implements Serializable {
      * serialVersionUID
      */
     private static final long serialVersionUID = -6670321224692156622L;
-
-    /**
-     * Players count constant.
-     */
-    private final static int PLAYERS_COUNT = 4;
-
-    /**
-     * Teams count constant.
-     */
-    private final static int TEAMS_COUNT = 2;
 
     /**
      * Hanged points.
@@ -63,16 +56,6 @@ public final class Game implements Serializable {
      * Announce list.
      */
     private final AnnounceList announceList = new AnnounceList();
-
-    /**
-     * Game players.
-     */
-    private final Player[] players = new Player[PLAYERS_COUNT];
-
-    /**
-     * Game teams.
-     */
-    private final Team[] teams = new Team[TEAMS_COUNT];
 
     /**
      * Game pack.
@@ -104,21 +87,20 @@ public final class Game implements Serializable {
      */
     private Player trickCouplePlayer;
 
+    private final List<Player> players;
+
+    public final List<Team> teams;
+
     /**
      * Constructor.
-     * @param names of the players.
+     *
      */
     public Game() {
-        for (int i = 0; i < teams.length; i++) {
-            teams[i] = new Team(i);
-        }
+        teams = Team.initTeams();
+        players = Players.initaPlayers();
 
-        for (int i = 0; i < players.length; i++) {
-            players[i] = new Player(teams[i % teams.length], i);
-        }
-
-        setDealAttackPlayer(getPlayer(0));
-        setTrickAttackPlayer(getPlayer(0));
+        setDealAttackPlayer(Players.NORTH);
+        setTrickAttackPlayer(Players.NORTH);
     }
 
     /**
@@ -132,6 +114,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns the size of card pack.
+     *
      * @return pack size.
      */
     public int getPackSize() {
@@ -143,6 +126,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns the attack player for current dealing.
+     *
      * @return Player deal attack player.
      */
     public Player getDealAttackPlayer() {
@@ -151,6 +135,7 @@ public final class Game implements Serializable {
 
     /**
      * Sets the new deal attack player.
+     *
      * @param dealAttackPlayer new one.
      */
     public void setDealAttackPlayer(final Player dealAttackPlayer) {
@@ -159,6 +144,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns the attack player for the current trick.
+     *
      * @return Player trick attack player.
      */
     public Player getTrickAttackPlayer() {
@@ -167,6 +153,7 @@ public final class Game implements Serializable {
 
     /**
      * Sets new trick attack player.
+     *
      * @param trickAttackPlayer new one.
      */
     public void setTrickAttackPlayer(final Player trickAttackPlayer) {
@@ -175,6 +162,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns trick couple player.
+     *
      * @return Player trick couple player.
      */
     public Player getTrickCouplePlayer() {
@@ -183,6 +171,7 @@ public final class Game implements Serializable {
 
     /**
      * Sets new trick couple player.
+     *
      * @param trickCouplePlayer new one.
      */
     public void setTrickCouplePlayer(final Player trickCouplePlayer) {
@@ -191,6 +180,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns current game mode.
+     *
      * @return game mode;
      */
     public GameMode getGameMode() {
@@ -199,6 +189,7 @@ public final class Game implements Serializable {
 
     /**
      * Set a new game mode.
+     *
      * @param gameMode new value.
      */
     public void setGameMode(final GameMode gameMode) {
@@ -207,6 +198,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns game's hanged points.
+     *
      * @return int game's hanged points.
      */
     public int getHangedPoints() {
@@ -215,6 +207,7 @@ public final class Game implements Serializable {
 
     /**
      * Sets hanged points.
+     *
      * @param value which will be added to hangedPoints.
      */
     public void increaseHangedPoints(final int value) {
@@ -230,51 +223,30 @@ public final class Game implements Serializable {
 
     /**
      * Adds count more cards to the players cards.
+     *
      * @param count the count of the added cards to each player.
      */
     public void addPlayersCards(final int count) {
         for (int i = 0; i < count; i++) {
-            for (int j = 0; j < players.length; j++) {
-                players[j].getCards().add(pack.remove(0));
+            for (final Player player : players) {
+                player.getCards().add(pack.remove(0));
             }
         }
     }
 
     /**
-     * Returns next player (iterates in cycle).
-     * @param player current player.
-     * @return Player next player.
-     */
-    public Player getPlayerAfter(final Player player) {
-        if (player.getID() < players.length - 1) {
-            return players[player.getID() + 1];
-        }
-        return players[0];
-    }
-
-    /**
-     * Returns previous player (iterates in cycle).
-     * @param player current player.
-     * @return Player previous player.
-     */
-    public Player getPlayerBefore(final Player player) {
-        if (player.getID() > 0) {
-            return players[player.getID() - 1];
-        }
-        return players[players.length - 1];
-    }
-
-    /**
      * Returns opposite team by team.
+     *
      * @param team provided team.
      * @return Team opposite team.
      */
     public Team getOppositeTeam(final Team team) {
-        return team.equals(teams[0]) ? teams[1] : teams[0];
+        return Team.N_S.equals(team) ? Team.E_W : Team.N_S;
     }
 
     /**
      * Returns opposite team by player.
+     *
      * @param player provided player.
      * @return Team opposite team.
      */
@@ -284,6 +256,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns Announce list.
+     *
      * @return announce list.
      */
     public AnnounceList getAnnounceList() {
@@ -292,6 +265,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns trick list.
+     *
      * @return TrickList instance.
      */
     public TrickList getTrickList() {
@@ -300,6 +274,7 @@ public final class Game implements Serializable {
 
     /**
      * Returns cards of the current trick.
+     *
      * @return trick cards.
      */
     public TrickPack getTrickCards() {
@@ -308,58 +283,34 @@ public final class Game implements Serializable {
 
     /**
      * Returns the count of game players. (4 players)
+     *
      * @return players count.
      */
     public int getPlayersCount() {
-        return players.length;
-    }
-
-    /**
-     * Returns player by index.
-     * @param index of the player.
-     * @return player by index.
-     */
-    public Player getPlayer(final int index) {
-        return players[index];
-    }
-
-    /**
-     * Returns the count of game teams. (2 teams)
-     * @return teams count.
-     */
-    public int getTeamsCount() {
-        return teams.length;
-    }
-
-    /**
-     * Returns team by index.
-     * @param index of the player.
-     * @return team by index.
-     */
-    public Team getTeam(final int index) {
-        return teams[index];
+        return players.size();
     }
 
     /**
      * Returns player who played provided card.
+     *
      * @param card provided card.
      * @return Player player who played provided card.
      */
     public Player getPlayerByCard(final Card card) {
         Player result = getTrickAttackPlayer();
-        for (PackIterator iterator = getTrickCards().iterator(); iterator.hasNext();) {
-            final Card currentCard = iterator.next();
+        for (final Card currentCard : getTrickCards().list()) {
             if (currentCard.equals(card)) {
                 return result;
             }
 
-            result = getPlayerAfter(result);
+            result = Players.getPlayerAfter(result);
         }
         return null;
     }
 
     /**
      * Returns true if is announce game mode false otherwise.
+     *
      * @return boolean true if is announce game mode false otherwise.
      */
     public boolean isAnnounceGameMode() {
@@ -368,23 +319,32 @@ public final class Game implements Serializable {
 
     /**
      * Checks if there is a winner team.
+     *
      * @return Team winner team or null.
      */
     public Team getWinnerTeam() {
         Team result = null;
         boolean capotGame = false;
 
-        for (int i = 0; i < getTeamsCount(); i++) {
-            if (getTeam(i).getPointsInfo().getCapotPoints() > 0) {
+        for (final Team team : teams) {
+            if (team.getPointsInfo().getCapotPoints() > 0) {
                 capotGame = true;
             }
 
-            if (getTeam(i).getPoints().getAllPoints() >= END_GAME_POINTS
-                    && getTeam(i).getPoints().getAllPoints() > getOppositeTeam(getTeam(i)).getPoints().getAllPoints()) {
-                result = getTeam(i);
+            if (team.getPoints().getAllPoints() >= END_GAME_POINTS
+                    && team.getPoints().getAllPoints() > getOppositeTeam(team).getPoints().getAllPoints()) {
+                result = team;
             }
         }
 
         return capotGame ? null : result;
+    }
+
+    public List<Team> teams() {
+        return teams;
+    }
+
+    public List<Player> players() {
+        return players;
     }
 }

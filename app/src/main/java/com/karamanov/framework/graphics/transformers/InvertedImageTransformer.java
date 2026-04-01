@@ -11,12 +11,14 @@ package com.karamanov.framework.graphics.transformers;
 
 /**
  * InvertedImageTransformer class.
+ *
  * @author Dimitar Karamanov
  */
 public final class InvertedImageTransformer extends BasicImageTransformer {
 
     /**
      * Transform method.
+     *
      * @param pixel which be transformed.
      * @return int transformed pixel value.
      */

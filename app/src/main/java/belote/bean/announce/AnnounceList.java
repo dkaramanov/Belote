@@ -11,21 +11,23 @@ package belote.bean.announce;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import belote.bean.Player;
 import belote.bean.announce.suit.AnnounceSuit;
+import belote.bean.announce.suit.AnnounceSuits;
 import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.player.Player;
 
 /**
  * AnnounceList class. Wrapper class of system collection used to hold and access Announce instances.
+ *
  * @author Dimitar Karamanov
  */
 public final class AnnounceList implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 763763319248786518L;
 
     /**
@@ -54,6 +56,7 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Adds an announce instance to the list.
+     *
      * @param announce to be added.
      */
     public void add(final Announce announce) {
@@ -62,6 +65,7 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns the count of announce instances stored in the list.
+     *
      * @return announces count.
      */
     public int getCount() {
@@ -70,6 +74,7 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns the announce from the list with provided index. If there is no element with that index an Exception will be thrown.
+     *
      * @param index of the announce.
      * @return Announce instance with provided index or Exception is thrown.
      */
@@ -79,6 +84,7 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns the last order announce having not pass suit.
+     *
      * @return Announce last not pass (contract) announce.
      */
     public Announce getContractAnnounce() {
@@ -87,30 +93,34 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns the last normal (no double or redouble) announce.
+     *
      * @return Announce last normal (open contract) announce.
      */
     public Announce getOpenContractAnnounce() {
-        return getContractAnnounce(AnnounceType.Normal, null);
+        return getContractAnnounce(AnnounceTypes.Normal, null);
     }
 
     /**
      * Returns the last normal (no double or redouble) announce.
+     *
      * @return Announce last normal (open contract) announce.
      */
     public Announce getDoubleAnnounce() {
-        return getContractAnnounce(AnnounceType.Double, null);
+        return getContractAnnounce(AnnounceTypes.Double, null);
     }
 
     /**
      * Returns the last normal (no double or redouble) announce.
+     *
      * @return Announce last normal (open contract) announce.
      */
     public Announce getRedoubleAnnounce() {
-        return getContractAnnounce(AnnounceType.Redouble, null);
+        return getContractAnnounce(AnnounceTypes.Redouble, null);
     }
 
     /**
      * Returns last not pass announce for the provided player.
+     *
      * @param player player.
      * @return Announce last not pass player' announce.
      */
@@ -120,14 +130,15 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns last normal (no double or redouble) announce.
+     *
      * @param announceType the type of searching announce or null for all types.
-     * @param player to filter announces for the provided player or null for all.
+     * @param player       to filter announces for the provided player or null for all.
      * @return Announce last normal announce.
      */
     private Announce getContractAnnounce(final AnnounceType announceType, final Player player) {
         for (int i = announces.size() - 1; i >= 0; i--) {
             final Announce announce = getAnnounce(i);
-            final boolean noPassAnnounce = !announce.getAnnounceSuit().equals(AnnounceSuit.Pass);
+            final boolean noPassAnnounce = !announce.getAnnounceSuit().equals(AnnounceSuits.Pass);
             final boolean normalAnnounce = announceType == null || announce.getType().equals(announceType);
             final boolean fitPlayer = player == null || announce.getPlayer().equals(player);
             if (noPassAnnounce && normalAnnounce && fitPlayer) {
@@ -139,6 +150,7 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns the player did the last normal announce.
+     *
      * @return Player who announced the last normal announce.
      */
     public Player getOpenContractAnnouncePlayer() {
@@ -148,6 +160,7 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns a list with announces whose suit equals to the provided one.
+     *
      * @param suit provided suit.
      * @return AnnounceList a list with announces whose suit equals to the provided one.
      */
@@ -157,6 +170,7 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns a list with the provided player announces.
+     *
      * @param player provided player.
      * @return AnnounceList a list with the provided player announces.
      */
@@ -166,8 +180,9 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns a list with the provided player and suit announces.
+     *
      * @param player provided player.
-     * @param suit provided suit.
+     * @param suit   provided suit.
      * @return AnnounceList a list with the provided player announces.
      */
     private AnnounceList getAnnounces(final Player player, final AnnounceSuit suit) {
@@ -186,13 +201,14 @@ public final class AnnounceList implements Serializable {
 
     /**
      * Returns the count of the pass announce which are on the end of the list.
+     *
      * @return int the count of pass announces.
      */
     public int getCurrentPassAnnouncesCount() {
         int result = 0;
         for (int i = announces.size() - 1; i >= 0; i--) {
             final Announce announce = getAnnounce(i);
-            if (announce.getAnnounceSuit().equals(AnnounceSuit.Pass)) {
+            if (announce.getAnnounceSuit().equals(AnnounceSuits.Pass)) {
                 result++;
             } else {
                 break;
@@ -204,6 +220,7 @@ public final class AnnounceList implements Serializable {
     /**
      * Returns true if another announce is possible to be made, false otherwise. If the last made announce are pass ones and their count is more than 2 is
      * impossible to be made a new announce.
+     *
      * @return boolean true if a new announce can be declared, false otherwise.
      */
     public boolean canDeal() {
@@ -216,46 +233,7 @@ public final class AnnounceList implements Serializable {
         return passesCount < PASS_COUNT;
     }
 
-    /**
-     * Returns iterator associated with collection.
-     * @return AnnounceIterator instance.
-     */
-    public AnnounceIterator iterator() {
-        return new AnnounceIteratorImpl(announces.iterator());
-    }
-
-    /**
-     * AnnounceIteratorImpl class. Implements AnnounceIterator interface.
-     */
-    private static class AnnounceIteratorImpl implements AnnounceIterator {
-
-        /**
-         * The internal collection enumerator.
-         */
-        private final Iterator<Announce> enumeration;
-
-        /**
-         * Constructor.
-         * @param enumeration the internal collection enumerator.
-         */
-        public AnnounceIteratorImpl(final Iterator<Announce> enumeration) {
-            this.enumeration = enumeration;
-        }
-
-        /**
-         * Returns true if the iteration has more elements.
-         * @return boolean true if the iteration has more elements false otherwise.
-         */
-        public boolean hasNext() {
-            return enumeration.hasNext();
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         * @return Announce the next element in the iteration.
-         */
-        public Announce next() {
-            return enumeration.next();
-        }
+    public Iterable<Announce> list() {
+        return announces;
     }
 }

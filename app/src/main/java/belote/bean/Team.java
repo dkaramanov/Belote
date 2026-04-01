@@ -10,31 +10,34 @@
 package belote.bean;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
 
 import belote.base.Assert;
 import belote.base.ComparableObject;
 import belote.bean.pack.Pack;
-import belote.bean.pack.PackIterator;
-import belote.bean.pack.card.rank.Rank;
-import belote.bean.pack.card.suit.Suit;
+import belote.bean.pack.card.Card;
+import belote.bean.pack.card.rank.Ranks;
+import belote.bean.pack.card.suit.Suits;
 import belote.bean.pack.sequence.Sequence;
-import belote.bean.pack.sequence.SequenceIterator;
 import belote.bean.pack.sequence.SequenceList;
 import belote.bean.pack.square.Square;
-import belote.bean.pack.square.SquareIterator;
 import belote.bean.pack.square.SquareList;
+import belote.bean.player.Player;
 import belote.bean.points.PointsInfo;
 import belote.bean.points.PointsList;
 
 /**
  * Team class.
+ *
  * @author Dimitar Karamanov
  */
 public final class Team implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 3269463892642834632L;
 
     /**
@@ -82,19 +85,31 @@ public final class Team implements Serializable {
      */
     private final PointsInfo pointsInfo = new PointsInfo();
 
+    public final static Team N_S = new Team(0);
+    public final static Team E_W = new Team(1);
+
+    private final static List<Team> teams = List.of(N_S, E_W);
+
     /**
      * Constructor.
-     * 
+     *
      * @param ID of the team.
      */
-    public Team(final int ID) {
+    private Team(final int ID) {
         this.ID = ID;
+    }
+
+    public static List<Team> initTeams() {
+        N_S.clearData();
+        E_W.clearData();
+        return teams;
     }
 
     /**
      * Sets team player.
+     *
      * @param player provided player.
-     * @param index player's index.
+     * @param index  player's index.
      */
     public void setPlayer(final Player player, final int index) {
         Assert.assertTrue(index >= 0 && index < players.length, "Player's index out of range");
@@ -104,6 +119,7 @@ public final class Team implements Serializable {
 
     /**
      * Returns PointsInfo.
+     *
      * @return PointsInfo.
      */
     public PointsInfo getPointsInfo() {
@@ -112,6 +128,7 @@ public final class Team implements Serializable {
 
     /**
      * Returns teams big games info.
+     *
      * @return int bigGames.
      */
     public int getWinBelotGames() {
@@ -127,6 +144,7 @@ public final class Team implements Serializable {
 
     /**
      * Returns provided player partner.
+     *
      * @param player provided player.
      * @return Player partner.
      */
@@ -143,25 +161,27 @@ public final class Team implements Serializable {
 
     /**
      * Returns hands points.
+     *
      * @return int hands points.
      */
     public int getHandsPoints() {
         int result = 0;
-        for (PackIterator iterator = getHands().iterator(); iterator.hasNext();) {
-            result += iterator.next().getPoints();
+        for (Card card : getHands().list()) {
+            result += card.getPoints();
         }
         return result;
     }
 
     /**
      * Returns announce points.
+     *
      * @return int announce points.
      */
     public int getAnnouncePoints() {
         int result = 0;
 
-        for (int i = 0; i < players.length; i++) {
-            result += players[i].getCards().getAnnouncePoints();
+        for (Player player : players) {
+            result += player.getCards().getAnnouncePoints();
         }
 
         return result;
@@ -169,10 +189,11 @@ public final class Team implements Serializable {
 
     /**
      * Returns capot points.
+     *
      * @return int capot points.
      */
     public int getCapotPoints() {
-        if (getHands().getSize() == Rank.getRankCount() * Suit.getSuitCount()) {
+        if (getHands().getSize() == Ranks.getRankCount() * Suits.getSuitCount()) {
             return CAPOT_EXTRA_POINTS;
         }
         return 0;
@@ -180,15 +201,15 @@ public final class Team implements Serializable {
 
     /**
      * Returns the maximum square of the team players.
+     *
      * @return EqualCards the maximum square.
      */
     public Square getMaxSquare() {
         Square result = null;
 
-        for (int i = 0; i < players.length; i++) {
-            final SquareList squaresList = players[i].getCards().getSquaresList();
-            for (final SquareIterator iterator = squaresList.iterator(); iterator.hasNext();) {
-                final Square square = iterator.next();
+        for (Player player : players) {
+            final SquareList squaresList = player.getCards().getSquaresList();
+            for (final Square square : squaresList.list()) {
                 if (result == null || square.compareTo(result) > 0) {
                     result = square;
                 }
@@ -199,15 +220,15 @@ public final class Team implements Serializable {
 
     /**
      * Returns maximum sequence of the team players.
+     *
      * @return Sequence maximum sequence.
      */
     public Sequence getMaxSequence() {
         Sequence result = null;
 
-        for (int i = 0; i < players.length; i++) {
-            final SequenceList sequencesList = players[i].getCards().getSequencesList();
-            for (final SequenceIterator iterator = sequencesList.iterator(); iterator.hasNext();) {
-                Sequence sequence = iterator.next();
+        for (Player player : players) {
+            final SequenceList sequencesList = player.getCards().getSequencesList();
+            for (final Sequence sequence : sequencesList.list()) {
                 if (result == null || sequence.compareTo(result) > 0) {
                     result = sequence;
                 }
@@ -218,9 +239,10 @@ public final class Team implements Serializable {
 
     /**
      * Compares announces with announces of the provided team.
+     *
      * @param team provided team.
      * @return int value which may be: = 0 if this team announces are equal to the provided team announces > 0 if this team announces are bigger to the provided
-     *         team announces < 0 if this team announces are smaller to the provided team announces
+     * team announces < 0 if this team announces are smaller to the provided team announces
      */
     public int compareAnnouncesTo(final Team team) {
         int result = compareSquaresTo(team);
@@ -234,9 +256,10 @@ public final class Team implements Serializable {
 
     /**
      * Compares equals with equals of the provided team.
+     *
      * @param team provided team.
      * @return int value which may be: = 0 if this team equals are equal to the provided team equals > 0 if this team equals are bigger to the provided team
-     *         equals < 0 if this team equals are smaller to the provided team equals
+     * equals < 0 if this team equals are smaller to the provided team equals
      */
     private int compareSquaresTo(final Team team) {
         final Square maxSquare = getMaxSquare();
@@ -247,9 +270,10 @@ public final class Team implements Serializable {
 
     /**
      * Compares sequence with sequence of the provided team.
+     *
      * @param team provided team.
      * @return int value which may be: = 0 if this team sequence are equal to the provided team sequence > 0 if this team sequence are bigger to the provided
-     *         team sequence < 0 if this team sequence are smaller to the provided team sequence
+     * team sequence < 0 if this team sequence are smaller to the provided team sequence
      */
     private int compareSequencesTo(final Team team) {
         final Sequence maxSequence = getMaxSequence();
@@ -275,7 +299,8 @@ public final class Team implements Serializable {
 
     /**
      * Returns player's hash code.
-     * @return int teams's hash code value.
+     *
+     * @return int team's hash code value.
      */
     public int hashCode() {
         int hash = 13;
@@ -285,6 +310,7 @@ public final class Team implements Serializable {
 
     /**
      * The method checks if this team and specified object (team) are equal.
+     *
      * @param obj specified object.
      * @return boolean true if this team is equal to specified object and false otherwise.
      */
@@ -297,6 +323,7 @@ public final class Team implements Serializable {
 
     /**
      * Returns points of played games in current rubber game.
+     *
      * @return points list.
      */
     public PointsList getPoints() {
@@ -305,6 +332,7 @@ public final class Team implements Serializable {
 
     /**
      * Returns couples of team players.
+     *
      * @return the couples
      */
     public Couple getCouples() {
@@ -313,6 +341,7 @@ public final class Team implements Serializable {
 
     /**
      * Returns hands of the team (win trick cards).
+     *
      * @return the hands
      */
     public Pack getHands() {
@@ -320,19 +349,16 @@ public final class Team implements Serializable {
     }
 
     /**
-     * Returns team players count.
-     * @return players count.
-     */
-    public int getPlayersCount() {
-        return players.length;
-    }
-
-    /**
      * Returns player by index or throws Exception.
+     *
      * @param index of the player.
      * @return player by index.
      */
     public Player getPlayer(final int index) {
         return players[index];
+    }
+
+    public Iterable<Player> players() {
+        return Arrays.asList(players);
     }
 }

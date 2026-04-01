@@ -10,20 +10,22 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.OppositeTeamEndGameZone;
 
 /**
  * EndGameNagDoubleAnnounce class. Announce factory method which creates double announce if the enemy team declared game and is in end game zone.
+ *
  * @author Dimitar Karamanov
  */
 public final class EndGameNagDoubleAnnounce extends ConditionListMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public EndGameNagDoubleAnnounce(final Game game) {
@@ -33,6 +35,7 @@ public final class EndGameNagDoubleAnnounce extends ConditionListMethod {
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */
@@ -40,7 +43,7 @@ public final class EndGameNagDoubleAnnounce extends ConditionListMethod {
         final Announce announce = game.getAnnounceList().getContractAnnounce();
         if (announce != null) {
             final boolean enemyAnnounce = !announce.getPlayer().isSameTeam(player);
-            final boolean normalAnnounce = announce.getType().equals(AnnounceType.Normal);
+            final boolean normalAnnounce = announce.getType().equals(AnnounceTypes.Normal);
             final boolean normalEnemyAnnounce = enemyAnnounce && normalAnnounce;
             final boolean enemyHasMorePoints = player.getTeam().getPoints().getAllPoints() < game.getOppositeTeam(player).getPoints().getAllPoints();
 

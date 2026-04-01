@@ -10,13 +10,14 @@
 package belote.logic.play.strategy.automat.base.executor;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.PlayCardMethod;
 
 /**
  * PlayCardExecutor abstract class. Provides the mechanism to be executed one by one PlayCardMethod methods stored in an collection and to return the first not
  * null result value returned from the iteration. Also provides the facility the user to write own code which is executed before the result to be returned.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class PlayCardExecutor implements PlayCardMethod {
@@ -33,6 +34,7 @@ public abstract class PlayCardExecutor implements PlayCardMethod {
 
     /**
      * Constructor
+     *
      * @param game BelotGame instance.
      */
     public PlayCardExecutor(final Game game) {
@@ -41,6 +43,7 @@ public abstract class PlayCardExecutor implements PlayCardMethod {
 
     /**
      * Returns player's card by executing one by one the collection's methods.
+     *
      * @param player for which the card is retrieved.
      * @return Card object instance or null.
      */
@@ -48,7 +51,7 @@ public abstract class PlayCardExecutor implements PlayCardMethod {
         Card result = null;
 
         if (fitPreCondition(player)) {
-            for (final PlayCardMethodIterator iterator = list.iterator(); iterator.hasNext() && result == null;) {
+            for (final PlayCardMethodIterator iterator = list.iterator(); iterator.hasNext() && result == null; ) {
                 final PlayCardMethod playable = iterator.next();
                 result = playable.getPlayerCard(player);
             }
@@ -60,6 +63,7 @@ public abstract class PlayCardExecutor implements PlayCardMethod {
 
     /**
      * Handler method providing the user facility to check custom condition for methods executions.
+     *
      * @param player for which is called the executor
      * @return true to process method execution false to not.
      */
@@ -69,6 +73,7 @@ public abstract class PlayCardExecutor implements PlayCardMethod {
 
     /**
      * Handler method providing the user to write additional code which is executed after the getPlayerCard(Player).
+     *
      * @param player for which is called the executor
      * @param result the result of the method getPlayerCard(Player)
      */
@@ -78,6 +83,7 @@ public abstract class PlayCardExecutor implements PlayCardMethod {
 
     /**
      * Adds method to the execution collection.
+     *
      * @param method which is added to collection.
      */
     protected void register(final PlayCardMethod method) {

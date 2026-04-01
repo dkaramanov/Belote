@@ -11,15 +11,16 @@ package belote.bean.pack.card.suit;
 
 /**
  * Suit spade class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Spade extends Suit {
+final class Spade extends Suit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 3200954318160833662L;
-    
+
     /**
      * Spade ID constant.
      */
@@ -34,6 +35,7 @@ public final class Spade extends Suit {
 
     /**
      * Returns suit's color.
+     *
      * @return String suit's color.
      */
     public String getSuitColor() {

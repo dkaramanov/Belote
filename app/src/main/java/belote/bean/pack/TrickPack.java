@@ -9,18 +9,21 @@
  */
 package belote.bean.pack;
 
+import java.util.Iterator;
+
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
 
 /**
  * TrickPack class.
+ *
  * @author Dimitar Karamanov
  */
 public final class TrickPack extends Pack {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 7015330407925820737L;
 
     /**
@@ -32,10 +35,11 @@ public final class TrickPack extends Pack {
 
     /**
      * Returns attack card.
+     *
      * @return Card the attack card.
      */
     public Card getAttackCard() {
-        final PackIterator it = iterator();
+        final Iterator<Card> it = list().iterator();
         if (it.hasNext()) {
             return it.next();
         }
@@ -44,19 +48,21 @@ public final class TrickPack extends Pack {
 
     /**
      * Returns the card with best rank and suit equals to attack card's suit.
+     *
      * @return Card with the best(max) rank and suit equals to attack card's suit.
      */
     public Card getHandAttackSuitCard() {
-        final PackIterator it = iterator();
+        final Iterator<Card> it = list().iterator();
         if (it.hasNext()) {
             final Suit suit = it.next().getSuit();
             return findMaxSuitCard(suit);
         }
         return null;
     }
-    
+
     /**
      * Returns the card with best rank and suit equals to attack card's suit.
+     *
      * @return Card with the best(max) rank and suit equals to attack card's suit.
      */
     public Card getHandAttackSuitCard(Suit suit) {

@@ -9,10 +9,11 @@
  */
 package belote.logic.announce.factory.automat.methods.conditions.base;
 
-import belote.bean.Player;
+import belote.bean.player.Player;
 
 /**
  * NotCondition class. NotCondition is an complicated condition which reverts the result of other announce condition.
+ *
  * @author Dimitar Karamanov
  */
 public final class NotCondition implements AnnounceCondition {
@@ -21,6 +22,7 @@ public final class NotCondition implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param condition used to be reverted.
      */
     public NotCondition(final AnnounceCondition condition) {
@@ -29,6 +31,7 @@ public final class NotCondition implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition. (Boolean NOT)
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

@@ -9,10 +9,12 @@
  */
 package belote.logic.announce.factory.automat.executors;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 import belote.logic.announce.factory.automat.methods.RedoubleAnnounce;
 import belote.logic.announce.factory.transformers.AnnounceTransformer;
@@ -20,6 +22,7 @@ import belote.logic.announce.factory.transformers.DoubleAnnounce;
 
 /**
  * RegGameNormalAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameNormalAnnounce extends AnnounceExecutor {
@@ -28,25 +31,28 @@ public final class RegGameNormalAnnounce extends AnnounceExecutor {
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public RegGameNormalAnnounce(final Game game) {
-        super(game);
+    public RegGameNormalAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
         doubleAnnounce = new DoubleAnnounce(game);
         register(new RedoubleAnnounce(game));
-        register(new RegGameNormalStandardAnnounce(game));
+        register(new RegGameNormalStandardAnnounce(game, gameLock));
     }
 
     /**
      * Handler method providing the user to write additional code which is executed after the getPlayerCard(Player).
-     * @param player for which is called the executor
+     *
+     * @param player   for which is called the executor
      * @param announce the result of the method getAnnounce(Player)
      * @return Announce - the same or transformed one.
      */
     protected Announce afterExecution(final Player player, final Announce announce) {
         Announce result = announce;
 
-        if (announce != null && announce.getType().equals(AnnounceType.Normal)) {
+        if (announce != null && announce.getType().equals(AnnounceTypes.Normal)) {
             result = doubleAnnounce.transform(player, announce);
         }
 

@@ -9,22 +9,24 @@
  */
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
+import java.util.List;
+
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
-import belote.bean.pack.card.suit.SuitList;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * PartnerSuitAnnounceCard class. PlayCardMethod which implements the logic of playing card from suit declared by partner during game announce.
+ *
  * @author Dimitar Karamanov
  */
 public final class PartnerSuitAnnounceCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public PartnerSuitAnnounceCard(final Game game) {
@@ -33,17 +35,16 @@ public final class PartnerSuitAnnounceCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player) {
         final Player partner = player.getPartner();
-        
-        final SuitList suits = getTrumpAnnounces(partner);
-        
-        for (final SuitIterator iterator = suits.iterator(); iterator.hasNext();) {
-            Suit suit = iterator.next();
-            
+
+        final List<Suit> suits = getTrumpAnnounces(partner);
+
+        for (final Suit suit : suits) {
             Card result;
             result = player.getCards().findMaxSuitCard(suit);
             if (result != null && isMaxSuitCardLeft(result, false)) {
@@ -55,7 +56,7 @@ public final class PartnerSuitAnnounceCard extends BaseMethod {
                 return result;
             }
         }
-        
+
         return null;
     }
 }

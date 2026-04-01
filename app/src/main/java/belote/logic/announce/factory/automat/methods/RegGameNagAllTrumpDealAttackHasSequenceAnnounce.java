@@ -10,11 +10,11 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
 import belote.bean.pack.sequence.SequenceType;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.DealAttackPlayer;
 import belote.logic.announce.factory.automat.methods.conditions.HasSuit;
@@ -23,25 +23,28 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.SequenceSu
 
 /**
  * RegGameNagAllTrumpWhenFirstAndHasSequenceAnnounce class. Announce factory method which creates nag all trump announce when has a sequence.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameNagAllTrumpDealAttackHasSequenceAnnounce extends ConditionListMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public RegGameNagAllTrumpDealAttackHasSequenceAnnounce(final Game game) {
         super(game);
-        addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Rank.Jack)), new DealAttackPlayer(game)));
-        addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Rank.Queen)), new DealAttackPlayer(game)));
-        addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Rank.King)), new DealAttackPlayer(game)));
-        addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Rank.Ace)), new DealAttackPlayer(game)));
+        addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Ranks.Jack)), new DealAttackPlayer(game)));
+        addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Ranks.Queen)), new DealAttackPlayer(game)));
+        addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Ranks.King)), new DealAttackPlayer(game)));
+        addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quarte, Ranks.Ace)), new DealAttackPlayer(game)));
         addAnnounceCondition(new MultipleAndCondition(new HasSuit(new SequenceSuit(SequenceType.Quint)), new DealAttackPlayer(game)));
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

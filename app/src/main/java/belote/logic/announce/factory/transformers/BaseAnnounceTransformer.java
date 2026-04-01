@@ -13,6 +13,7 @@ import belote.bean.Game;
 
 /**
  * BaseAnnounceTransformer class.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class BaseAnnounceTransformer implements AnnounceTransformer {
@@ -24,6 +25,7 @@ public abstract class BaseAnnounceTransformer implements AnnounceTransformer {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public BaseAnnounceTransformer(final Game game) {

@@ -10,20 +10,22 @@
 package belote.logic.play.strategy.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * TeamSuitCard class. PlayCardMethod which implements the logic of playing the minimum card from the first found team suit.
+ *
  * @author Dimitar Karamanov
  */
 public final class TeamSuitCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public TeamSuitCard(Game game) {
@@ -32,14 +34,14 @@ public final class TeamSuitCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
     protected Card getPlayMethodCard(final Player player) {
         final Suit trump = getTrump();
-        
-        for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
+
+        for (final Suit suit : Suits.list()) {
             if (trump == null || !trump.equals(suit)) {
                 if (isTeamSuit(suit, player.getTeam())) {
                     final Card card = player.getCards().findMinSuitCard(suit);

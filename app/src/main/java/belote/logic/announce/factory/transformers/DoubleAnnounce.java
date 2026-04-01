@@ -10,17 +10,19 @@
 package belote.logic.announce.factory.transformers;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
+import belote.bean.player.Player;
 
 /**
  * DoubleAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class DoubleAnnounce extends BaseAnnounceTransformer {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public DoubleAnnounce(Game game) {
@@ -29,7 +31,8 @@ public final class DoubleAnnounce extends BaseAnnounceTransformer {
 
     /**
      * Transforms or not the provide announce to other depending conditions.
-     * @param player which has to declare the announce.
+     *
+     * @param player   which has to declare the announce.
      * @param announce which will be transformed.
      * @return the same or new announce.
      */

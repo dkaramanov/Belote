@@ -1,11 +1,12 @@
 package com.karamanov.beloteGame.text;
 
-import java.util.Hashtable;
-
 import android.content.Context;
-import belote.bean.Player;
 
 import com.karamanov.beloteGame.R;
+
+import java.util.Hashtable;
+
+import belote.bean.player.Player;
 
 public class ShortPlayerNameDecorator {
 

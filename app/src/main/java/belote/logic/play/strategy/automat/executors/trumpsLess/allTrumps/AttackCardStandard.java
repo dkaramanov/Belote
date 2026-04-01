@@ -23,12 +23,14 @@ import belote.logic.play.strategy.automat.methods.trumpsLess.allTrump.PromoteNin
 
 /**
  * Standard AllTrumpAttackCard executor. Used in AllTrumpAttackCard getAttackCard().
+ *
  * @author Dimitar Karamanov
  */
 class AttackCardStandard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public AttackCardStandard(final Game game) {

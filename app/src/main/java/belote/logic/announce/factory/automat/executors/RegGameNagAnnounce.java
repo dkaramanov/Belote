@@ -9,6 +9,8 @@
  */
 package belote.logic.announce.factory.automat.executors;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
 import belote.logic.announce.factory.automat.executors.base.AnnounceExecutor;
 import belote.logic.announce.factory.automat.methods.RegGameNagAllTrumpAnnounce;
@@ -20,16 +22,19 @@ import belote.logic.announce.factory.automat.methods.conditions.OppositeTeamNorm
 
 /**
  * RegGameNagAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameNagAnnounce extends AnnounceExecutor {
 
     /**
      * Constructor.
-     * @param game BelotGame instance class.
+     *
+     * @param game     BelotGame instance class.
+     * @param gameLock game lock.
      */
-    public RegGameNagAnnounce(final Game game) {
-        super(game);
+    public RegGameNagAnnounce(final Game game, final ReentrantReadWriteLock gameLock) {
+        super(game, gameLock);
         // Preconditions
         addPreCondition(new OppositeTeamNormalAnnounce(game));
         // Methods
@@ -38,6 +43,6 @@ public final class RegGameNagAnnounce extends AnnounceExecutor {
         register(new RegGameNagAllTrumpAnnounce(game));
         register(new RegGameNagNoTrumpAnnounce(game));
         register(new RegGameNagNoTrumpWhenFirstAndHasAceSuitAnnounce(game));
-        register(new RegGameNagTrumpAnnounce(game));
+        register(new RegGameNagTrumpAnnounce(game, gameLock));
     }
 }

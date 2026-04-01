@@ -11,6 +11,7 @@ package com.karamanov.framework.graphics;
 
 /**
  * Color class.
+ *
  * @author Dimitar Karamanov
  */
 public final class Color {
@@ -85,6 +86,7 @@ public final class Color {
 
     /**
      * Constructor.
+     *
      * @param gray segment
      */
     public Color(final int gray) {
@@ -93,9 +95,10 @@ public final class Color {
 
     /**
      * Constructor.
-     * @param red segment
+     *
+     * @param red   segment
      * @param green segment
-     * @param blue segment
+     * @param blue  segment
      */
     public Color(final int red, final int green, final int blue) {
         RGB = (red << 16) + (green << 8) + blue;
@@ -103,6 +106,7 @@ public final class Color {
 
     /**
      * Returns color's RGB value.
+     *
      * @return RGB value.
      */
     public int getRGB() {
@@ -111,6 +115,7 @@ public final class Color {
 
     /**
      * Returns color's Red value.
+     *
      * @return red value.
      */
     public int getRed() {
@@ -119,6 +124,7 @@ public final class Color {
 
     /**
      * Returns color's Red value.
+     *
      * @param RGB of color.
      * @return red value.
      */
@@ -128,6 +134,7 @@ public final class Color {
 
     /**
      * Returns color's Green value.
+     *
      * @return green value.
      */
     public int getGreen() {
@@ -136,6 +143,7 @@ public final class Color {
 
     /**
      * Returns color's Green value.
+     *
      * @param RGB of color.
      * @return green value.
      */
@@ -145,6 +153,7 @@ public final class Color {
 
     /**
      * Returns color's Blue value.
+     *
      * @return blue value.
      */
     public int getBlue() {
@@ -153,6 +162,7 @@ public final class Color {
 
     /**
      * Returns color's Blue value.
+     *
      * @param RGB of color.
      * @return blue value.
      */
@@ -162,6 +172,7 @@ public final class Color {
 
     /**
      * Returns color's low color.
+     *
      * @return Color low color.
      */
     public Color getLowColor() {
@@ -174,6 +185,7 @@ public final class Color {
 
     /**
      * Returns color's high color.
+     *
      * @return Color high color.
      */
     public Color getHighColor() {
@@ -186,6 +198,7 @@ public final class Color {
 
     /**
      * Transforms segment into high color segment.
+     *
      * @param segment which will be transformed.
      * @return high color segment.
      */
@@ -198,9 +211,10 @@ public final class Color {
 
     /**
      * Returns RGB color by provided red, green and blue values.
-     * @param red of the RGB
+     *
+     * @param red   of the RGB
      * @param green of the RGB
-     * @param blue of the RGB
+     * @param blue  of the RGB
      * @return RGB color.
      */
     public static int getRGB(final int gray) {
@@ -209,9 +223,10 @@ public final class Color {
 
     /**
      * Returns RGB color by provided red, green and blue values.
-     * @param red of the RGB
+     *
+     * @param red   of the RGB
      * @param green of the RGB
-     * @param blue of the RGB
+     * @param blue  of the RGB
      * @return RGB color.
      */
     public static int getRGB(final int red, final int green, final int blue) {

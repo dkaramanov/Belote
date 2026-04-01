@@ -11,10 +11,11 @@ package belote.logic.play.points.distributors;
 
 import belote.bean.Game;
 import belote.bean.announce.Announce;
-import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
 
 /**
  * PointsDistributor base distributor class. Points calculator class for All Trump game.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class PointsDistributor {
@@ -26,6 +27,7 @@ public abstract class PointsDistributor {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public PointsDistributor(Game game) {
@@ -40,11 +42,11 @@ public abstract class PointsDistributor {
         final Announce lastAnnounce = game.getAnnounceList().getContractAnnounce();
 
         if (normalAnnounce != null && lastAnnounce != null) {
-            if (lastAnnounce.getType().equals(AnnounceType.Normal)) {
+            if (lastAnnounce.getType().equals(AnnounceTypes.Normal)) {
                 distributeTeamsPointsNormalGame(normalAnnounce);
-            } else if (lastAnnounce.getType().equals(AnnounceType.Double)) {
+            } else if (lastAnnounce.getType().equals(AnnounceTypes.Double)) {
                 distributeTeamsPointsDoubleGame(normalAnnounce);
-            } else if (lastAnnounce.getType().equals(AnnounceType.Redouble)) {
+            } else if (lastAnnounce.getType().equals(AnnounceTypes.Redouble)) {
                 distributeTeamsPointsRedoubleGame(normalAnnounce);
             }
         }
@@ -52,18 +54,21 @@ public abstract class PointsDistributor {
 
     /**
      * Distributes points when the game type is TP_NORMAL.
+     *
      * @param normalAnnounce announce.
      */
     public abstract void distributeTeamsPointsNormalGame(Announce normalAnnounce);
 
     /**
      * Distributes points when the game type is TP_DOUBLE.
+     *
      * @param normalAnnounce announce.
      */
     public abstract void distributeTeamsPointsDoubleGame(Announce normalAnnounce);
 
     /**
      * Distributes points when the game type is TP_REDOUBLE.
+     *
      * @param normalAnnounce announce.
      */
     public abstract void distributeTeamsPointsRedoubleGame(Announce normalAnnounce);

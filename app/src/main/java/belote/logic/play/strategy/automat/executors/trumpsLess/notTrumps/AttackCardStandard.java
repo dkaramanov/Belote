@@ -21,13 +21,15 @@ import belote.logic.play.strategy.automat.methods.trumpsLess.TeamSuitPartnerCard
 import belote.logic.play.strategy.automat.methods.trumpsLess.notTrump.PromoteTenRankCard;
 
 /**
- * Standard NotTrumpAttackCard executor. Used in NotTrumpPlayStategy getAttackCard().
+ * Standard NotTrumpAttackCard executor. Used in NotTrumpPlayStrategy getAttackCard().
+ *
  * @author Dimitar Karamanov
  */
 class AttackCardStandard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public AttackCardStandard(final Game game) {

@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     namespace 'com.karamanov.beloteGame'
-    compileSdkVersion 34
+    compileSdkVersion 35
 
     defaultConfig {
         applicationId "com.karamanov.beloteGame"
         minSdkVersion 21
-        targetSdkVersion 34
-        versionCode 39
-        versionName "1.39"
+        targetSdkVersion 35
+        versionCode 50
+        versionName "2.01"
     }
 
     buildTypes {
@@ -21,6 +21,10 @@ android {
     lint {
         abortOnError false
         checkReleaseBuilds false
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
 }

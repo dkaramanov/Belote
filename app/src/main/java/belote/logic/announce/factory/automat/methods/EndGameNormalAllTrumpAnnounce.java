@@ -10,9 +10,9 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.PlayerTeamEndGameZone;
 import belote.logic.announce.factory.automat.methods.conditions.RankCount;
@@ -22,24 +22,27 @@ import belote.logic.announce.factory.automat.methods.conditions.base.MultipleAnd
 
 /**
  * EndGameNormalAllTrumpAnnounce class. Announce factory method which creates normal all trump announce when some of the teams reached end game.
+ *
  * @author Dimitar Karamanov
  */
 public final class EndGameNormalAllTrumpAnnounce extends ConditionListMethod {
-    
+
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public EndGameNormalAllTrumpAnnounce(final Game game) {
         super(game);
-        addAnnounceCondition(new RankCount(Rank.Jack, 4));
-        addAnnounceCondition(new MultipleAndCondition(new PlayerTeamEndGameZone(), new RankCount(Rank.Nine, 4)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Rank.Jack, 3), new RankCount(Rank.Nine, 1)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Rank.Jack, 3), new RankCount(Rank.Nine, 1)));
+        addAnnounceCondition(new RankCount(Ranks.Jack, 4));
+        addAnnounceCondition(new MultipleAndCondition(new PlayerTeamEndGameZone(), new RankCount(Ranks.Nine, 4)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Ranks.Jack, 3), new RankCount(Ranks.Nine, 1)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Ranks.Jack, 3), new RankCount(Ranks.Nine, 1)));
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

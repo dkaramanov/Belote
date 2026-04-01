@@ -13,10 +13,13 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import belote.bean.announce.suit.AnnounceSuit;
+import belote.bean.announce.suit.AnnounceSuits;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.pack.card.suit.Suits;
 
 /**
  * Transforms from Suit to AnnounceSuit and back.
+ *
  * @author Dimitar Karamanov
  */
 public class AnnounceUnit {
@@ -28,41 +31,44 @@ public class AnnounceUnit {
 
     /**
      * Initializes mapping table.
+     *
      * @return Hashtable with suit mappings.
      */
     private static Hashtable<Suit, AnnounceSuit> initMapping() {
         final Hashtable<Suit, AnnounceSuit> result = new Hashtable<Suit, AnnounceSuit>();
 
-        result.put(Suit.Club, AnnounceSuit.Club);
-        result.put(Suit.Diamond, AnnounceSuit.Diamond);
-        result.put(Suit.Heart, AnnounceSuit.Heart);
-        result.put(Suit.Spade, AnnounceSuit.Spade);
+        result.put(Suits.Club, AnnounceSuits.Club);
+        result.put(Suits.Diamond, AnnounceSuits.Diamond);
+        result.put(Suits.Heart, AnnounceSuits.Heart);
+        result.put(Suits.Spade, AnnounceSuits.Spade);
 
         return result;
     }
 
     /**
      * Transforms from Suit object to AnnounceSuit one.
+     *
      * @param suit provided suit.
      * @return AnnounceSuit instance object.
      */
-    public static final AnnounceSuit transformFromSuitToAnnounceSuit(final Suit suit) {
+    public static AnnounceSuit transformFromSuitToAnnounceSuit(final Suit suit) {
         if (mapping.containsKey(suit)) {
             return mapping.get(suit);
         }
-        return AnnounceSuit.Pass;
+        return AnnounceSuits.Pass;
     }
 
     /**
      * Transforms from AnnounceSuit object to Suit one.
+     *
      * @param announceSuit provided announce suit.
      * @return Suit instance object or null.
      */
-    public final static Suit transformFromAnnounceSuitToSuit(final AnnounceSuit announceSuit) {
-        for (final Enumeration<Suit> iterator = mapping.keys(); iterator.hasMoreElements();) {
+    public static Suit transformFromAnnounceSuitToSuit(final AnnounceSuit announceSuit) {
+        for (final Enumeration<Suit> iterator = mapping.keys(); iterator.hasMoreElements(); ) {
             final Suit suit = iterator.nextElement();
             final AnnounceSuit aSuit = mapping.get(suit);
-            if (aSuit.equals(announceSuit)) {
+            if (aSuit != null && aSuit.equals(announceSuit)) {
                 return suit;
             }
         }

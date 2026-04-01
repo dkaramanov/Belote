@@ -9,13 +9,14 @@
  */
 package belote.logic.announce.factory.automat.methods.conditions;
 
-import belote.bean.Player;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 import belote.logic.announce.factory.automat.methods.suitDeterminants.base.SuitDeterminant;
 
 /**
  * SuitCount class. Returns if the announce player has ant minimum cards from dynamically determined suit.
+ *
  * @author Dimitar Karamanov
  */
 public final class SuitCount implements AnnounceCondition {
@@ -32,8 +33,9 @@ public final class SuitCount implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param suitDeterminant used to determine dynamically the suit.
-     * @param count the minimum needed.
+     * @param count           the minimum needed.
      */
     public SuitCount(final SuitDeterminant suitDeterminant, final int count) {
         this.suitDeterminant = suitDeterminant;
@@ -42,6 +44,7 @@ public final class SuitCount implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

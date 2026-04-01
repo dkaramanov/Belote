@@ -10,10 +10,10 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.HasSuit;
 import belote.logic.announce.factory.automat.methods.conditions.RankCount;
@@ -24,6 +24,7 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.base.SuitD
 /**
  * EndGameNormalJackNineSuitAnnounce class. Announce factory method which creates normal suit announce on jack nine suit and more than 1 aces. TODO: maybe
  * overlapped with dominant suit or not if only jack and nine.
+ *
  * @author Dimitar Karamanov
  */
 public final class EndGameNormalJackNineSuitAnnounce extends ConditionListMethod {
@@ -32,16 +33,18 @@ public final class EndGameNormalJackNineSuitAnnounce extends ConditionListMethod
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public EndGameNormalJackNineSuitAnnounce(final Game game) {
         super(game);
         suitDeterminant = new JackNineSuit();
-        addAnnounceCondition(new MultipleAndCondition(new HasSuit(suitDeterminant), new RankCount(Rank.Ace, 2)));
+        addAnnounceCondition(new MultipleAndCondition(new HasSuit(suitDeterminant), new RankCount(Ranks.Ace, 2)));
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

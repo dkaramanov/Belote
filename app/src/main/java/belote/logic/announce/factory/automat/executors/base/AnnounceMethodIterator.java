@@ -13,18 +13,21 @@ import belote.logic.announce.factory.automat.base.AnnounceMethod;
 
 /**
  * AnnounceMethodIterator interface.
+ *
  * @author Dimitar Karamanov
  */
 public interface AnnounceMethodIterator {
 
     /**
      * Returns true if the iteration has more elements.
+     *
      * @return boolean true if the iteration has more elements false otherwise.
      */
     boolean hasNext();
 
     /**
      * Returns the next element in the iteration.
+     *
      * @return AnnounceMethod the next element in the iteration.
      */
     AnnounceMethod next();

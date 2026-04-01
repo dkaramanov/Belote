@@ -11,15 +11,16 @@ package belote.bean.pack.card.suit;
 
 /**
  * Suit club class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Club extends Suit {
+final class Club extends Suit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -2588635664982772738L;
-    
+
     /**
      * Club ID constant.
      */
@@ -34,6 +35,7 @@ public final class Club extends Suit {
 
     /**
      * Returns suit's color.
+     *
      * @return String suit's color.
      */
     public String getSuitColor() {

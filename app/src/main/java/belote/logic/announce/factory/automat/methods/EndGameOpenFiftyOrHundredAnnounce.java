@@ -10,22 +10,24 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
 import belote.bean.pack.card.suit.Suit;
 import belote.bean.pack.sequence.SequenceType;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.HasSuit;
 import belote.logic.announce.factory.automat.methods.suitDeterminants.SequenceSuit;
 
 /**
  * EndGameOpenFiftyOrHundredAnnounce class. Announce factory method which creates suit announce when the player has 50 or 100 suit sequence.
+ *
  * @author Dimitar Karamanov
  */
 public final class EndGameOpenFiftyOrHundredAnnounce extends ConditionListMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public EndGameOpenFiftyOrHundredAnnounce(final Game game) {
@@ -36,6 +38,7 @@ public final class EndGameOpenFiftyOrHundredAnnounce extends ConditionListMethod
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

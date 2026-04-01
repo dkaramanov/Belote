@@ -10,15 +10,16 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.TeamEndGameZone;
 
 /**
  * OppositeTeamEndGameZone class.
+ *
  * @author Dimitar Karamanov
  */
 public final class OppositeTeamEndGameZone extends TeamEndGameZone {
-    
+
     /**
      * BelotGame instance.
      */
@@ -26,6 +27,7 @@ public final class OppositeTeamEndGameZone extends TeamEndGameZone {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public OppositeTeamEndGameZone(final Game game) {
@@ -34,6 +36,7 @@ public final class OppositeTeamEndGameZone extends TeamEndGameZone {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

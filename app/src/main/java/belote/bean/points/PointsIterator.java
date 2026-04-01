@@ -11,18 +11,21 @@ package belote.bean.points;
 
 /**
  * PointsIterator interface.
+ *
  * @author Dimitar Karamanov
  */
 public interface PointsIterator {
 
     /**
      * Returns true if the iteration has more elements.
+     *
      * @return boolean true if the iteration has more elements false otherwise.
      */
     boolean hasNext();
 
     /**
      * Returns the next element in the iteration.
+     *
      * @return int the next element in the iteration.
      */
     int next();

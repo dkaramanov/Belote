@@ -10,20 +10,23 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess.allTrump;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
+import belote.bean.player.Players;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * AllTrumpSuitHookCard class. PlayCardMethod which implements the logic of playing a card in all trump game in third defense position, which try to "hook" the
  * hand.
+ *
  * @author Dimitar Karamanov
  */
 public final class HookCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public HookCard(final Game game) {
@@ -32,12 +35,12 @@ public final class HookCard extends BaseMethod {
 
     private boolean canHook(final Player player, final Suit suit) {
         if (isFirstDefencePosition()) {
-            Player next = game.getPlayerAfter(player);
-            Player afterNext = game.getPlayerAfter(next);
+            Player next = Players.getPlayerAfter(player);
+            Player afterNext = Players.getPlayerAfter(next);
 
             return next.getMissedSuits().contains(suit) && afterNext.getMissedSuits().contains(suit);
         } else if (isSecondDefencePosition()) {
-            Player next = game.getPlayerAfter(player);
+            Player next = Players.getPlayerAfter(player);
 
             return next.getMissedSuits().contains(suit);
         } else if (isThirdDefencePosition()) {
@@ -49,6 +52,7 @@ public final class HookCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */

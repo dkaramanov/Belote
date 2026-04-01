@@ -26,6 +26,7 @@ import java.io.Serializable;
 
 import belote.bean.Game;
 import belote.bean.Team;
+import belote.bean.player.Player;
 
 public final class ScoreActivity extends Activity {
 
@@ -35,7 +36,9 @@ public final class ScoreActivity extends Activity {
         super();
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +76,12 @@ public final class ScoreActivity extends Activity {
                     LinearLayout horizontal = new LinearLayout(this);
                     horizontal.setOrientation(LinearLayout.HORIZONTAL);
 
-                    int c1 = game.getTeam(0).getPoints().size();
-                    int c2 = game.getTeam(1).getPoints().size();
+                    int c1 = Team.N_S.getPoints().size();
+                    int c2 = Team.E_W.getPoints().size();
                     int count = Math.max(c1, c2);
 
-                    View left = getScore(game.getTeam(0), count);
-                    View right = getScore(game.getTeam(1), count);
+                    View left = getScore(Team.N_S, count);
+                    View right = getScore(Team.E_W, count);
 
                     params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
                     params.rightMargin = dip5;
@@ -118,12 +121,10 @@ public final class ScoreActivity extends Activity {
     private String getTeamCaption(Team team) {
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < team.getPlayersCount(); i++) {
-
-            PlayerNameDecorator playerDecorator = new PlayerNameDecorator(team.getPlayer(i));
-
+        for (final Player player: team.players()) {
+            PlayerNameDecorator playerDecorator = new PlayerNameDecorator(player);
             String pName = playerDecorator.decorate(this);
-            if (pName.length() > 0) {
+            if (!pName.isEmpty()) {
                 if (sb.length() > 0) {
                     sb.append(" & ");
                 }

@@ -1,9 +1,9 @@
 package belote.logic;
 
 import belote.bean.pack.Pack;
-import belote.bean.pack.PackIterator;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.pack.card.suit.Suits;
 
 public final class BlackRedPackOrderTransformer {
 
@@ -14,24 +14,11 @@ public final class BlackRedPackOrderTransformer {
     }
 
     public Pack transform() {
-        Pack result = new Pack();
+        final Pack result = new Pack();
+        final Suit[] order = getSuitsOrder();
 
-        int blackSuits = (pack.hasSuitCard(Suit.Spade) ? 1 : 0) + (pack.hasSuitCard(Suit.Club) ? 1 : 0);
-        int redSuits = (pack.hasSuitCard(Suit.Heart) ? 1 : 0) + (pack.hasSuitCard(Suit.Diamond) ? 1 : 0);
-
-        Suit[] order;
-
-        if (blackSuits > redSuits) {
-            order = new Suit[] { Suit.Spade, Suit.Heart, Suit.Diamond, Suit.Club };
-        } else if (blackSuits < redSuits) {
-            order = new Suit[] { Suit.Heart, Suit.Spade, Suit.Club, Suit.Diamond };
-        } else {
-            order = new Suit[] { Suit.Spade, Suit.Heart, Suit.Club, Suit.Diamond };
-        }
-
-        for (Suit suit : order) {
-            for (final PackIterator packIterator = pack.iterator(); packIterator.hasNext();) {
-                Card card = packIterator.next();
+        for (final Suit suit : order) {
+            for (final Card card : pack.list()) {
                 if (card.getSuit().equals(suit)) {
                     result.add(card);
                 }
@@ -39,5 +26,17 @@ public final class BlackRedPackOrderTransformer {
         }
 
         return result;
+    }
+
+    private Suit[] getSuitsOrder() {
+        final int blackSuits = (pack.hasSuitCard(Suits.Spade) ? 1 : 0) + (pack.hasSuitCard(Suits.Club) ? 1 : 0);
+        final int redSuits = (pack.hasSuitCard(Suits.Heart) ? 1 : 0) + (pack.hasSuitCard(Suits.Diamond) ? 1 : 0);
+        if (blackSuits > redSuits) {
+            return new Suit[]{Suits.Spade, Suits.Heart, Suits.Diamond, Suits.Club};
+        } else if (blackSuits < redSuits) {
+            return new Suit[]{Suits.Heart, Suits.Spade, Suits.Club, Suits.Diamond};
+        } else {
+            return new Suit[]{Suits.Spade, Suits.Heart, Suits.Club, Suits.Diamond};
+        }
     }
 }

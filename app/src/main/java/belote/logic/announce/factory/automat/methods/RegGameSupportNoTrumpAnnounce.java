@@ -10,9 +10,9 @@
 package belote.logic.announce.factory.automat.methods;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.base.ConditionListMethod;
 import belote.logic.announce.factory.automat.methods.conditions.HasSuit;
 import belote.logic.announce.factory.automat.methods.conditions.RankCount;
@@ -23,25 +23,28 @@ import belote.logic.announce.factory.automat.methods.suitDeterminants.AceTenKing
 
 /**
  * RegGameSupportNotTrumpAnnounce class. Announce factory method which creates support not trump announce.
+ *
  * @author Dimitar Karamanov
  */
 public final class RegGameSupportNoTrumpAnnounce extends ConditionListMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public RegGameSupportNoTrumpAnnounce(final Game game) {
         super(game);
-        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Rank.Ace, 3)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Rank.Ace, 2), new RankCount(Rank.Ten, 1)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Rank.Ace, 3)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Rank.Ace, 2), new RankCount(Rank.Ten, 2)));
-        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Rank.Ace, 2), new HasSuit(new AceTenKingSuit())));
+        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Ranks.Ace, 3)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamAttack(game), new RankCount(Ranks.Ace, 2), new RankCount(Ranks.Ten, 1)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Ranks.Ace, 3)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Ranks.Ace, 2), new RankCount(Ranks.Ten, 2)));
+        addAnnounceCondition(new MultipleAndCondition(new TeamDefence(game), new RankCount(Ranks.Ace, 2), new HasSuit(new AceTenKingSuit())));
     }
 
     /**
      * Returns the proper Announce when conditions match.
+     *
      * @param player who is on turn.
      * @return an Announce instance.
      */

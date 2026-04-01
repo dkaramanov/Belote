@@ -10,13 +10,14 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
 import belote.bean.announce.suit.AnnounceSuit;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * GameLastNoPassAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class HasContractAnnounce implements AnnounceCondition {
@@ -33,6 +34,7 @@ public final class HasContractAnnounce implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public HasContractAnnounce(final Game game) {
@@ -41,7 +43,8 @@ public final class HasContractAnnounce implements AnnounceCondition {
 
     /**
      * Constructor.
-     * @param game BelotGame instance.
+     *
+     * @param game         BelotGame instance.
      * @param announceSuit instance.
      */
     public HasContractAnnounce(final Game game, final AnnounceSuit announceSuit) {
@@ -51,6 +54,7 @@ public final class HasContractAnnounce implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

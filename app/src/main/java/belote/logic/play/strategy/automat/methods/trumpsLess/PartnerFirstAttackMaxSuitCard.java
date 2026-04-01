@@ -10,14 +10,15 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 public class PartnerFirstAttackMaxSuitCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public PartnerFirstAttackMaxSuitCard(final Game game) {
@@ -26,6 +27,7 @@ public class PartnerFirstAttackMaxSuitCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
@@ -35,7 +37,7 @@ public class PartnerFirstAttackMaxSuitCard extends BaseMethod {
         final Card attackCard = game.getTrickCards().getAttackCard();
 
         if (attackCard != null && isSecondDefencePosition()) { // partner is the
-                                                               // attack player
+            // attack player
             final Card maxCard = player.getCards().findMaxSuitCard(attackCard.getSuit());
             if (maxCard != null && !hasPlayerAttack(partner) && isMaxSuitCardLeft(attackCard, false)) {
                 result = maxCard;

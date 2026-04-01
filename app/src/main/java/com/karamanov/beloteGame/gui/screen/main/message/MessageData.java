@@ -19,8 +19,9 @@ public class MessageData {
 
     /**
      * Constructor.
+     *
      * @param image of the data.
-     * @param text of the data.
+     * @param text  of the data.
      */
     public MessageData(final Bitmap image, final String text) {
         this.image = image;

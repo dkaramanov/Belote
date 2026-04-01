@@ -11,13 +11,14 @@ package belote.bean.announce.suit;
 
 /**
  * Spade class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Spade extends ColorSuit {
+final class Spade extends ColorSuit {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 8862973313519075903L;
 
     /**

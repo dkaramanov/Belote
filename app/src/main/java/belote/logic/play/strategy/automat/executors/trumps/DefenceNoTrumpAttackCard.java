@@ -13,18 +13,20 @@ import belote.bean.Game;
 import belote.logic.play.strategy.automat.base.executor.PlayCardExecutor;
 import belote.logic.play.strategy.automat.methods.MinimumSuitCard;
 import belote.logic.play.strategy.automat.methods.trumps.noTrumpAttack.EnemyPlayedTrumpCard;
-import belote.logic.play.strategy.automat.methods.trumps.noTrumpAttack.MaxSuitLeftCard;
 import belote.logic.play.strategy.automat.methods.trumps.noTrumpAttack.HookCard;
+import belote.logic.play.strategy.automat.methods.trumps.noTrumpAttack.MaxSuitLeftCard;
 
 /**
  * DefenceNoTrumpAttackCard executor. Implements the obligatory rules for defense player when the attack card is not from trump suit. Used in TrumpDefenceCard
  * executor.
+ *
  * @author Dimitar Karamanov
  */
 public final class DefenceNoTrumpAttackCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public DefenceNoTrumpAttackCard(final Game game) {

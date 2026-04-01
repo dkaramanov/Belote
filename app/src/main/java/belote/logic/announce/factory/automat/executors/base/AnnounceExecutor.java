@@ -9,10 +9,12 @@
  */
 package belote.logic.announce.factory.automat.executors.base;
 
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.base.AnnounceMethod;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceConditionIterator;
@@ -21,6 +23,7 @@ import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCon
 /**
  * AnnounceExecutor abstract class. Provides the mechanism to be executed one by one PlayCardMethod methods stored in an collection and to return the first not
  * null result value returned from the iteration. Also provides the facility the user to write own code which is executed before the result to be returned.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class AnnounceExecutor implements AnnounceMethod {
@@ -29,6 +32,8 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
      * Belote game internal object.
      */
     protected final Game game;
+
+    private final ReentrantReadWriteLock gameLock;
 
     /**
      * List with preCondition
@@ -42,14 +47,17 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
 
     /**
      * Constructor
+     *
      * @param game BelotGame instance.
      */
-    public AnnounceExecutor(final Game game) {
+    public AnnounceExecutor(final Game game, final ReentrantReadWriteLock gameLock) {
         this.game = game;
+        this.gameLock = gameLock;
     }
 
     /**
      * Returns player's announce by executing one by one the collection's methods.
+     *
      * @param player for which the card is retrieved.
      * @return Announce object instance or null.
      */
@@ -57,7 +65,7 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
         Announce result = null;
 
         if (fitPreCondition(player)) {
-            for (final AnnounceMethodIterator iterator = list.iterator(); iterator.hasNext() && result == null;) {
+            for (final AnnounceMethodIterator iterator = list.iterator(); iterator.hasNext() && result == null; ) {
                 final AnnounceMethod announceMethod = iterator.next();
                 result = announceMethod.getAnnounce(player);
 
@@ -72,6 +80,7 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
 
     /**
      * Returns true if the provided announce can be made false otherwise.
+     *
      * @param announce provided announce.
      * @return boolean true if the provided announce can be made false otherwise.
      */
@@ -79,15 +88,15 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
         Announce contractAnnounce = game.getAnnounceList().getContractAnnounce();
         if (contractAnnounce != null) {
             if (contractAnnounce.getAnnounceSuit().compareTo(announce.getAnnounceSuit()) < 0) {
-                return announce.getType().equals(AnnounceType.Normal);
+                return announce.getType().equals(AnnounceTypes.Normal);
             }
 
             if (contractAnnounce.getAnnounceSuit().equals(announce.getAnnounceSuit())) {
                 if (!contractAnnounce.getPlayer().isSameTeam(announce.getPlayer())) {
-                    final boolean saidDoubleAfterNormal = contractAnnounce.getType().equals(AnnounceType.Normal)
-                            && announce.getType().equals(AnnounceType.Double);
-                    final boolean saidRedoubleAfterDouble = contractAnnounce.getType().equals(AnnounceType.Double)
-                            && announce.getType().equals(AnnounceType.Redouble);
+                    final boolean saidDoubleAfterNormal = contractAnnounce.getType().equals(AnnounceTypes.Normal)
+                            && announce.getType().equals(AnnounceTypes.Double);
+                    final boolean saidRedoubleAfterDouble = contractAnnounce.getType().equals(AnnounceTypes.Double)
+                            && announce.getType().equals(AnnounceTypes.Redouble);
                     return saidDoubleAfterNormal || saidRedoubleAfterDouble;
                 }
             }
@@ -98,6 +107,7 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
 
     /**
      * Adds precondition to the internal container.
+     *
      * @param announceCondition which to be added.
      */
     protected final void addPreCondition(final AnnounceCondition announceCondition) {
@@ -106,11 +116,12 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
 
     /**
      * Handler method providing the user facility to check custom condition for methods executions.
+     *
      * @param player for which is called the executor
      * @return true to process method execution false to not.
      */
     private boolean fitPreCondition(final Player player) {
-        for (final AnnounceConditionIterator iterator = preConditionsList.iterator(); iterator.hasNext();) {
+        for (final AnnounceConditionIterator iterator = preConditionsList.iterator(); iterator.hasNext(); ) {
             if (!iterator.next().process(player)) {
                 return false;
             }
@@ -120,7 +131,8 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
 
     /**
      * Handler method providing the user to write additional code which is executed after the getAnnounce(Player).
-     * @param player for which is called the executor
+     *
+     * @param player   for which is called the executor
      * @param announce the result of the method getAnnounce(Player)
      * @return Announce - the same or transformed one.
      */
@@ -130,6 +142,7 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
 
     /**
      * Adds method to the execution collection.
+     *
      * @param method which is added to collection.
      */
     protected final void register(final AnnounceMethod method) {
@@ -138,14 +151,20 @@ public abstract class AnnounceExecutor implements AnnounceMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Announce object instance or null.
      */
     public final Announce getAnnounce(Player player) {
-        final Announce result = getAnnounceMethod(player);
-        if (result != null) {
-            // handle result in future
+        gameLock.readLock().lock();
+        try {
+            final Announce result = getAnnounceMethod(player);
+            if (result != null) {
+                // handle result in future
+            }
+            return result;
+        } finally {
+            gameLock.readLock().unlock();
         }
-        return result;
     }
 }

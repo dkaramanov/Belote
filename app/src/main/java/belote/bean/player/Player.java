@@ -7,23 +7,27 @@
  *
  * This software is provided "AS IS," without a warranty of any kind.
  */
-package belote.bean;
+package belote.bean.player;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import belote.bean.Team;
 import belote.bean.pack.Pack;
 import belote.bean.pack.card.Card;
-import belote.bean.pack.card.suit.SuitList;
+import belote.bean.pack.card.suit.Suit;
 
 /**
  * Player class.
+ *
  * @author Dimitar Karamanov
  */
-public final class Player implements Serializable {
+public abstract class Player implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = 7234505479951609925L;
 
     /**
@@ -49,22 +53,22 @@ public final class Player implements Serializable {
     /**
      * Player's preferred suits.
      */
-    private final SuitList preferredSuits = new SuitList();
+    private final List<Suit> preferredSuits = new ArrayList<>();
 
     /**
      * Player's unwanted suits.
      */
-    private final SuitList unwantedSuits = new SuitList();
+    private final List<Suit> unwantedSuits = new ArrayList<>();
 
     /**
      * Player's missed suits.
      */
-    private final SuitList missedSuits = new SuitList();
+    private final List<Suit> missedSuits = new ArrayList<>();
 
     /**
      * AT|NT marked by Ace or Jack suits.
      */
-    private final SuitList jackAceSuits = new SuitList();
+    private final List<Suit> jackAceSuits = new ArrayList<>();
 
     /**
      * Game's players count constant.
@@ -78,9 +82,9 @@ public final class Player implements Serializable {
 
     /**
      * Constructor.
-     * @param name of the player.
+     *
      * @param team of the player.
-     * @param ID of the player.
+     * @param ID   of the player.
      */
     public Player(final Team team, final int ID) {
         this.name = "";
@@ -91,6 +95,7 @@ public final class Player implements Serializable {
 
     /**
      * Returns player's name.
+     *
      * @return String player's name.
      */
     public String getName() {
@@ -99,6 +104,7 @@ public final class Player implements Serializable {
 
     /**
      * Returns player's partner.
+     *
      * @return Player partner.
      */
     public Player getPartner() {
@@ -107,6 +113,7 @@ public final class Player implements Serializable {
 
     /**
      * Returns player's team.
+     *
      * @return Team player's team .
      */
     public Team getTeam() {
@@ -115,7 +122,8 @@ public final class Player implements Serializable {
 
     /**
      * Returns true if the players are team-mates, false otherwise.
-     * @param player
+     *
+     * @param player Player
      * @return boolean true or false.
      */
     public boolean isSameTeam(final Player player) {
@@ -135,6 +143,7 @@ public final class Player implements Serializable {
 
     /**
      * Returns player's hash code.
+     *
      * @return int player's hash code value.
      */
     public int hashCode() {
@@ -145,6 +154,7 @@ public final class Player implements Serializable {
 
     /**
      * The method checks if this player and specified object (player) are equal.
+     *
      * @param obj specified object
      * @return boolean true if this player is equal to specified object and false otherwise
      */
@@ -172,25 +182,25 @@ public final class Player implements Serializable {
     /**
      * @return the preferredSuits
      */
-    public SuitList getPreferredSuits() {
+    public List<Suit> getPreferredSuits() {
         return preferredSuits;
     }
 
-    public SuitList getJackAceSuits() {
+    public List<Suit> getJackAceSuits() {
         return jackAceSuits;
     }
 
     /**
      * @return the unwantedSuits
      */
-    public SuitList getUnwantedSuits() {
+    public List<Suit> getUnwantedSuits() {
         return unwantedSuits;
     }
 
     /**
      * @return the missedSuits
      */
-    public SuitList getMissedSuits() {
+    public List<Suit> getMissedSuits() {
         return missedSuits;
     }
 
@@ -203,6 +213,7 @@ public final class Player implements Serializable {
 
     /**
      * Sets player selected card.
+     *
      * @param selectedCard the player selected one.
      */
     public void setSelectedCard(Card selectedCard) {

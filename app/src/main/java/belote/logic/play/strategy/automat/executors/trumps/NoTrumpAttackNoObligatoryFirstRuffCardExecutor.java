@@ -10,25 +10,27 @@
 package belote.logic.play.strategy.automat.executors.trumps;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
 import belote.bean.announce.AnnounceUnit;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.executor.PlayCardExecutor;
-import belote.logic.play.strategy.automat.methods.trumps.noObligatory.TrumpOnAllMastersCard;
 import belote.logic.play.strategy.automat.methods.trumps.noObligatory.EnemyGameSingleTrumpCard;
 import belote.logic.play.strategy.automat.methods.trumps.noObligatory.SecondDeffenceTrumpCard;
+import belote.logic.play.strategy.automat.methods.trumps.noObligatory.TrumpOnAllMastersCard;
 
 /**
  * NoTrumpAttackNoObligatoryFirstRuffCardExecutor class. PlayCardMethod is used to play card when the current trick player is player' partner and has no card from
  * attack suit and trump card is NOT PLAYED YET.
+ *
  * @author Dimitar Karamanov
  */
 public final class NoTrumpAttackNoObligatoryFirstRuffCardExecutor extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public NoTrumpAttackNoObligatoryFirstRuffCardExecutor(final Game game) {
@@ -41,6 +43,7 @@ public final class NoTrumpAttackNoObligatoryFirstRuffCardExecutor extends PlayCa
 
     /**
      * Handler method providing the user facility to check custom condition for methods executions.
+     *
      * @param player for which is called the executor
      * @return true to process method execution false to not.
      */
@@ -54,7 +57,7 @@ public final class NoTrumpAttackNoObligatoryFirstRuffCardExecutor extends PlayCa
             final Card handAttackCard = game.getTrickCards().getHandAttackSuitCard();
             if (handAttackCard != null && someTrumpCard == null) {
                 final Player handPlayer = game.getPlayerByCard(handAttackCard);
-                result =  handPlayer != null && handPlayer.isSameTeam(player);
+                result = handPlayer != null && handPlayer.isSameTeam(player);
             }
         }
         return result;

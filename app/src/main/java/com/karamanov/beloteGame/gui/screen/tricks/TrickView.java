@@ -4,17 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import belote.bean.Game;
-import belote.bean.Player;
-import belote.bean.pack.PackIterator;
-import belote.bean.pack.card.Card;
-import belote.bean.trick.Trick;
 
 import com.karamanov.beloteGame.Belote;
 import com.karamanov.beloteGame.gui.graphics.PictureDecorator;
 import com.karamanov.framework.graphics.Color;
 import com.karamanov.framework.graphics.ImageUtil;
 import com.karamanov.framework.graphics.Rectangle;
+
+import belote.bean.Game;
+import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
+import belote.bean.player.Players;
+import belote.bean.trick.Trick;
 
 public final class TrickView extends LinearLayout {
 
@@ -27,9 +28,8 @@ public final class TrickView extends LinearLayout {
         PictureDecorator decorator = new PictureDecorator(context);
 
         Player player = trick.getAttackPlayer();
-        for (PackIterator packIterator = trick.iterator(); packIterator.hasNext(); player = game.getPlayerAfter(player)) {
+        for (Card card : trick.list()) {
             ImageView imageView = new ImageView(context);
-            Card card = packIterator.next();
 
             if (player.equals(trick.getWinnerPlayer())) {
                 Bitmap picture = decorator.getCardImage(card);
@@ -46,6 +46,7 @@ public final class TrickView extends LinearLayout {
             params.setMargins(dip2, dip2, dip2, dip2);
             imageView.setLayoutParams(params);
             addView(imageView);
+            player = Players.getPlayerAfter(player);
         }
     }
 }

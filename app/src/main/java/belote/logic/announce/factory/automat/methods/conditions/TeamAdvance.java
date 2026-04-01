@@ -10,11 +10,12 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * TeamAdvance class. Returns true if the announce player team has enough points advance, false otherwise.
+ *
  * @author Dimitar Karamanov
  */
 public final class TeamAdvance implements AnnounceCondition {
@@ -26,6 +27,7 @@ public final class TeamAdvance implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public TeamAdvance(final Game game) {
@@ -34,6 +36,7 @@ public final class TeamAdvance implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */
@@ -41,6 +44,6 @@ public final class TeamAdvance implements AnnounceCondition {
         final int playerTeamPoints = player.getTeam().getPoints().getAllPoints();
         final int oppositeTeamPoints = game.getOppositeTeam(player).getPoints().getAllPoints();
         return ((playerTeamPoints - oppositeTeamPoints) >= 0);// (AnnounceSuit.BG_AT.getBasePoints()
-                                                              // * 2));
+        // * 2));
     }
 }

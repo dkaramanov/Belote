@@ -16,13 +16,15 @@ import belote.logic.play.strategy.automat.methods.MinimumSuitCard;
 import belote.logic.play.strategy.automat.methods.trumpsLess.allTrump.HookCard;
 
 /**
- * AllTrumpFirstDefencePositionCard executor. Used in AllTrumpPlayStategy getThirdDefencePositionCard().
+ * AllTrumpFirstDefencePositionCard executor. Used in AllTrumpPlayStrategy getThirdDefencePositionCard().
+ *
  * @author Dimitar Karamanov
  */
 public final class ThirdDefencePositionCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public ThirdDefencePositionCard(final Game game) {

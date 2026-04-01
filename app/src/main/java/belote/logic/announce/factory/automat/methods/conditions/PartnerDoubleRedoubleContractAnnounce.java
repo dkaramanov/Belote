@@ -10,13 +10,14 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.announce.Announce;
-import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * PartnerDoubleRedoubleContractAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public class PartnerDoubleRedoubleContractAnnounce implements AnnounceCondition {
@@ -28,6 +29,7 @@ public class PartnerDoubleRedoubleContractAnnounce implements AnnounceCondition 
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public PartnerDoubleRedoubleContractAnnounce(final Game game) {
@@ -36,6 +38,7 @@ public class PartnerDoubleRedoubleContractAnnounce implements AnnounceCondition 
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */
@@ -43,7 +46,7 @@ public class PartnerDoubleRedoubleContractAnnounce implements AnnounceCondition 
         final Player partner = player.getPartner();
         final Announce partnerAnnounce = game.getAnnounceList().getContractAnnounce(partner);
         final Announce contractAnnounce = game.getAnnounceList().getContractAnnounce();
-        
-        return partnerAnnounce != null && !partnerAnnounce.getType().equals(AnnounceType.Normal) && partnerAnnounce.equals(contractAnnounce);
+
+        return partnerAnnounce != null && !partnerAnnounce.getType().equals(AnnounceTypes.Normal) && partnerAnnounce.equals(contractAnnounce);
     }
 }

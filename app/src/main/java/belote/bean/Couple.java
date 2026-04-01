@@ -10,25 +10,27 @@
 package belote.bean;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
 
 /**
  * Couple class.
+ *
  * @author Dimitar Karamanov
  */
 public final class Couple implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -7275183680786350586L;
 
     /**
      * Array couples count constant.
      */
-    public static final int MAX_COUNT = Suit.getSuitCount();
+    public static final int MAX_COUNT = Suits.getSuitCount();
 
     /**
      * Couple points.
@@ -38,7 +40,7 @@ public final class Couple implements Serializable {
     /**
      * Internal container. The maximum couple counts equals to suits count. For a single game is possible only one couple per suit.
      */
-    private final boolean coupleSuit[] = new boolean[MAX_COUNT];
+    private final boolean[] coupleSuit = new boolean[MAX_COUNT];
 
     /**
      * Constructor.
@@ -49,6 +51,7 @@ public final class Couple implements Serializable {
 
     /**
      * Sets couple for provided suit.
+     *
      * @param suit provided suit.
      */
     public void setCouple(final Suit suit) {
@@ -57,24 +60,25 @@ public final class Couple implements Serializable {
 
     /**
      * Returns the sum of all couples points.
+     *
      * @return int couples points.
      */
     public int getCouplePoints() {
         int result = 0;
-        for (final SuitIterator suitIterator = Suit.iterator(); suitIterator.hasNext();) {
-            result += getCouplePoints(suitIterator.next());
+        for (final Suit suit : Suits.list()) {
+            result += getCouplePoints(suit);
         }
         return result;
     }
 
     /**
      * Returns the count of couples stored in the container.
+     *
      * @return int couples count.
      */
     public int getCoupleCount() {
         int result = 0;
-        for (final SuitIterator suitIterator = Suit.iterator(); suitIterator.hasNext();) {
-            final Suit suit = suitIterator.next();
+        for (final Suit suit : Suits.list()) {
             if (hasCouple(suit)) {
                 result++;
             }
@@ -84,6 +88,7 @@ public final class Couple implements Serializable {
 
     /**
      * Returns true if has couple from provided suit.
+     *
      * @param suit provided suit.
      * @return boolean true if has couple false otherwise.
      */
@@ -93,6 +98,7 @@ public final class Couple implements Serializable {
 
     /**
      * Returns couple points for specified suit.
+     *
      * @param suit specified suit.
      * @return int suit couple points.
      */
@@ -107,8 +113,6 @@ public final class Couple implements Serializable {
      * Clears couples points.
      */
     public void clear() {
-        for (int suit = 0; suit < coupleSuit.length; suit++) {
-            coupleSuit[suit] = false;
-        }
+        Arrays.fill(coupleSuit, false);
     }
 }

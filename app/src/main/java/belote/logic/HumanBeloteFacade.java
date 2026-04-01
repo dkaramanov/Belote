@@ -9,12 +9,14 @@
  */
 package belote.logic;
 
-import belote.bean.Player;
 import belote.bean.pack.Pack;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
+import belote.bean.player.Players;
 
 /**
  * HumanBelotGame class.
+ *
  * @author Dimitar Karamanov
  */
 public final class HumanBeloteFacade extends BeloteFacade {
@@ -26,11 +28,10 @@ public final class HumanBeloteFacade extends BeloteFacade {
     /**
      * Human player array index.
      */
-    public static final int HUMAN_PLAYER_INDEX = 2;
+    public static final Player HUMAN_PLAYER = Players.SOUTH;
 
     /**
      * Constructor
-     * @param names of the players.
      */
     public HumanBeloteFacade() {
         super();
@@ -42,55 +43,78 @@ public final class HumanBeloteFacade extends BeloteFacade {
 
     /**
      * Returns the human player.
+     *
      * @return Player human player.
      */
-    public final Player getHumanPlayer() {
-    	synchronized(game) { 
-    		return game.getPlayer(HUMAN_PLAYER_INDEX);
-    	}
+    public Player getHumanPlayer() {
+        getGameLock().readLock().lock();
+        try {
+            return HUMAN_PLAYER;
+        } finally {
+            getGameLock().readLock().unlock();
+        }
     }
 
     /**
      * Returns the position of the first right card.
+     *
      * @return int the position of the first right card.
      */
     private int getFirstRightCardIndex() {
-        if (getHumanPlayer().getCards().getSize() > 0) {
-            return getHumanPlayer().getCards().getSize() - 1;
+        getGameLock().readLock().lock();
+        try {
+            if (getHumanPlayer().getCards().getSize() > 0) {
+                return getHumanPlayer().getCards().getSize() - 1;
+            }
+        } finally {
+            getGameLock().readLock().unlock();
         }
         return -1;
     }
 
     /**
      * Returns the position of the first left card.
+     *
      * @return int the position of the first left card.
      */
     private int getFirstLeftCardIndex() {
-        if (getHumanPlayer().getCards().getSize() > 0) {
-            return 0;
+        getGameLock().readLock().lock();
+        try {
+            if (getHumanPlayer().getCards().getSize() > 0) {
+                return 0;
+            }
+        } finally {
+            getGameLock().readLock().unlock();
         }
         return -1;
     }
 
     /**
      * Returns human selected card index.
+     *
      * @return human selected card index.
      */
     private int getHumanSelectedCardIndex() {
-        if (getHumanPlayer().getSelectedCard() != null) {
-            for (int i = 0; i < getHumanPlayer().getCards().getSize(); i++) {
-                final Card card = getHumanPlayer().getCards().getCard(i);
+        getGameLock().readLock().lock();
+        try {
+            if (getHumanPlayer().getSelectedCard() != null) {
+                for (int i = 0; i < getHumanPlayer().getCards().getSize(); i++) {
+                    final Card card = getHumanPlayer().getCards().getCard(i);
 
-                if (getHumanPlayer().getSelectedCard().equals(card)) {
-                    return i;
+                    if (getHumanPlayer().getSelectedCard().equals(card)) {
+                        return i;
+                    }
                 }
             }
+        } finally {
+            getGameLock().readLock().unlock();
         }
         return -1;
     }
 
     /**
      * Returns next left card index.
+     *
      * @param current card index.
      * @return next left card index.
      */
@@ -104,9 +128,10 @@ public final class HumanBeloteFacade extends BeloteFacade {
 
     /**
      * Selects next left card.
+     *
      * @return the selected card.
      */
-    public final Card selectNextLeftCard() {
+    public Card selectNextLeftCard() {
         int index = getHumanSelectedCardIndex();
         Card card;
         do {
@@ -122,6 +147,7 @@ public final class HumanBeloteFacade extends BeloteFacade {
 
     /**
      * Returns next right card index.
+     *
      * @param current card index.
      * @return next right card index.
      */
@@ -138,17 +164,23 @@ public final class HumanBeloteFacade extends BeloteFacade {
 
     /**
      * Selects next right card.
+     *
      * @return the selected card.
      */
-    public final Card selectNextRightCard() {
+    public Card selectNextRightCard() {
         int index = getHumanSelectedCardIndex();
         Card card;
         do {
             index = getNextRightCardIndex(index);
-            if (index == -1 || index >= getHumanPlayer().getCards().getSize()) {
-                return null;
+            getGameLock().readLock().lock();
+            try {
+                if (index == -1 || index >= getHumanPlayer().getCards().getSize()) {
+                    return null;
+                }
+                card = getHumanPlayer().getCards().getCard(index);
+            } finally {
+                getGameLock().readLock().unlock();
             }
-            card = getHumanPlayer().getCards().getCard(index);
         } while (!validatePlayerCard(getHumanPlayer(), card));
 
         return card;
@@ -156,41 +188,70 @@ public final class HumanBeloteFacade extends BeloteFacade {
 
     /**
      * Returns if human player's trick card or null if hasn't played yet.
+     *
      * @return Card instance or null.
      */
-    public final Card getHumanTrickCard() {
+    public Card getHumanTrickCard() {
         return getPlayerTrickCard(getHumanPlayer());
     }
 
     /**
      * Returns if the human player is on trick turn or not.
+     *
      * @return boolean true or false.
      */
-    public final boolean isHumanTrickOrder() {
+    public boolean isHumanTrickOrder() {
         return isPlayerTrickOrder(getHumanPlayer());
     }
 
     /**
      * Arranges players cards.
      */
-    public final void arrangePlayersCards() {
+    public void arrangePlayersCards() {
         super.arrangePlayersCards();
-
-        if (blackRedCardOrder) {
-            Player player = getHumanPlayer();
-            Pack pack = player.getCards();
-            BlackRedPackOrderTransformer transformer = new BlackRedPackOrderTransformer(pack);
-            Pack blackRedPack = transformer.transform();
-            pack.clear();
-            pack.addAll(blackRedPack);
+        getGameLock().writeLock().lock();
+        try {
+            if (blackRedCardOrder) {
+                Player player = getHumanPlayer();
+                Pack pack = player.getCards();
+                BlackRedPackOrderTransformer transformer = new BlackRedPackOrderTransformer(pack);
+                Pack blackRedPack = transformer.transform();
+                pack.clear();
+                pack.addAll(blackRedPack);
+            }
+        } finally {
+            getGameLock().writeLock().unlock();
         }
     }
 
-    public final void setPlayerIsAnnouncing(boolean mode) {
-        playerIsAnnouncing = mode;
+    public void setPlayerIsAnnouncing(boolean mode) {
+        getGameLock().writeLock().lock();
+        try {
+            playerIsAnnouncing = mode;
+        } finally {
+            getGameLock().writeLock().unlock();
+        }
     }
 
-    public final boolean isPlayerIsAnnoincing() {
+    public boolean isPlayerIsAnnoincing() {
         return playerIsAnnouncing;
+    }
+
+    public Card getHumanSelectedCard() {
+        getGameLock().readLock().lock();
+        try {
+            return getHumanPlayer().getSelectedCard();
+        } finally {
+            getGameLock().readLock().unlock();
+        }
+    }
+
+    public void setHumanPlayerCard(Card card) {
+        getGameLock().writeLock().lock();
+        try {
+            getHumanPlayer().setSelectedCard(card);
+        } finally {
+            getGameLock().writeLock().unlock();
+        }
     }
 }

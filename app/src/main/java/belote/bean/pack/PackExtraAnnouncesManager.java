@@ -13,24 +13,23 @@ import java.io.Serializable;
 
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.rank.Rank;
-import belote.bean.pack.card.rank.RankIterator;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
 import belote.bean.pack.sequence.Sequence;
-import belote.bean.pack.sequence.SequenceIterator;
 import belote.bean.pack.sequence.SequenceType;
 import belote.bean.pack.square.Square;
-import belote.bean.pack.square.SquareIterator;
 
 /**
  * PackExtraAnnouncesManager class. A help facade for extracting equal cards and sequences from the pack.
+ *
  * @author Dimitar Karamanov
  */
 public class PackExtraAnnouncesManager implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -7740837122383291209L;
 
     /**
@@ -60,6 +59,7 @@ public class PackExtraAnnouncesManager implements Serializable {
 
     /**
      * Constructor.
+     *
      * @param pack the internal pack object.
      */
     public PackExtraAnnouncesManager(final Pack pack) {
@@ -76,17 +76,18 @@ public class PackExtraAnnouncesManager implements Serializable {
 
     /**
      * Returns the extra announces points.
+     *
      * @return int the extra announces points.
      */
     public final int getAnnouncePoints() {
         int result = 0;
         // Equals points
-        for (SquareIterator it = pack.getSquaresList().iterator(); it.hasNext();) {
-            result += it.next().getPoints();
+        for (final Square square : pack.getSquaresList().list()) {
+            result += square.getPoints();
         }
         // Sequences points
-        for (SequenceIterator it = pack.getSequencesList().iterator(); it.hasNext();) {
-            result += it.next().getPoints();
+        for (final Sequence sequence : pack.getSequencesList().list()) {
+            result += sequence.getPoints();
         }
 
         return result;
@@ -97,10 +98,9 @@ public class PackExtraAnnouncesManager implements Serializable {
      */
     private void processSquares() {
         pack.getSquaresList().clear();
-        for (final RankIterator it = Rank.iterator(); it.hasNext();) {
-            final Rank rank = it.next();
-            if (rank.compareTo(Rank.Eight) > 0) {
-                if (pack.getRankCounts(rank) == Suit.getSuitCount()) {
+        for (final Rank rank : Ranks.list()) {
+            if (rank.compareTo(Ranks.Eight) > 0) {
+                if (pack.getRankCounts(rank) == Suits.getSuitCount()) {
                     pack.getSquaresList().add(new Square(rank));
                 }
             }
@@ -115,19 +115,16 @@ public class PackExtraAnnouncesManager implements Serializable {
         final Pack copyPack = new Pack(pack);
 
         // Remove equals card if we have
-        for (final SquareIterator it = pack.getSquaresList().iterator(); it.hasNext();) {
-            final Square equals = it.next();
-            for (final SuitIterator sit = Suit.iterator(); sit.hasNext();) {
-                final Suit suit = sit.next();
-                final Card card = copyPack.findCard(equals.getRank(), suit);
+        for (final Square square : pack.getSquaresList().list()) {
+            for (final Suit suit : Suits.list()) {
+                final Card card = copyPack.findCard(square.getRank(), suit);
                 if (card != null) {
                     copyPack.remove(card);
                 }
             }
         }
 
-        for (final SuitIterator sit = Suit.iterator(); sit.hasNext();) {
-            final Suit suit = sit.next();
+        for (final Suit suit : Suits.list()) {
             Card card = null;
 
             do {
@@ -140,8 +137,10 @@ public class PackExtraAnnouncesManager implements Serializable {
                     count++;
                     while (copyPack.hasPrevFromSameSuit(card) && count < MAX_SEQUENCE_CARD_COUNT) {
                         count++;
-                        card = copyPack.findCard(Rank.getSTRankBefore(card.getRank()), suit);
-                        copyPack.remove(card);
+                        card = copyPack.findCard(Ranks.getSTRankBefore(card.getRank()), suit);
+                        if (card != null) {
+                            copyPack.remove(card);
+                        }
                     }
                     createSequence(count, maxCard);
                 }
@@ -151,20 +150,21 @@ public class PackExtraAnnouncesManager implements Serializable {
 
     /**
      * Factory method which creates sequence by specified count and max card.
+     *
      * @param count the specified count.
-     * @param card the max sequence's card.
+     * @param card  the max sequence's card.
      */
     private void createSequence(final int count, final Card card) {
         switch (count) {
-        case ST_020_COUNT:
-            pack.getSequencesList().add(new Sequence(card, SequenceType.Tierce));
-            break;
-        case ST_050_COUNT:
-            pack.getSequencesList().add(new Sequence(card, SequenceType.Quarte));
-            break;
-        case ST_100_COUNT:
-            pack.getSequencesList().add(new Sequence(card, SequenceType.Quint));
-            break;
+            case ST_020_COUNT:
+                pack.getSequencesList().add(new Sequence(card, SequenceType.Tierce));
+                break;
+            case ST_050_COUNT:
+                pack.getSequencesList().add(new Sequence(card, SequenceType.Quarte));
+                break;
+            case ST_100_COUNT:
+                pack.getSequencesList().add(new Sequence(card, SequenceType.Quint));
+                break;
         }
     }
 }

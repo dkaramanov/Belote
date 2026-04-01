@@ -10,19 +10,21 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * PartnerAttackMaxSuitCard class. PlayCardMethod which implements the logic of playing the biggest card or the min sequence before it when the attack is from
  * partner.
+ *
  * @author Dimitar Karamanov
  */
 public final class PartnerAttackMaxSuitCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public PartnerAttackMaxSuitCard(final Game game) {
@@ -31,6 +33,7 @@ public final class PartnerAttackMaxSuitCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
@@ -40,7 +43,7 @@ public final class PartnerAttackMaxSuitCard extends BaseMethod {
         final Card attackCard = game.getTrickCards().getAttackCard();
 
         if (attackCard != null && isSecondDefencePosition()) { // partner is the
-                                                               // attack player
+            // attack player
             final Card maxCard = player.getCards().findMaxSuitCard(attackCard.getSuit());
             if (maxCard != null && hasPlayerAttack(partner)) {
                 result = player.getCards().getMinSequenceCardBefore(maxCard);

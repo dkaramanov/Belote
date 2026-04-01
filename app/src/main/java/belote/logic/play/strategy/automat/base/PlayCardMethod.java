@@ -9,17 +9,19 @@
  */
 package belote.logic.play.strategy.automat.base;
 
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 
 /**
  * PlayCardMethod interface.
+ *
  * @author Dimitar Karamanov
  */
 public interface PlayCardMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */

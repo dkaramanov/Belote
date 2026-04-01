@@ -17,17 +17,19 @@ import belote.logic.play.strategy.automat.methods.trumps.attackCard.DominantAllT
 import belote.logic.play.strategy.automat.methods.trumps.attackCard.DominantNoTrumpCard;
 import belote.logic.play.strategy.automat.methods.trumps.attackCard.DominantTrumpCard;
 import belote.logic.play.strategy.automat.methods.trumps.attackCard.NoTrumpHandCard;
-import belote.logic.play.strategy.automat.methods.trumps.attackCard.TrumpToPartnerCard;
 import belote.logic.play.strategy.automat.methods.trumps.attackCard.TeamSuitCard;
+import belote.logic.play.strategy.automat.methods.trumps.attackCard.TrumpToPartnerCard;
 
 /**
- * AttackCard executor. Used in TrumpPlayStategy getAttackCard().
+ * AttackCard executor. Used in TrumpPlayStrategy getAttackCard().
+ *
  * @author Dimitar Karamanov
  */
 public final class AttackCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public AttackCard(final Game game) {

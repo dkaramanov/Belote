@@ -10,20 +10,22 @@
 package belote.logic.play.strategy.automat.methods.trumps.noObligatory;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseTrumpMethod;
 
 /**
  * EnemyGameSingleTrumpCard class. PlayCardMethod which implements the logic of playing a card when the game is declared by enemy team and the
  * player has only single trump card - play it.
+ *
  * @author Dimitar Karamanov
  */
 public final class EnemyGameSingleTrumpCard extends BaseTrumpMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public EnemyGameSingleTrumpCard(final Game game) {
@@ -32,8 +34,9 @@ public final class EnemyGameSingleTrumpCard extends BaseTrumpMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
-     * @param trump suit.
+     * @param trump  suit.
      * @return Card object instance or null.
      */
     protected Card getPlayMethodCard(final Player player, final Suit trump) {

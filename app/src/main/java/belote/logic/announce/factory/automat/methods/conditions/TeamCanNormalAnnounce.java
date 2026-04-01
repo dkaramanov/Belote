@@ -10,11 +10,12 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.announce.suit.AnnounceSuit;
+import belote.bean.announce.suit.AnnounceSuits;
 import belote.logic.announce.factory.automat.methods.conditions.base.BaseTeamCanAnnounce;
 
 /**
  * TeamCanNormalAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public final class TeamCanNormalAnnounce extends BaseTeamCanAnnounce {
@@ -22,10 +23,11 @@ public final class TeamCanNormalAnnounce extends BaseTeamCanAnnounce {
     /**
      * Minimum points to make normal announce (can hold double announce).
      */
-    private static final int MinPointsToMakeNormalAnnounce = AnnounceSuit.AllTrump.getBasePoints() * 2;
+    private static final int MinPointsToMakeNormalAnnounce = AnnounceSuits.AllTrump.getBasePoints() * 2;
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public TeamCanNormalAnnounce(final Game game) {

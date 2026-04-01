@@ -9,22 +9,26 @@
  */
 package com.karamanov.beloteGame.text;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-
 import android.content.Context;
-import belote.bean.announce.Announce;
-import belote.bean.announce.AnnounceIterator;
-import belote.bean.announce.AnnounceList;
-import belote.bean.announce.suit.AnnounceSuit;
-import belote.bean.announce.type.AnnounceType;
-import belote.bean.pack.card.rank.Rank;
-import belote.bean.pack.square.Square;
 
 import com.karamanov.beloteGame.R;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
+
+import belote.bean.announce.Announce;
+import belote.bean.announce.AnnounceList;
+import belote.bean.announce.suit.AnnounceSuit;
+import belote.bean.announce.suit.AnnounceSuits;
+import belote.bean.announce.type.AnnounceType;
+import belote.bean.announce.type.AnnounceTypes;
+import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
+import belote.bean.pack.square.Square;
+
 /**
  * TextDecorator class.
+ *
  * @author Dimitar Karamanov
  */
 public final class TextDecorator {
@@ -67,47 +71,47 @@ public final class TextDecorator {
         this.context = context;
 
         // Announce types initialization
-        announceTypes.put(AnnounceType.Normal, context.getString(R.string.OrdinaryAnnounce));
-        announceTypes.put(AnnounceType.Double, context.getString(R.string.DoubleAnnounce));
-        announceTypes.put(AnnounceType.Redouble, context.getString(R.string.RedoubleAnnounce));
+        announceTypes.put(AnnounceTypes.Normal, context.getString(R.string.OrdinaryAnnounce));
+        announceTypes.put(AnnounceTypes.Double, context.getString(R.string.DoubleAnnounce));
+        announceTypes.put(AnnounceTypes.Redouble, context.getString(R.string.RedoubleAnnounce));
 
         // Announce suits initialization
-        announceSuits.put(AnnounceSuit.AllTrump, context.getString(R.string.AllTrumpsAnnounce));
-        announceSuits.put(AnnounceSuit.Club, context.getString(R.string.ClubsAnnounce));
-        announceSuits.put(AnnounceSuit.Diamond, context.getString(R.string.DiamondsAnnounce));
-        announceSuits.put(AnnounceSuit.Heart, context.getString(R.string.HeartsAnnounce));
-        announceSuits.put(AnnounceSuit.Spade, context.getString(R.string.SpadesAnnounce));
-        announceSuits.put(AnnounceSuit.Pass, context.getString(R.string.PassAnnounce));
-        announceSuits.put(AnnounceSuit.NotTrump, context.getString(R.string.NotTrumpsAnnounce));
+        announceSuits.put(AnnounceSuits.AllTrump, context.getString(R.string.AllTrumpsAnnounce));
+        announceSuits.put(AnnounceSuits.Club, context.getString(R.string.ClubsAnnounce));
+        announceSuits.put(AnnounceSuits.Diamond, context.getString(R.string.DiamondsAnnounce));
+        announceSuits.put(AnnounceSuits.Heart, context.getString(R.string.HeartsAnnounce));
+        announceSuits.put(AnnounceSuits.Spade, context.getString(R.string.SpadesAnnounce));
+        announceSuits.put(AnnounceSuits.Pass, context.getString(R.string.PassAnnounce));
+        announceSuits.put(AnnounceSuits.NotTrump, context.getString(R.string.NotTrumpsAnnounce));
 
         // Short announce suits initialization
-        shortAnnounceSuits.put(AnnounceSuit.AllTrump, context.getString(R.string.AllTrumpsAnnounceShort));
-        shortAnnounceSuits.put(AnnounceSuit.Club, context.getString(R.string.ClubsAnnounceShort));
-        shortAnnounceSuits.put(AnnounceSuit.Diamond, context.getString(R.string.DiamondsAnnounceShort));
-        shortAnnounceSuits.put(AnnounceSuit.Heart, context.getString(R.string.HeartsAnnounceShort));
-        shortAnnounceSuits.put(AnnounceSuit.Spade, context.getString(R.string.SpadesAnnounceShort));
-        shortAnnounceSuits.put(AnnounceSuit.Pass, context.getString(R.string.PassAnnounceShort));
-        shortAnnounceSuits.put(AnnounceSuit.NotTrump, context.getString(R.string.NotTrumpsAnnounceShort));
+        shortAnnounceSuits.put(AnnounceSuits.AllTrump, context.getString(R.string.AllTrumpsAnnounceShort));
+        shortAnnounceSuits.put(AnnounceSuits.Club, context.getString(R.string.ClubsAnnounceShort));
+        shortAnnounceSuits.put(AnnounceSuits.Diamond, context.getString(R.string.DiamondsAnnounceShort));
+        shortAnnounceSuits.put(AnnounceSuits.Heart, context.getString(R.string.HeartsAnnounceShort));
+        shortAnnounceSuits.put(AnnounceSuits.Spade, context.getString(R.string.SpadesAnnounceShort));
+        shortAnnounceSuits.put(AnnounceSuits.Pass, context.getString(R.string.PassAnnounceShort));
+        shortAnnounceSuits.put(AnnounceSuits.NotTrump, context.getString(R.string.NotTrumpsAnnounceShort));
 
         // Rank signs initialization
-        rankSigns.put(Rank.Ace, context.getString(R.string.AceSign));
-        rankSigns.put(Rank.King, context.getString(R.string.KingSign));
-        rankSigns.put(Rank.Queen, context.getString(R.string.QueenSign));
-        rankSigns.put(Rank.Jack, context.getString(R.string.JackSign));
-        rankSigns.put(Rank.Ten, context.getString(R.string.TenSign));
-        rankSigns.put(Rank.Nine, context.getString(R.string.NineSign));
-        rankSigns.put(Rank.Eight, context.getString(R.string.EightSign));
-        rankSigns.put(Rank.Seven, context.getString(R.string.SevenSign));
+        rankSigns.put(Ranks.Ace, context.getString(R.string.AceSign));
+        rankSigns.put(Ranks.King, context.getString(R.string.KingSign));
+        rankSigns.put(Ranks.Queen, context.getString(R.string.QueenSign));
+        rankSigns.put(Ranks.Jack, context.getString(R.string.JackSign));
+        rankSigns.put(Ranks.Ten, context.getString(R.string.TenSign));
+        rankSigns.put(Ranks.Nine, context.getString(R.string.NineSign));
+        rankSigns.put(Ranks.Eight, context.getString(R.string.EightSign));
+        rankSigns.put(Ranks.Seven, context.getString(R.string.SevenSign));
 
         // Rank signs initialization
-        ranks.put(Rank.Ace, context.getString(R.string.Ace));
-        ranks.put(Rank.King, context.getString(R.string.King));
-        ranks.put(Rank.Queen, context.getString(R.string.Queen));
-        ranks.put(Rank.Jack, context.getString(R.string.Jack));
-        ranks.put(Rank.Ten, context.getString(R.string.Ten));
-        ranks.put(Rank.Nine, context.getString(R.string.Nine));
-        ranks.put(Rank.Eight, context.getString(R.string.Eight));
-        ranks.put(Rank.Seven, context.getString(R.string.Seven));
+        ranks.put(Ranks.Ace, context.getString(R.string.Ace));
+        ranks.put(Ranks.King, context.getString(R.string.King));
+        ranks.put(Ranks.Queen, context.getString(R.string.Queen));
+        ranks.put(Ranks.Jack, context.getString(R.string.Jack));
+        ranks.put(Ranks.Ten, context.getString(R.string.Ten));
+        ranks.put(Ranks.Nine, context.getString(R.string.Nine));
+        ranks.put(Ranks.Eight, context.getString(R.string.Eight));
+        ranks.put(Ranks.Seven, context.getString(R.string.Seven));
 
         doubleAnnounce = context.getString(R.string.DoubleAnnounce);
         redoubleAnnounce = context.getString(R.string.RedoubleAnnounce);
@@ -115,6 +119,7 @@ public final class TextDecorator {
 
     /**
      * Returns announce type text.
+     *
      * @param announceType AnnounceType instance.
      * @return Text presentation of the provided argument object.
      */
@@ -124,6 +129,7 @@ public final class TextDecorator {
 
     /**
      * Returns announce suit text.
+     *
      * @param announceSuit AnnounceSuit instance.
      * @return Text presentation of the provided argument object.
      */
@@ -133,6 +139,7 @@ public final class TextDecorator {
 
     /**
      * Returns short announce suit text.
+     *
      * @param announceSuit AnnounceSuit instance.
      * @return Short text presentation of the provided argument object.
      */
@@ -142,6 +149,7 @@ public final class TextDecorator {
 
     /**
      * Returns rank sign text.
+     *
      * @param rank Rank instance.
      * @return Text presentation of the provided argument object.
      */
@@ -151,6 +159,7 @@ public final class TextDecorator {
 
     /**
      * Returns rank sign text.
+     *
      * @param rank Rank instance.
      * @return Text presentation of the provided argument object.
      */
@@ -160,12 +169,13 @@ public final class TextDecorator {
 
     /**
      * Returns rank first letter sign.
+     *
      * @param rank Rank instance.
      * @return Text presentation of the provided argument object.
      */
     public String getRankLetter(final Rank rank) {
         final String text = getHasTableKeyString(ranks, rank);
-        if (text != null && text.length() > 0) {
+        if (text != null && !text.isEmpty()) {
             return text.substring(0, 1);
         }
         return "";
@@ -173,20 +183,22 @@ public final class TextDecorator {
 
     /**
      * Returns associated key object value text presentation.
+     *
      * @param hash container.
-     * @param key of the object.
+     * @param key  of the object.
      * @return Text presentation of the key object.
      */
     private String getHasTableKeyString(final Hashtable<?, String> hash, final Object key) {
         if (hash.containsKey(key)) {
-            return hash.get(key).toString();
+            return hash.get(key);
         }
         return "";
     }
 
     /**
      * Returns text represention of the current game announce.
-     * @param announceList
+     *
+     * @param announceList announceList
      * @return String game announce text.
      */
     public ArrayList<String> getAnnounceText(final AnnounceList announceList) {
@@ -195,7 +207,8 @@ public final class TextDecorator {
 
     /**
      * Returns text represention of the current game announce.
-     * @param announceList
+     *
+     * @param announceList announceList
      * @return String game announce text.
      */
     public ArrayList<String> getShortAnnounceText(final AnnounceList announceList) {
@@ -204,6 +217,7 @@ public final class TextDecorator {
 
     /**
      * Returns text represention of the squere.
+     *
      * @param square instance.
      * @return String game announce text.
      */
@@ -213,6 +227,7 @@ public final class TextDecorator {
 
     /**
      * Returns text represention of the current game announce.
+     *
      * @param normal indicates if is full or short version.
      * @return String game announce text.
      */
@@ -232,10 +247,8 @@ public final class TextDecorator {
 
             AnnounceList announces = announceList.getSuitAnnounces(lastNormalAnnounce.getAnnounceSuit());
 
-            for (final AnnounceIterator iterator = announces.iterator(); iterator.hasNext();) {
-                Announce announce = iterator.next();
-
-                if (announce.getType().equals(AnnounceType.Double)) {
+            for (final Announce announce : announces.list()) {
+                if (announce.getType().equals(AnnounceTypes.Double)) {
                     if (normal) {
                         PlayerNameDecorator decorator = new PlayerNameDecorator(announce.getPlayer());
                         result.add(doubleAnnounce + " " + decorator.decorate(context));
@@ -245,7 +258,7 @@ public final class TextDecorator {
                     }
                 }
 
-                if (announce.getType().equals(AnnounceType.Redouble)) {
+                if (announce.getType().equals(AnnounceTypes.Redouble)) {
                     if (normal) {
                         PlayerNameDecorator decorator = new PlayerNameDecorator(announce.getPlayer());
                         result.add(redoubleAnnounce + " " + decorator.decorate(context));
@@ -276,7 +289,8 @@ public final class TextDecorator {
 
     /**
      * Returns text representation of the current game announce.
-     * @param announceList
+     *
+     * @param announceList announceList
      * @return String game announce text.
      */
     public String getAnnounceTextEx(final AnnounceList announceList) {

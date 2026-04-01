@@ -10,11 +10,12 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * TeamDefence class. Returns true if the announce player team is on defense, false otherwise.
+ *
  * @author Dimitar Karamanov
  */
 public final class TeamDefence implements AnnounceCondition {
@@ -26,6 +27,7 @@ public final class TeamDefence implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public TeamDefence(final Game game) {
@@ -34,6 +36,7 @@ public final class TeamDefence implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

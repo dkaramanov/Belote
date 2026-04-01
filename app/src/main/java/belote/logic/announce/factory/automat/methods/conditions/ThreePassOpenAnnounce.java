@@ -10,11 +10,12 @@
 package belote.logic.announce.factory.automat.methods.conditions;
 
 import belote.bean.Game;
-import belote.bean.Player;
+import belote.bean.player.Player;
 import belote.logic.announce.factory.automat.methods.conditions.base.AnnounceCondition;
 
 /**
  * OnlyPassAnnounces class. Returns true if before the announce player all other players made pass announces.
+ *
  * @author Dimitar Karamanov
  */
 public final class ThreePassOpenAnnounce implements AnnounceCondition {
@@ -26,6 +27,7 @@ public final class ThreePassOpenAnnounce implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public ThreePassOpenAnnounce(final Game game) {
@@ -34,6 +36,7 @@ public final class ThreePassOpenAnnounce implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */

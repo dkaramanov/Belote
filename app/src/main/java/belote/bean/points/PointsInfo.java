@@ -13,13 +13,14 @@ import java.io.Serializable;
 
 /**
  * GamePointsInfo class.
+ *
  * @author Dimitar Karamanov
  */
 public final class PointsInfo implements Serializable {
 
     /**
-	 * SerialVersionUID
-	 */
+     * SerialVersionUID
+     */
     private static final long serialVersionUID = -6993520653948056582L;
 
     /**
@@ -66,6 +67,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Gets announce points.
+     *
      * @return announcePoints.
      */
     public int getAnnouncePoints() {
@@ -74,6 +76,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Sets announce points.
+     *
      * @param announcePoints new ones.
      */
     public void setAnnouncePoints(int announcePoints) {
@@ -82,6 +85,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Gets capot points.
+     *
      * @return capotPoints.
      */
     public int getCapotPoints() {
@@ -90,6 +94,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Sets capot points.
+     *
      * @param capotPoints new ones.
      */
     public void setCapotPoints(int capotPoints) {
@@ -98,6 +103,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Gets card points.
+     *
      * @return cardPoints.
      */
     public int getCardPoints() {
@@ -106,6 +112,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Sets card points.
+     *
      * @param cardPoints new ones.
      */
     public void setCardPoints(final int cardPoints) {
@@ -114,6 +121,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Gets couples points.
+     *
      * @return couplesPoints.
      */
     public int getCouplesPoints() {
@@ -122,6 +130,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Sets couples points.
+     *
      * @param couplesPoints new ones.
      */
     public void setCouplesPoints(final int couplesPoints) {
@@ -130,6 +139,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Gets last hand points.
+     *
      * @return lastHand.
      */
     public int getLastHand() {
@@ -138,6 +148,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Sets last hands points.
+     *
      * @param lastHand new ones.
      */
     public void setLastHand(final int lastHand) {
@@ -146,6 +157,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Gets total points.
+     *
      * @return totalPoints.
      */
     public int getTotalPoints() {
@@ -154,6 +166,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Sets total points.
+     *
      * @param totalPoints new ones.
      */
     public void setTotalPoints(final int totalPoints) {
@@ -162,6 +175,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Gets total trick points.
+     *
      * @return totalTrickPoints.
      */
     public int getTotalTrickPoints() {
@@ -170,6 +184,7 @@ public final class PointsInfo implements Serializable {
 
     /**
      * Sets total trick points.
+     *
      * @param totalTrickPoints new ones .
      */
     public void setTotalTrickPoints(final int totalTrickPoints) {

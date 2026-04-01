@@ -9,7 +9,7 @@ public final class MessageProcessor implements Processor {
     private final MessageQueue messageQueue;
 
     private boolean processMessages = true;
-    
+
     /**
      * Hash table which maps messages with handlers.
      */
@@ -23,9 +23,10 @@ public final class MessageProcessor implements Processor {
     public final void start() {
         messageThread.start();
     }
-    
+
     /**
      * Sends message.
+     *
      * @param message - to be send.
      */
     public final void sendMessage(Message message, boolean always) {
@@ -36,6 +37,7 @@ public final class MessageProcessor implements Processor {
 
     /**
      * Sends message.
+     *
      * @param message - to be send.
      */
     public final void sendMessage(Message message) {
@@ -50,9 +52,10 @@ public final class MessageProcessor implements Processor {
     public final void runMessaging() {
         processMessages = true;
     }
-    
+
     /**
      * Adds message listener for the concrete message type.
+     *
      * @param messageType concrete message type.
      * @param messageable message listener.
      */
@@ -65,12 +68,13 @@ public final class MessageProcessor implements Processor {
 
     /**
      * Removes message listener for the concrete message type.
+     *
      * @param messageType concrete message type.
      */
     public final void removeMessageListener(final MessageType messageType) {
         listenersHash.remove(messageType);
     }
-    
+
     /**
      * Process one message.
      */

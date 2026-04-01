@@ -10,21 +10,23 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess.allTrump;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * BelotCard class. PlayCardMethod which implements the logic of playing a belot in all trump game.
+ *
  * @author Dimitar Karamanov
  */
 public final class BelotCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public BelotCard(final Game game) {
@@ -33,14 +35,14 @@ public final class BelotCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player) {
-        for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
+        for (final Suit suit : Suits.list()) {
             if (player.getCards().hasCouple(suit)) {
-                return player.getCards().findCard(Rank.Queen, suit);
+                return player.getCards().findCard(Ranks.Queen, suit);
             }
         }
         return null;

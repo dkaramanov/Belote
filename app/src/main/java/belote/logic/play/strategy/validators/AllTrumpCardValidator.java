@@ -10,17 +10,19 @@
 package belote.logic.play.strategy.validators;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 
 /**
  * AllTrumpCardValidator class.
+ *
  * @author Dimitar Karamanov
  */
 public class AllTrumpCardValidator extends BaseCardValidator {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public AllTrumpCardValidator(final Game game) {
@@ -29,8 +31,9 @@ public class AllTrumpCardValidator extends BaseCardValidator {
 
     /**
      * Validates player card.
+     *
      * @param player provided player.
-     * @param card provided card.
+     * @param card   provided card.
      * @return boolean true if the card is valid, false otherwise.
      */
     public boolean validateNoAttackPlayerCard(final Player player, final Card card, final Card attackCard) {
@@ -42,22 +45,17 @@ public class AllTrumpCardValidator extends BaseCardValidator {
         if (isSameSuitCardAndHasNoBigger(player, card, handCard)) {
             return true;
         }
-        if (isDifferentSuitAndHasNoFromSuit(player, card, handCard)) {
-            return true;
-        }
-        return false;
+        return isDifferentSuitAndHasNoFromSuit(player, card, handCard);
     }
 
     /**
      * Returns if the provided card is a couple card.
+     *
      * @param card provided card.
      * @return boolean true if the card is from a couple false otherwise.
      */
     protected final boolean hasPlayerCouple(Card card) {
         final Card attack = game.getTrickCards().getAttackCard();
-        if (attack == null || attack.getSuit().equals(card.getSuit())) {
-            return true;
-        }
-        return false;
+        return attack == null || attack.getSuit().equals(card.getSuit());
     }
 }

@@ -11,6 +11,7 @@ package com.karamanov.framework.message;
 
 /**
  * Message class.
+ *
  * @author Dimitar Karamanov
  */
 public class Message {
@@ -27,6 +28,7 @@ public class Message {
 
     /**
      * Constructor.
+     *
      * @param messageType message type.
      */
     public Message(final MessageType messageType) {
@@ -35,8 +37,9 @@ public class Message {
 
     /**
      * Constructor.
+     *
      * @param messageType message type.
-     * @param data message data.
+     * @param data        message data.
      */
     public Message(final MessageType messageType, final Object data) {
         this.messageType = messageType;
@@ -45,6 +48,7 @@ public class Message {
 
     /**
      * Returns message data.
+     *
      * @return Object message data.
      */
     public final Object getData() {
@@ -53,6 +57,7 @@ public class Message {
 
     /**
      * Returns message type.
+     *
      * @return MessageType message type.
      */
     public final MessageType getMessageType() {

@@ -9,11 +9,12 @@
  */
 package belote.logic.announce.factory.automat.methods.conditions.base;
 
-import belote.bean.Player;
+import belote.bean.player.Player;
 
 /**
  * MultipleOrCondition class. MultipleOrCondition is an complicated condition which is compound of several announce conditions (which can be single or
  * complicated too) and the result is the boolean OR of all of them.
+ *
  * @author Dimitar Karamanov
  */
 public final class MultipleOrCondition implements AnnounceCondition {
@@ -26,6 +27,7 @@ public final class MultipleOrCondition implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param condition0 to be added to the list.
      */
     public MultipleOrCondition(final AnnounceCondition condition0) {
@@ -35,6 +37,7 @@ public final class MultipleOrCondition implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param condition0 to be added to the list.
      * @param condition1 to be added to the list.
      */
@@ -45,6 +48,7 @@ public final class MultipleOrCondition implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param condition0 to be added to the list.
      * @param condition1 to be added to the list.
      * @param condition2 to be added to the list.
@@ -56,19 +60,21 @@ public final class MultipleOrCondition implements AnnounceCondition {
 
     /**
      * Constructor.
+     *
      * @param condition0 to be added to the list.
      * @param condition1 to be added to the list.
      * @param condition2 to be added to the list.
      * @param condition3 to be added to the list.
      */
     public MultipleOrCondition(final AnnounceCondition condition0, final AnnounceCondition condition1, final AnnounceCondition condition2,
-            final AnnounceCondition condition3) {
+                               final AnnounceCondition condition3) {
         this(condition0, condition1, condition2);
         announceConditionsList.add(condition3);
     }
 
     /**
      * Adds an announce condition to the list.
+     *
      * @param announceCondition to be added.
      */
     public final void addAnnounceCondition(final AnnounceCondition announceCondition) {
@@ -77,11 +83,12 @@ public final class MultipleOrCondition implements AnnounceCondition {
 
     /**
      * The method which returns the result of condition. (Multiple OR)
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */
     public boolean process(final Player player) {
-        for (final AnnounceConditionIterator iterator = announceConditionsList.iterator(); iterator.hasNext();) {
+        for (final AnnounceConditionIterator iterator = announceConditionsList.iterator(); iterator.hasNext(); ) {
             if (iterator.next().process(player)) {
                 return true;
             }

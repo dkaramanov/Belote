@@ -21,7 +21,7 @@ import com.karamanov.beloteGame.gui.screen.main.BeloteActivity;
 
 /**
  * LogoFrame class.
- * 
+ *
  * @author Dimitar Karamanov
  */
 public final class LogoActivity extends Activity {
@@ -35,7 +35,9 @@ public final class LogoActivity extends Activity {
         super();
     }
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -10,14 +10,15 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.PlayCardMethod;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 import belote.logic.play.strategy.automat.methods.MinMeterSuitCard;
 
 /**
  * MinimumOfAllMastersCard class. PlayCardMethod which implements the logic of playing the minimum by rank card when all cards are master.
+ *
  * @author Dimitar Karamanov.
  */
 public final class MinimumOfAllMastersCard extends BaseMethod {
@@ -29,6 +30,7 @@ public final class MinimumOfAllMastersCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public MinimumOfAllMastersCard(final Game game) {
@@ -39,6 +41,7 @@ public final class MinimumOfAllMastersCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */

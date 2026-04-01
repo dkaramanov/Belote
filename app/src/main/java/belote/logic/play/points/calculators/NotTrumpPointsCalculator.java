@@ -15,6 +15,7 @@ import belote.bean.points.PointsInfo;
 
 /**
  * NTPointsCalculator class. Points calculator class for No Trump game.
+ *
  * @author Dimitar Karamanov
  */
 public final class NotTrumpPointsCalculator extends PointsCalculator {
@@ -26,6 +27,7 @@ public final class NotTrumpPointsCalculator extends PointsCalculator {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public NotTrumpPointsCalculator(Game game) {
@@ -34,6 +36,7 @@ public final class NotTrumpPointsCalculator extends PointsCalculator {
 
     /**
      * Calculates team points.
+     *
      * @param team for which the points will be calculated.
      */
     public void calculateTeamPoints(Team team) {
@@ -52,6 +55,7 @@ public final class NotTrumpPointsCalculator extends PointsCalculator {
 
     /**
      * Rounds team points.
+     *
      * @param team for which the points will be rounded.
      */
     public void trickTeamPoints(Team team) {

@@ -10,8 +10,8 @@
 package belote.logic.play.strategy;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.executors.trumpsLess.notTrumps.AttackCard;
 import belote.logic.play.strategy.automat.executors.trumpsLess.notTrumps.FirstDefencePositionCard;
 import belote.logic.play.strategy.automat.executors.trumpsLess.notTrumps.SecondDefencePositionCard;
@@ -20,12 +20,14 @@ import belote.logic.play.strategy.validators.NotTrumpCardValidator;
 
 /**
  * NTPlayCardStrategy class. Not trump strategy playing class.
+ *
  * @author Dimitar Karamanov
  */
 public final class NotTrumpPlayStrategy extends BasePlayStrategy {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance.
      */
     public NotTrumpPlayStrategy(final Game game) {
@@ -35,6 +37,7 @@ public final class NotTrumpPlayStrategy extends BasePlayStrategy {
 
     /**
      * Returns next attack player.
+     *
      * @param attack the round attack card.
      * @return Player next attack player.
      */

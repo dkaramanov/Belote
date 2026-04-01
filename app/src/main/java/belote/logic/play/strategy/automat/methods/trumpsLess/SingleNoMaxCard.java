@@ -10,20 +10,22 @@
 package belote.logic.play.strategy.automat.methods.trumpsLess;
 
 import belote.bean.Game;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
 import belote.bean.pack.card.suit.Suit;
-import belote.bean.pack.card.suit.SuitIterator;
+import belote.bean.pack.card.suit.Suits;
+import belote.bean.player.Player;
 import belote.logic.play.strategy.automat.base.method.BaseMethod;
 
 /**
  * SingleNoMaxCard class. PlayCardMethod which implements the logic of playing the minimum by rank single no maximum left suit card.
+ *
  * @author Dimitar Karamanov
  */
 public final class SingleNoMaxCard extends BaseMethod {
 
     /**
      * Constructor.
+     *
      * @param game BelotGame instance class.
      */
     public SingleNoMaxCard(final Game game) {
@@ -32,13 +34,13 @@ public final class SingleNoMaxCard extends BaseMethod {
 
     /**
      * Returns player's card.
+     *
      * @param player who is on turn.
      * @return Card object instance or null.
      */
     public Card getPlayMethodCard(final Player player) {
         Card result = null;
-        for (final SuitIterator iterator = Suit.iterator(); iterator.hasNext();) {
-            final Suit suit = iterator.next();
+        for (final Suit suit : Suits.list()) {
             final int count = player.getCards().getSuitCount(suit);
 
             if (count == SINGLE_CARD_COUNT) {

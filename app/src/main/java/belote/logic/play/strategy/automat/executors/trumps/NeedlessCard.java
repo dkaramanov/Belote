@@ -13,22 +13,24 @@ import belote.bean.Game;
 import belote.logic.play.strategy.automat.base.executor.PlayCardExecutor;
 import belote.logic.play.strategy.automat.methods.MaxSingleNoHandCardToPartner;
 import belote.logic.play.strategy.automat.methods.MinimumOfAllCard;
-import belote.logic.play.strategy.automat.methods.trumps.needless.MaxCardToPartnerOnDefense;
-import belote.logic.play.strategy.automat.methods.trumps.needless.MinimumOfAllNoTrumpCard;
-import belote.logic.play.strategy.automat.methods.trumps.needless.MinimumOfAllMastersCards;
 import belote.logic.play.strategy.automat.methods.trumps.needless.ClearCard;
 import belote.logic.play.strategy.automat.methods.trumps.needless.ClearSingleSuitCard;
+import belote.logic.play.strategy.automat.methods.trumps.needless.MaxCardToPartnerOnDefense;
+import belote.logic.play.strategy.automat.methods.trumps.needless.MinimumOfAllMastersCards;
+import belote.logic.play.strategy.automat.methods.trumps.needless.MinimumOfAllNoTrumpCard;
 import belote.logic.play.strategy.automat.methods.trumps.needless.TrumpCard;
 
 /**
  * NeedlessCard executor. Implements the logic to play no needed card and is called after obligatory rules. Used in TrumpAttackCard and TrumpDefenceCard
  * executors.
+ *
  * @author Dimitar Karamanov
  */
 public final class NeedlessCard extends PlayCardExecutor {
 
     /**
      * Constructor.
+     *
      * @param game a BelotGame instance.
      */
     public NeedlessCard(final Game game) {

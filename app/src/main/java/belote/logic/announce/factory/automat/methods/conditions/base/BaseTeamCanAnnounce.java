@@ -9,19 +9,20 @@
  */
 package belote.logic.announce.factory.automat.methods.conditions.base;
 
+import java.util.Iterator;
+
 import belote.bean.Game;
-import belote.bean.Player;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
 import belote.bean.pack.sequence.Sequence;
-import belote.bean.pack.sequence.SequenceIterator;
 import belote.bean.pack.sequence.SequenceList;
 import belote.bean.pack.sequence.SequenceType;
 import belote.bean.pack.square.Square;
-import belote.bean.pack.square.SquareIterator;
 import belote.bean.pack.square.SquareList;
+import belote.bean.player.Player;
 
 /**
  * BaseTeamCanAnnounce class.
+ *
  * @author Dimitar Karamanov
  */
 public abstract class BaseTeamCanAnnounce implements AnnounceCondition {
@@ -29,7 +30,7 @@ public abstract class BaseTeamCanAnnounce implements AnnounceCondition {
     /**
      * Minimum points difference allowed to make end game announce.
      */
-    private final int MinPointsToMakeAnnounce;
+    private final int minPointsToMakeAnnounce;
 
     /**
      * BelotGame instance.
@@ -38,16 +39,18 @@ public abstract class BaseTeamCanAnnounce implements AnnounceCondition {
 
     /**
      * Constructor.
-     * @param game BelotGame instance.
-     * @param MinPointsToMakeAnnounce
+     *
+     * @param game                    BelotGame instance.
+     * @param minPointsToMakeAnnounce minimum points for announce
      */
-    public BaseTeamCanAnnounce(final Game game, final int MinPointsToMakeAnnounce) {
+    public BaseTeamCanAnnounce(final Game game, final int minPointsToMakeAnnounce) {
         this.game = game;
-        this.MinPointsToMakeAnnounce = MinPointsToMakeAnnounce;
+        this.minPointsToMakeAnnounce = minPointsToMakeAnnounce;
     }
 
     /**
      * The method which returns the result of condition.
+     *
      * @param player which has to declare next game announce.
      * @return boolean true if the condition fits, false otherwise.
      */
@@ -56,11 +59,12 @@ public abstract class BaseTeamCanAnnounce implements AnnounceCondition {
         final int playerTeamPoints = player.getTeam().getPoints().getAllPoints();
         final int extraPoints = getExtraPoints(player);
 
-        return ((playerTeamPoints + extraPoints) - oppositeTeamPoints) >= MinPointsToMakeAnnounce;
+        return ((playerTeamPoints + extraPoints) - oppositeTeamPoints) >= minPointsToMakeAnnounce;
     }
 
     /**
      * Returns player team extra points (Equals or/and Sequences).
+     *
      * @param player provided player.
      * @return int player team extra points (Equals or/and Sequences).
      */
@@ -68,7 +72,7 @@ public abstract class BaseTeamCanAnnounce implements AnnounceCondition {
         int result = 0;
 
         final SequenceList sequencesList = player.getCards().getSequencesList();
-        final SequenceIterator sequencesIterator = sequencesList.iterator();
+        final Iterator<Sequence> sequencesIterator = sequencesList.list().iterator();
 
         if (sequencesIterator.hasNext()) {
             final Sequence sequence = sequencesIterator.next();
@@ -78,11 +82,11 @@ public abstract class BaseTeamCanAnnounce implements AnnounceCondition {
         }
 
         final SquareList squareList = player.getCards().getSquaresList();
-        final SquareIterator squareIterator = squareList.iterator();
+        final Iterator<Square> squareIterator = squareList.list().iterator();
 
         if (squareIterator.hasNext()) {
             final Square square = squareIterator.next();
-            if (square.getRank().equals(Rank.Jack) || square.getRank().equals(Rank.Nine)) {
+            if (square.getRank().equals(Ranks.Jack) || square.getRank().equals(Ranks.Nine)) {
                 result += square.getPoints();
             }
         }

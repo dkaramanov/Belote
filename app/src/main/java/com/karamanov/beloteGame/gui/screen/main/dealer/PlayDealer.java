@@ -11,12 +11,12 @@ import com.karamanov.beloteGame.gui.screen.main.message.MessageData;
 import com.karamanov.framework.MessageActivity;
 import com.karamanov.framework.graphics.Rectangle;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import belote.base.BelotException;
-import belote.bean.Player;
 import belote.bean.pack.card.Card;
-import belote.bean.pack.card.rank.Rank;
+import belote.bean.pack.card.rank.Ranks;
+import belote.bean.player.Player;
 
 final class PlayDealer extends BaseDealer {
 
@@ -57,9 +57,9 @@ final class PlayDealer extends BaseDealer {
                 // repaint frame
                 invalidateGame();
 
-                ArrayList<MessageData> messages = getMessageList(player, player.getSelectedCard());
+                List<MessageData> messages = getMessageList(player, player.getSelectedCard());
 
-                if (messages.size() > 0) {
+                if (!messages.isEmpty()) {
                     displayMessage(player, messages);
                 } else {
                     sleep(PLAY_DELAY);
@@ -74,7 +74,7 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Process game playing.
-     * 
+     *
      * @param keyCode pressed key code.
      */
     private void processGamePlaying(int keyCode) {
@@ -89,7 +89,7 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Process round playing.
-     * 
+     *
      * @param keyCode pressed key code.
      */
     private void processRoundPlaying(int keyCode) {
@@ -104,7 +104,7 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Process rounds after human player.
-     * 
+     *
      * @param keyCode
      */
     private void processPlayAfterHumanPlayer(int keyCode) {
@@ -114,11 +114,11 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Process rounds till human player.
-     * 
+     *
      * @param keyCode
      */
     private void processPlayTillHumanPlayer(int keyCode) {
-        if (beloteFacade.getHumanPlayer().equals(beloteFacade.getGame().getTrickAttackPlayer())) {
+        if (beloteFacade.getHumanPlayer().equals(beloteFacade.getTrickAttackPlayer())) {
             selectHumanSingleCard();
             processSelectCard(keyCode);
         } else {
@@ -129,7 +129,7 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Checks card click.
-     * 
+     *
      * @param keyCode pressed key code.
      */
     private void processSelectCard(int keyCode) {
@@ -173,7 +173,7 @@ final class PlayDealer extends BaseDealer {
 
         Canvas canvas = belotPanel.getBufferedCanvas();
         if (canvas != null) {
-            for (int i = 0; i < Rank.getRankCount(); i++) {
+            for (int i = 0; i < Ranks.getRankCount(); i++) {
                 if (i < player.getCards().getSize()) {
 
                     Rectangle rec = belotPainter.getPlayerCardRectangle(canvas, beloteFacade, i, player);
@@ -202,8 +202,8 @@ final class PlayDealer extends BaseDealer {
                 // repaint frame
                 invalidateGame();
                 // check for display message
-                ArrayList<MessageData> messages = getMessageList(player, beloteFacade.getHumanPlayer().getSelectedCard());
-                if (messages.size() > 0) {
+                List<MessageData> messages = getMessageList(player, beloteFacade.getHumanPlayer().getSelectedCard());
+                if (!messages.isEmpty()) {
                     displayMessage(player, messages);
                 } else {
                     sleep(PLAY_DELAY);
@@ -218,7 +218,7 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Checks card click.
-     * 
+     *
      * @param x
      * @param y
      * @return if a card was selected.
@@ -234,7 +234,7 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Process the selected card.
-     * 
+     *
      * @param card selected one.
      */
     private void processSelectCard(final Card card) {
@@ -268,7 +268,7 @@ final class PlayDealer extends BaseDealer {
         beloteFacade.processTrickData();
         beloteFacade.calculateTeamsPoints();
 
-        if (beloteFacade.getGame().getAnnounceList().getOpenContractAnnounce() != null) {
+        if (beloteFacade.getOpenContractAnnounce() != null) {
 
             handler.post(new Runnable() {
                 public void run() {
@@ -282,6 +282,7 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Process round playing.
+     *
      * @param x
      * @param y
      */
@@ -290,19 +291,19 @@ final class PlayDealer extends BaseDealer {
             if (beloteFacade.getHumanTrickCard() == null) {
                 processTillHumanPlayer(x, y);
             } else {
-                processAfterHumanPlayer(x, y);
+                processAfterHumanPlayer();
             }
         }
     }
 
     /**
      * Process rounds till human player.
-     * 
+     *
      * @param x
      * @param y
      */
     private void processTillHumanPlayer(float x, float y) {
-        if (beloteFacade.getHumanPlayer().equals(beloteFacade.getGame().getTrickAttackPlayer())) {
+        if (beloteFacade.getHumanPlayer().equals(beloteFacade.getTrickAttackPlayer())) {
             selectHumanSingleCard();
             processSelectHumanCard(x, y);
         } else {
@@ -324,11 +325,9 @@ final class PlayDealer extends BaseDealer {
 
     /**
      * Process rounds after human player.
-     * 
-     * @param x
-     * @param y
+     *
      */
-    private void processAfterHumanPlayer(float x, float y) {
+    private void processAfterHumanPlayer() {
         beloteFacade.getHumanPlayer().setSelectedCard(null);
         playRepeatedSingleRoundAfterHumanPlayer();
     }
@@ -337,7 +336,7 @@ final class PlayDealer extends BaseDealer {
      * Plays one round till human player.
      */
     private void playRepeatedSingleRoundTillHumanPlayer() {
-        for (Player player = beloteFacade.getGame().getTrickAttackPlayer(); !player.equals(beloteFacade.getHumanPlayer()); player = beloteFacade
+        for (Player player = beloteFacade.getTrickAttackPlayer(); !player.equals(beloteFacade.getHumanPlayer()); player = beloteFacade
                 .getPlayerAfter(player)) {
             playSingleRoundPlayerCard(player);
         }
@@ -347,7 +346,7 @@ final class PlayDealer extends BaseDealer {
      * Plays one round after human player (Till end of round).
      */
     private void playRepeatedSingleRoundAfterHumanPlayer() {
-        for (Player player = beloteFacade.getPlayerAfter(beloteFacade.getHumanPlayer()); !player.equals(beloteFacade.getGame().getTrickAttackPlayer()); player = beloteFacade
+        for (Player player = beloteFacade.getPlayerAfter(beloteFacade.getHumanPlayer()); !player.equals(beloteFacade.getTrickAttackPlayer()); player = beloteFacade
                 .getPlayerAfter(player)) {
             playSingleRoundPlayerCard(player);
         }
@@ -359,15 +358,15 @@ final class PlayDealer extends BaseDealer {
             invalidateGame();
 
             if (card != null) {
-                ArrayList<MessageData> messages = getMessageList(player, card);
-                if (messages.size() > 0) {
+                List<MessageData> messages = getMessageList(player, card);
+                if (!messages.isEmpty()) {
                     displayMessage(player, messages);
                 } else {
                     sleep(PLAY_DELAY);
                 }
             }
 
-        } catch (BelotException be) {
+        } catch (BelotException ignored) {
         }
     }
 }
