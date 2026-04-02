@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import belote.bean.pack.card.Card;
@@ -51,7 +52,7 @@ public class Pack implements Serializable {
     /**
      * Internal container collection.
      */
-    private final ArrayList<Card> collection = new ArrayList<Card>();
+    private final List<Card> collection = new ArrayList<>();
 
     /**
      * Sequences list.

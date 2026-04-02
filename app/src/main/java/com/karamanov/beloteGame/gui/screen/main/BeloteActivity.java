@@ -56,9 +56,6 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
     private static final int MENU_RESET_INDEX = 5;
 
     private DealerFacade dealer;
-    private BeloteView beloteView;
-    //private RelativeLayout buttonsView;
-    private RelativeLayout bodyView;
 
     /**
      * Called when the activity is first created.
@@ -77,20 +74,18 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
         boolean blackRedOrder = preferences.getBoolean(key, Boolean.FALSE);
         Belote.getBeloteFacade(this).setBlackRedCardOrder(blackRedOrder);
 
-        beloteView = new BeloteView(this);
+        BeloteView beloteView = new BeloteView(this);
 
         dealer = new DealerFacade(this, beloteView);
         RelativeLayout.LayoutParams rlp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         beloteView.setLayoutParams(rlp);
-        bodyView = new RelativeLayout(this);
 
+        RelativeLayout bodyView = new RelativeLayout(this);
         bodyView.setLayoutParams(rlp);
         bodyView.addView(beloteView);
         setContentView(bodyView);
 
         preferences.registerOnSharedPreferenceChangeListener(this);
-
-
     }
 
     @Override
@@ -296,7 +291,7 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.prefBlackRedOrder))) {
+        if (key != null && key.equals(getString(R.string.prefBlackRedOrder))) {
             boolean blackRedOrder = sharedPreferences.getBoolean(key, Boolean.FALSE);
             Belote.getBeloteFacade(this).setBlackRedCardOrder(blackRedOrder);
             Belote.getBeloteFacade(this).arrangePlayersCards();
@@ -306,34 +301,6 @@ public final class BeloteActivity extends MessageActivity implements OnSharedPre
 
     public void onSurfaceChanged() {
         dealer.onSurfaceChanged();
-    }
-
-    private class ButtonPressListener implements OnClickListener {
-
-        private final Integer i;
-
-        public ButtonPressListener(Integer i) {
-            this.i = i;
-        }
-
-        @Override
-        public void onClick(View view) {
-            Message tMessage = new Message(Belote.MT_KEY_PRESSED, i);
-            triggerMessage(tMessage);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Resume the AdView.
-        // adView.setVisibility(View.VISIBLE); 
-    }
-
-    @Override
-    public void onPause() {
-        // Pause the AdView.
-        super.onPause();
     }
 
 }
