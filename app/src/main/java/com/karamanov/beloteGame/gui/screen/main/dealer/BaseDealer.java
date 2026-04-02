@@ -184,7 +184,7 @@ abstract class BaseDealer {
 
         while (flag.getValue()) {
             invalidateGame();
-            sleep(PLAY_DELAY);
+            sleep();
         }
     }
 
@@ -193,13 +193,11 @@ abstract class BaseDealer {
      *
      * @param ms provided millisecond.
      */
-    protected final void sleep(final long ms) {
-        if (ms > 0) {
-            try {
-                Thread.sleep(ms);
-            } catch (InterruptedException ex) {
-                // D.N.
-            }
+    protected final void sleep() {
+        try {
+            Thread.sleep(PLAY_DELAY);
+        } catch (InterruptedException ex) {
+            // D.N.
         }
     }
 
@@ -232,7 +230,7 @@ abstract class BaseDealer {
             switch (player.getID()) {
                 case 0:
                     lp.gravity |= Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-                    lp.y = rect.y + rect.height + belotPanel.getTop() + actionBarHeight;
+                    lp.y = rect.y + rect.height + actionBarHeight;
                     break;
 
                 case 1:
@@ -287,10 +285,7 @@ abstract class BaseDealer {
      * Called when end game activity is closed.
      */
     public final void onCloseEndGame() {
-        //save game log
-        //BeloteLog.saveGameInfo(beloteFacade.getGame(), context);
-
-        sleep(PLAY_DELAY);
+        sleep();
         newAnnounceDealRound();
     }
 }

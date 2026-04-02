@@ -62,7 +62,7 @@ final class PlayDealer extends BaseDealer {
                 if (!messages.isEmpty()) {
                     displayMessage(player, messages);
                 } else {
-                    sleep(PLAY_DELAY);
+                    sleep();
                 }
 
                 return true;
@@ -206,7 +206,7 @@ final class PlayDealer extends BaseDealer {
                 if (!messages.isEmpty()) {
                     displayMessage(player, messages);
                 } else {
-                    sleep(PLAY_DELAY);
+                    sleep();
                 }
 
                 return true;
@@ -362,7 +362,7 @@ final class PlayDealer extends BaseDealer {
                 if (!messages.isEmpty()) {
                     displayMessage(player, messages);
                 } else {
-                    sleep(PLAY_DELAY);
+                    sleep();
                 }
             }
 

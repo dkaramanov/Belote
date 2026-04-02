@@ -7,10 +7,13 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
+
 import com.karamanov.beloteGame.R;
 import com.karamanov.framework.BooleanFlag;
 
 import java.util.List;
+import java.util.Objects;
 
 import belote.bean.player.Player;
 
@@ -26,7 +29,7 @@ public class MessageScreen extends Dialog {
         this.player = player;
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        Objects.requireNonNull(getWindow()).clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
         getWindow().setBackgroundDrawableResource(R.drawable.message_shape);
 
         this.flag = flag;
@@ -45,7 +48,7 @@ public class MessageScreen extends Dialog {
         flag.setFalse();
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         dismiss();
         return true;
     }
@@ -53,10 +56,8 @@ public class MessageScreen extends Dialog {
     /**
      * Invoked when the navigational action is selected.
      *
-     * @param status - Bitfield of values defined by KeypadListener.
-     * @param time   - Number of milliseconds since the device was turned on.
      */
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
         dismiss();
         return true;
     }
