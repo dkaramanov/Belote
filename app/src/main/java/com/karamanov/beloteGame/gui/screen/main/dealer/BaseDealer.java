@@ -190,8 +190,6 @@ abstract class BaseDealer {
 
     /**
      * Sleeps for provided millisecond.
-     *
-     * @param ms provided millisecond.
      */
     protected final void sleep() {
         try {
