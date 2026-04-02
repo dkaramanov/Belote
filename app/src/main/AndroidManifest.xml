@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.karamanov.beloteGame"
     android:installLocation="preferExternal"
-    android:versionCode="50"
+    android:versionCode="51"
     android:versionName="2.01">
 
     <application
